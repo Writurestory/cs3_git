@@ -1,0 +1,2432 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix A</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 13.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="Appendix B.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table>
+<h2 class="docAppendixTitle">Appendix A. Useful UNIX Utilities for Shell
+Programmers</h2>
+<ul><li>&nbsp;<a class="docLink" href="#app14lev1sec1">at—at, batch—execute commands at a later time</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec2">awk—pattern scanning and processing language</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec3">banner—make posters</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec4">basename—with a directory name delivers portions ofthe pathname</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec5">bc—processes precision arithmetic</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec6">bdiff—compares two big files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec7">cal—displays a calendar</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec8">cat—concatenates and displays files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec9">chmod—change the permissions mode of a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec10">chown—changes owner of file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec11">clear—clears the terminal screen</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec12">cmp—compares two files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec13">compress—compress, uncompress, zcat compress,uncompress files, or display expanded files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec14">cp—copies files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec15">cpio—copy file archives in and out</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec16">cron—the clock daemon</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec17">crypt—encodes or decodes a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec18">cut—removes selected fields or characters from eachline of a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec19">date—displays the date and time or sets the date</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec20">diff—compares two files for differences diff [–bitw][–c | –Cn</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec21">du—summarizes disk usage</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec22">echo—echoes arguments</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec23">egrep—searches a file for a pattern using fullregular expressions</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec24">expr—evaluates arguments as an expression</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec25">fgrep—search a file for a character string</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec26">file—determines the type of a file by looking atits contents</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec27">find—finds files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec28">finger—displays information about local and remoteusers</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec29">fmt—simple text formatters</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec30">fold—folds long lines</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec31">ftp—file transfer program</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec32">getopt(s)—parses command line options</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec33">grep—searches a file for a pattern</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec34">groups—prints group membership of user</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec35">id—prints the username, user ID, group name andgroup ID</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec36">jsh—the standard, job control shell</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec37">line—reads one line</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec38">logname—gets the name of the user running theprocess</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec39">lp—sends output to a printer (AT&amp;T)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec40">lpr—sends output to a printer (UCB)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec41">lpstat—print information about the status of the LPprint service (AT&amp;T)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec42">lpq—print information about the status of theprinter (UCB)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec43">ls—lists contents of directory</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec44">mail—mail, rmail—read mail or send mail to users</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec45">mailx—interactive message processing system</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec46">make—maintains, updates, and regenerates groups ofrelated programs and files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec47">mesg—permits or denies messages resulting from thewrite command</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec48">mkdir—creates a directory</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec49">more—browse or page through a text file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec50">mv—move or rename files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec51">nawk—pattern scanning and processing language</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec52">newgrp—log in to a new group</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec53">news—prints news items</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec54">nice—runs a command at low priority</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec55">nohup—makes commands immune to hangups and quits</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec56">od—octal dump</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec57">pack—pack, pcat, unpack—compresses and expandsfiles</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec58">passwd—changes the login password and passwordattributes</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec59">paste—merges same lines of several files orsubsequent lines of one file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec60">pcat—(see <span class="docEmphasis">pack</span>)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec61">pg—displays files a page at a time</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec62">pr—prints files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec63">ps—reports process status</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec64">pwd—displays the present working directory name</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec65">rcp—remote file copy</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec66">rlogin—remote login</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec67">rm—removes files from directories</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec68">rmdir—removes a directory</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec69">rsh—starts a remote shell</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec70">ruptime—shows the host status of local machines</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec71">rwho—who is logged in on local machines</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec72">script—creates a typescript of a terminal session</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec73">sed—streamlined editor</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec74">size—prints section sizes in bytes of object files</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec75">sleep—suspends execution for some number of seconds</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec76">spell—finds spelling errors</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec77">split—splits a file into pieces</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec78">strings—finds any printable strings in an object orbinary file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec79">stty—sets the options for a terminal</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec80">su—become superuser or another user</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec81">sum—calculates a checksum for a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec82">sync—updates the superblock and sends changedblocks to disk</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec83">tabs—set tab stops on a terminal</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec84">tail—displays the tail end of a file.</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec85">talk—allows you to talk to another user</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec86">tar—stores and retrieves files from an archivefile, normally a tape device</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec87">tee—replicates the standard output</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec88">telnet—communicates with a remote host</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec89">test—evaluates an expression</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec90">time—displays a summary of time used by this shelland its children</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec91">timex—times a command; reports process data andsystem activity</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec92">touch—updates access time and/or modification timeof a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec93">tput—initializes a terminal or queries the<span class="docEmphasis">terminfo</span> database</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec94">tr—translates characters</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec95">true—provide successful exit status</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec96">tsort —topological sort</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec97">tty—gets the name of the terminal</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec98">umask—sets file-creation mode mask for permissions</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec99">uname—prints name of current machine</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec100">uncompress—restores files to their original stateafter they have been compressed using the compress command</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec101">uniq—reports on duplicate lines in a file</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec102">units—converts quantities expressed in standardscales to other scales</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec103">unpack—expands files created by<span class="docEmphasis">pack</span></a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec104">uucp—copy files to another system, UNIX-to-UNIXsystem copy</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec105">uuencode—uuencode, uudecode—encode a binary fileinto ASCII text in order to send it through e-mail, or convert it back into itsoriginal form</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec106">wc—counts lines, words, and characters</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec107">what—extracts SCCS version information from a fileby printing information found after the @(#) pattern</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec108">which—locates a command and displays its pathnameor alias (UCB)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec109">whereis—locates the binary, source, and manual pagefiles for a command (UCB)</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec110">who—displays who is logged on the system</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec111">write—writes a message to another user</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec112">xargs—constructs an argument list(s) and executes acommand</a></li>
+<li>&nbsp;<a class="docLink" href="#app14lev1sec113">zcat—uncompress a compressed file to standardoutput. Same as <span class="docEmphasis">uncompress –c</span></a></li>
+</ul>
+
+<h3 class="docSection1Title" id="app14lev1sec1">at—at, batch—execute commands at a later time</h3>
+<p class="docText"><br>
+at&nbsp;[–csm]&nbsp;[–f&nbsp;script]&nbsp;[–qqueue]&nbsp;time&nbsp;[date]&nbsp;[+&nbsp;increment]<br>
+at&nbsp;–l&nbsp;[&nbsp;job...]<br>
+at&nbsp;–r&nbsp;job...<br>
+batch<br>&nbsp;</p>
+<p class="docText"><span class="docEmphasis">at</span> and
+<span class="docEmphasis">batch</span> read commands from standard input to be
+executed at a later time. <span class="docEmphasis">at</span> allows you to
+specify when the commands should be executed, while jobs queued with
+<span class="docEmphasis">batch</span> will execute when system load level
+permits. Executes commands read from <span class="docEmphasis">stdin</span> or a
+file at some later time. Unless redirected, the output is mailed to the user.</p>
+<h5 class="docExampleTitle">Example A.1 </h5>
+<pre>1   at 6:30am Dec 12 &lt; program
+2   at noon tomorrow &lt; program
+3   at 1945 pm August 9 &lt; program
+4   at now + 3 hours &lt; program
+5   at 8:30am Jan 4 &lt; program
+6   at -r 83883555320.a</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">At 6:30 in the morning on December 12th, start the job.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">At noon tomorrow start the job.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">At 7:45 in the evening on August 9th, start the job.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">In three hours start the job.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">At 8:30 in the morning of January 4th, start the job.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Removes previously scheduled job
+      <span class="docEmphasis">83883555320.a.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec2">awk—pattern scanning and processing language</h3>
+<p class="docText"><br>
+awk&nbsp;[&nbsp;–fprogram–file&nbsp;]&nbsp;[&nbsp;–Fc&nbsp;]&nbsp;[&nbsp;prog&nbsp;]&nbsp;[&nbsp;parameters&nbsp;]<br>
+[&nbsp;filename...]<br>&nbsp;</p>
+<p class="docText"><span class="docEmphasis">awk</span> scans each input
+filename for lines that match any of a set of patterns specified in
+<span class="docEmphasis">prog.</span></p>
+<h5 class="docExampleTitle">Example A.2 </h5>
+<pre>1   awk '{print $1, $2}' file
+2   awk '/John/{print $3, $4}' file
+3   awk -F: '{print $3}' /etc/passwd
+4   date | awk '{print $6}'</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the first two fields of
+      <span class="docEmphasis">file</span> where fields are separated by
+      whitespace.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints fields 3 and 4 if the pattern
+      <span class="docEmphasis">John</span> is found.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Using a colon as the field separator, prints the third
+      field of the <span class="docEmphasis">/etc/passwd</span> file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sends the output of the <span class="docEmphasis">date</span>
+      command to <span class="docEmphasis">awk</span> and prints the sixth
+      field.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec3">banner—make posters</h3>
+<p class="docText"><span class="docEmphasis">banner</span> prints its arguments
+(each up to 10 characters long) in large letters on the standard output.</p>
+<h5 class="docExampleTitle">Example A.3 </h5>
+<pre>banner Happy Birthday
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Displays in banner format the string
+    <span class="docEmphasis">Happy Birthday.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec4">basename—with a directory name delivers portions of
+the pathname</h3>
+<p class="docText"><br>
+basename&nbsp;string&nbsp;[&nbsp;suffix&nbsp;]<br>
+dirname&nbsp;string<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">basename</span> deletes any prefix
+ending in / (forward slash) and the suffix (if present in string) from string,
+and prints the result on the standard output.</p>
+<h5 class="docExampleTitle">Example A.4 </h5>
+<pre>1   basename /usr/local/bin
+2   scriptname=&quot;'basename $0'&quot;
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Strips off the prefix <span class="docEmphasis">/usr/local/</span>
+      and displays <span class="docEmphasis">bin.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Assigns just the name of the script, $0, to the
+      variable <span class="docEmphasis">scriptname</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec5">bc—processes precision arithmetic</h3>
+<p class="docText"><br>
+bc&nbsp;[&nbsp;–c&nbsp;]&nbsp;[&nbsp;–l&nbsp;]&nbsp;[&nbsp;filename...]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">bc</span> is an interactive
+processor for a language that resembles C but provides unlimited precision
+arithmetic. It takes input from any files given, then reads the standard input.</p>
+<h5 class="docExampleTitle">Example A.5 </h5>
+<pre>1   bc &lt;&lt; EOF
+    scale=3
+    4.5 + 5.6 / 3
+    EOF
+    Output : 6.366
+    -----------------------------
+2   bc
+    ibase=2
+    5
+    101 (Output)
+    20
+    10100 (Output
+    ^D
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">This is a <span class="docEmphasis">here document.</span>
+      From the first EOF to the last EOF input is given to the
+      <span class="docEmphasis">bc</span> command. The scale specifies the
+      number of digits to the right of the decimal point. The result of the
+      calculation is displayed on the screen.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The number base is two. The number is converted to
+      binary (AT&amp;T only).</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec6">bdiff—compares two big files</h3>
+<p class="docText"><span class="docEmphasis">bdiff</span> compares two files
+that are too large for <span class="docEmphasis">diff.</span></p>
+<h3 class="docSection1Title" id="app14lev1sec7">cal—displays a calendar</h3>
+<p class="docText"><br>
+cal&nbsp;[&nbsp;[&nbsp;month&nbsp;]&nbsp;year&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">cal</span> prints a calendar for
+the specified year. If a month is also specified, a calendar just for that month
+is printed. If neither is specified, a calendar for the present month is
+printed.</p>
+<h5 class="docExampleTitle">Example A.6 </h5>
+<pre>1   cal 1997
+2   cal 5 1978
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the calendar year 1997.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the month of May for 1978.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec8">cat—concatenates and displays files</h3>
+<p class="docText"><br>
+cat&nbsp;[&nbsp;–bnsuvet&nbsp;]&nbsp;filename...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">cat</span> reads each filename in
+sequence and writes it on the standard output. If no input file is given, or if
+the argument – is encountered, <span class="docEmphasis">cat</span> reads from
+the standard input file.</p>
+<h5 class="docExampleTitle">Example A.7 </h5>
+<pre>1   cat /etc/passwd
+2   cat -n file1 file2 &gt;&gt; file3
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the contents of the <span class="docEmphasis">
+      /etc/passwd</span> file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Concatenates <span class="docEmphasis">file1</span> and
+      <span class="docEmphasis">file2</span> and appends output to
+      <span class="docEmphasis">file3.</span> The <span class="docEmphasis">–n</span>
+      switch causes each line to be numbered.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec9">chmod—change the permissions mode of a file</h3>
+<p class="docText"><br>
+chmod&nbsp;[&nbsp;–fR&nbsp;]&nbsp;mode&nbsp;filename...<br>
+chmod&nbsp;[ugoa&nbsp;]{&nbsp;+&nbsp;|&nbsp;–&nbsp;|&nbsp;=&nbsp;}[&nbsp;rwxlsStTugo]&nbsp;filename...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">chmod</span> changes or assigns the
+mode of a file. The mode of a file specifies its permissions and other
+attributes. The mode may be absolute or symbolic.</p>
+<h5 class="docExampleTitle">Example A.8 </h5>
+<pre>1   chmod +x script.file
+2   chmod u+x,g-x file
+3   chmod 755 *
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Turns on execute permission for user, group, and others
+      on <span class="docEmphasis">script.file.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Turns on execute permission for user, and removes it
+      from group on <span class="docEmphasis">file.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Turns on read, write, and execute for the user, read
+      and execute for the group, and read and execute for others on all files in
+      the current working directory. The value is octal ( 111 101 101 ).</p>
+      <pre>rwxxr-xr-x
+</pre>
+      </span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec10">chown—changes owner of file</h3>
+<p class="docText"><br>
+chown&nbsp;[&nbsp;–fhR&nbsp;]&nbsp;owner&nbsp;filename&nbsp;...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">chown</span> changes the owner of
+the files to owner. The owner may be either a decimal user ID or a login name
+found in <span class="docEmphasis">/etc/passwd</span> file. Only the owner of a
+file (or the superuser) may change the owner of that file.</p>
+<h5 class="docExampleTitle">Example A.9 </h5>
+<pre>1   chown john filex
+2   chown -R ellie ellie
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Changes the user ID of <span class="docEmphasis">filex</span>
+      to <span class="docEmphasis">john.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Recursively changes the ownership to
+      <span class="docEmphasis">ellie</span> for all files in
+      <span class="docEmphasis">ellie</span> directory.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec11">clear—clears the terminal screen</h3>
+<h3 class="docSection1Title" id="app14lev1sec12">cmp—compares two files</h3>
+<p class="docText"><br>
+cmp&nbsp;[&nbsp;–l&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;filename1&nbsp;filename2<br>
+&nbsp;</p>
+<p class="docText">The two files are compared. <span class="docEmphasis">cmp</span>
+makes no comment if the files are the same; if they differ, it announces the
+byte and line numbers at which the first difference occurred.</p>
+<h5 class="docExampleTitle">Example A.10 </h5>
+<pre>cmp file.new file.old
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">If the files differ, the character number and the line
+    number are displayed.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec13">compress—compress, uncompress, zcat compress,
+uncompress files, or display expanded files</h3>
+<p class="docText"><br>
+compress&nbsp;[&nbsp;–cfv&nbsp;]&nbsp;[&nbsp;–b&nbsp;bits&nbsp;]&nbsp;[&nbsp;filename...&nbsp;]<br>
+uncompress&nbsp;[&nbsp;–cv&nbsp;]&nbsp;[&nbsp;filename...&nbsp;]<br>
+zcat&nbsp;[&nbsp;filename...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">compress</span> reduces the size of
+the named files using adaptive Lempel-Ziv coding. Whenever possible, each file
+is replaced by one with a .Z extension. The ownership modes, access time, and
+modification time will stay the same. If no files are specified, the standard
+input is compressed to the standard output.</p>
+<h5 class="docExampleTitle">Example A.11 </h5>
+<pre>1   compress -v book
+    <span class="docEmphasis">book:Compression:35.07% -- replaced with book.Z</span>
+2   ls
+    book.Z
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Compresses the book into a file called
+      <span class="docEmphasis">book.Z</span> and displays the percentage that
+      the file was compressed and its new name.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec14">cp—copies files</h3>
+<p class="docText"><br>
+cp&nbsp;[&nbsp;–i&nbsp;]&nbsp;[&nbsp;–p&nbsp;]&nbsp;[&nbsp;–r&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]&nbsp;target<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">cp</span> command copies
+<span class="docEmphasis">filename</span> to another target, which is either a
+file or directory. The filename and target cannot have the same name. If the
+target is not a directory, only one file may be specified before it; if it is a
+directory, more than one file may be specified. If target does not exist,
+<span class="docEmphasis">cp</span> creates a file named
+<span class="docEmphasis">target.</span> If target exists and is not a
+directory, its contents are overwritten. If target is a directory, the file(s)
+are copied to that directory.</p>
+<h5 class="docExampleTitle">Example A.12 </h5>
+<pre>1   cp file1 file2
+2   cp chapter1 book
+3   cp -r desktop /usr/bin/tester
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Copies the contents of <span class="docEmphasis">file1</span>
+      to <span class="docEmphasis">file2.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Copies the contents of <span class="docEmphasis">
+      chapter1</span> to the <span class="docEmphasis">book</span> directory. In
+      the <span class="docEmphasis">book</span> directory,
+      <span class="docEmphasis">chapter1</span> has its original name.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Recursively copies the entire <span class="docEmphasis">
+      desktop</span> directory into <span class="docEmphasis">/usr/bin/tester.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec15">cpio—copy file archives in and out</h3>
+<p class="docText"><br>
+cpio&nbsp;–i&nbsp;[&nbsp;bBcdfkmrsStuvV6&nbsp;]&nbsp;[&nbsp;–C&nbsp;bufsize&nbsp;]&nbsp;[&nbsp;–E&nbsp;filename&nbsp;]<br>
+&nbsp;[&nbsp;–H&nbsp;header&nbsp;]&nbsp;[&nbsp;–I&nbsp;filename&nbsp;[&nbsp;–M&nbsp;message&nbsp;]&nbsp;]&nbsp;[&nbsp;–R&nbsp;id&nbsp;]<br>
+&nbsp;[&nbsp;pattern&nbsp;...&nbsp;]<br>
+cpio&nbsp;–o&nbsp;[&nbsp;aABcLvV&nbsp;]&nbsp;[&nbsp;–C&nbsp;bufsize&nbsp;]&nbsp;[&nbsp;–H&nbsp;header&nbsp;]<br>
+&nbsp;[&nbsp;–O&nbsp;filename&nbsp;[&nbsp;–M&nbsp;message&nbsp;]&nbsp;]<br>
+cpio&nbsp;–p&nbsp;[&nbsp;adlLmuvV&nbsp;]&nbsp;[&nbsp;–R&nbsp;id&nbsp;]&nbsp;directory<br>
+&nbsp;</p>
+<p class="docText">Copies file archives according to the modifiers given,
+usually for backup to a tape or directory.</p>
+<h5 class="docExampleTitle">Example A.13 </h5>
+<pre>find . -depth -print | cpio -pdmv /home/john/tmp
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Starting at the current directory,
+    <span class="docEmphasis">find</span> descends the directory hierarchy,
+    printing each entries of the directory even if the directory does not have
+    write permission, and sends the filenames to <span class="docEmphasis">cpio</span>
+    to be copied into the <span class="docEmphasis">john/tmp</span> directory in
+    the <span class="docEmphasis">/home</span> partition.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec16">cron—the clock daemon</h3>
+<p class="docText"><span class="docEmphasis">cron</span> executes commands at
+specified dates and times. Regularly scheduled jobs can be specified in the
+<span class="docEmphasis">/etc/crontab</span> file. In order to use
+<span class="docEmphasis">cron,</span> one of the following must be true: (1)
+you are superuser; (2) you are regular user, but your user ID is listed in the /<span class="docEmphasis">etc/cron.allow</span>
+file; (3) you are regular user, but your system contains a file
+<span class="docEmphasis">/etc/cron.deny,</span> which is empty.</p>
+<h3 class="docSection1Title" id="app14lev1sec17">crypt—encodes or decodes a file</h3>
+<p class="docText"><br>
+crypt&nbsp;[&nbsp;password&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">crypt</span> encrypts and decrypts
+the contents of a file. The password is a key that selects a type of
+transformation.</p>
+<h3 class="docSection1Title" id="app14lev1sec18">cut—removes selected fields or characters from each
+line of a file</h3>
+<p class="docText"><br>
+cut&nbsp;–clist&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+cut&nbsp;–flist&nbsp;[&nbsp;–dc&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">cut</span> command cuts out
+columns or characters from a line of a file; if no files are given, uses
+standard input. The <span class="docEmphasis">–d</span> option specifies the
+field delimiter. The default delimiter is a tab.</p>
+<h5 class="docExampleTitle">Example A.14 </h5>
+<pre>1   cut -d: -f1,3 /etc/passwd
+2   cut -d: -f1-5 /etc/passwd
+3   cut -c1-3,8-12 /etc/passwd
+4   date | cut -c1-3</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Using the colon as a field delimiter, displays fields 1
+      and 3 of the <span class="docEmphasis">/etc/passwd</span> file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Using the colon as a field separator, displays fields 1
+      through 5 of the <span class="docEmphasis">etc/passwd</span> file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Cuts and displays characters 1 through 3 and 8 through
+      12 of each line from the <span class="docEmphasis">/etc/passwd</span>
+      file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sends the output of the <span class="docEmphasis">date</span>
+      command as input to <span class="docEmphasis">cut.</span> The first three
+      characters are printed.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec19">date—displays the date and time or sets the date</h3>
+<p class="docText"><br>
+[&nbsp;–u&nbsp;]&nbsp;[&nbsp;–a&nbsp;[&nbsp;–&nbsp;]&nbsp;sss.fff&nbsp;]&nbsp;[&nbsp;yymmddhhmm&nbsp;[&nbsp;.ss&nbsp;]&nbsp;]<br>
+[+format&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">Without arguments, the <span class="docEmphasis">date</span>
+command displays the date and time. If the command line argument starts with a
+plus sign, the rest of the argument is used to format the output. If a percent
+sign is used, the next character is a formatting character to extract a
+particular part of the date, such as just the year or weekday. To set the date.
+the command line argument is expressed in digits representing the year, month,
+day, hours, and minutes.</p>
+<h5 class="docExampleTitle">Example A.15 </h5>
+<pre>1   date +%T
+2   date +20%y
+3   date &quot;+It is now %m/%d /%y&quot;</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the time as <span class="docEmphasis">20:25:51</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays <span class="docEmphasis">2096.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays <span class="docEmphasis">It is now 07/25/96.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec20">diff—compares two files for differences diff [–bitw]
+[–c | –Cn</h3>
+<p class="docText">Compares two files and displays the differences on a
+line-by-line basis. Also displays commands that you would use with the
+<span class="docEmphasis">ed</span> editor to make changes.</p>
+<h5 class="docExampleTitle">Example A.16 </h5>
+<pre>diff file1 file2
+1c1
+&lt; hello there
+---
+&gt; Hello there.
+2a3
+&gt; I'm fine.</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Shows how each line of <span class="docEmphasis">file1</span>
+    and <span class="docEmphasis">file2</span> differs. The first file is
+    represented by the &lt; symbol, and the second file by the &gt; symbol. Each line
+    is preceded by an <span class="docEmphasis">ed</span> command indicating the
+    editing command that would be used to make the files the same.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec21">du—summarizes disk usage</h3>
+<p class="docText"><br>
+du&nbsp;[–arskod]&nbsp;[name&nbsp;...]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">du</span> command reports the
+number of 512-byte blocks contained in all files and (recursively) directories
+within each directory and file specified.</p>
+<h5 class="docExampleTitle">Example A.17 </h5>
+<pre>1   du -s /desktop
+2   du -a</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays a summary of the block usage for all the files
+      in <span class="docEmphasis">/desktop</span> and its subdirectories.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays block usage for each file in this directory
+      and subdirectories.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec22">echo—echoes arguments</h3>
+<p class="docText"><br>
+echo&nbsp;[&nbsp;argument&nbsp;]&nbsp;...<br>
+echo&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;argument&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">echo</span> writes its arguments
+separated by blanks and terminated by a newline on the standard output.</p>
+<p class="docText"><br>
+<span class="docEmphUl">System V echo options:</span><br>
+\b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backspace<br>
+\c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;suppress&nbsp;newline<br>
+\f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;feed<br>
+\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newline<br>
+\r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return<br>
+\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tab<br>
+\v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;tab<br>
+\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backslash<br>
+\0<span class="docEmphasis">n n</span>&nbsp;is&nbsp;a&nbsp;1,&nbsp;2,&nbsp;or&nbsp;3,&nbsp;octal&nbsp;value<br>
+&nbsp;</p>
+<h3 class="docSection1Title" id="app14lev1sec23">egrep—searches a file for a pattern using full
+regular expressions</h3>
+<p class="docText"><br>
+egrep&nbsp;[&nbsp;–bchilnsv&nbsp;]&nbsp;[&nbsp;–e&nbsp;special–expression&nbsp;][&nbsp;–f&nbsp;filename&nbsp;]<br>
+[&nbsp;strings&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">egrep</span> (expression grep)
+searches files for a pattern of characters and prints all lines that contain
+that pattern. <span class="docEmphasis">egrep</span> uses full regular
+expressions (expressions with string values that use the full set of
+alphanumeric and special characters) to match the patterns.</p>
+<h5 class="docExampleTitle">Example A.18 </h5>
+<pre>1   egrep 'Tom|John' datafile
+2   egrep '^ [A-Z]+' file</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Display all lines in <span class="docEmphasis">datafile</span>
+      containing the pattern either <span class="docEmphasis">Tom</span> or
+      <span class="docEmphasis">John.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Display al lines starting with one or more uppercase
+      letters.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec24">expr—evaluates arguments as an expression</h3>
+<p class="docText"><br>
+expr&nbsp;arguments<br>
+&nbsp;</p>
+<p class="docText">The arguments are taken as an expression. After evaluation,
+the result is written to the standard output. The terms of the expression must
+be separated by blanks. Characters special to the shell must be escaped. Used in
+Bourne shell scripts for performing simple arithmetic operations.</p>
+<h5 class="docExampleTitle">Example A.19 </h5>
+<pre>1   expr 5 + 4
+2   expr 5 \* 3
+3   num=0
+    num='expr $num + 1'</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the sum of <span class="docEmphasis">5 + 4</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints of result of <span class="docEmphasis">5 * 3.</span>
+      The asterisk is protected from shell expansion.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">After assigning <span class="docEmphasis">0</span> to
+      variable <span class="docEmphasis">num,</span> the expr command adds 1 to
+      <span class="docEmphasis">num</span> and result is assigned to
+      <span class="docEmphasis">num.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec25">fgrep—search a file for a character string</h3>
+<p class="docText"><br>
+fgrep&nbsp;[&nbsp;–bchilnsvx&nbsp;]&nbsp;[&nbsp;–e&nbsp;special&nbsp;string&nbsp;]<br>
+[&nbsp;–f&nbsp;filename&nbsp;]&nbsp;[&nbsp;strings&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">fgrep</span> (fast grep) searches
+files for a character string and prints all lines that contain that string.
+<span class="docEmphasis">fgrep</span> is different from
+<span class="docEmphasis">grep</span> and <span class="docEmphasis">egrep</span>
+because it interprets regular expression metacharacters as literals.</p>
+<h5 class="docExampleTitle">Example A.20 </h5>
+<pre>1   fgrep '***' *
+2   fgrep '[ ] * ? $' filex</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays any line containing three asterisks from each
+      file in the present directory. All characters are treated as themselves;
+      i.e., metacharacters are not special.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays any lines in <span class="docEmphasis">filex</span>
+      containing the string enclosed in quotes.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec26">file—determines the type of a file by looking at
+its contents</h3>
+<p class="docText"><br>
+file&nbsp;[[&nbsp;–f&nbsp;ffile&nbsp;]&nbsp;[&nbsp;–cl&nbsp;]&nbsp;[&nbsp;–m&nbsp;mfile&nbsp;]&nbsp;filename...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">file</span> performs a series of
+tests on each filename in an attempt to determine what it contains. If the
+contents of the file appear to be ASCII text, <span class="docEmphasis">file</span>
+examines the first 512 bytes and tries to guess its language.</p>
+<h5 class="docExampleTitle">Example A.21 </h5>
+<pre>1   file bin/ls
+    <span class="docEmphasis">/bin/ls:sparc pure dynamically linked executable</span>
+2   file go
+    <span class="docEmphasis">go:    executable shell script</span>
+3   file junk
+    <span class="docEmphasis">junk:  English text</span></pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">ls</span> is a binary file
+      dynamically linked when executed.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">go</span> is an executable
+      shell script.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">junk</span> is a file
+      containing ASCII text.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec27">find—finds files</h3>
+<p class="docText"><br>
+find&nbsp;path–name–list&nbsp;expression<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">find</span> recursively descends
+the directory hierarchy for each pathname in the pathname list (i.e., one or
+more pathnames) seeking files that match options. First argument is the path
+where the search starts. The rest of the arguments specify some criteria by
+which to find the files, such as name, size, owner, permissions, etc. Check the
+UNIX manual pages for different syntax.</p>
+<h5 class="docExampleTitle">Example A.22 </h5>
+<pre>1   find . -name \*.c -print
+2   find .. -type f -print
+3   find . -type d -print
+4   find / -size 0 - exec rm &quot;{}&quot; \;
+5   find ~ -perm 644 -print
+6   find . -type f -size +500c -atime +21 -ok rm -f &quot;{}&quot; \;
+7   find . -name core -print 2&gt; /dev/null (Bourne and Korn Shells)
+    ( find . -name core -print &gt; /dev/tty ) &gt;&amp; /dev/null ( C shell)
+8   find / -user ellie xdev -print
+9   find ~ -atime +31 -exec mv {} /old/{} \; -print</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the present working directory (dot), finds
+      all files ending in .<span class="docEmphasis">c</span> and prints the
+      full pathname of the file.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the parent directory (dot dot), finds all
+      files of type <span class="docEmphasis">file;</span> i.e., files that are
+      not directories.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the present directory (dot), finds all
+      directory files.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the root directory, finds all files of size
+      zero and removes them. The {} are used as a place holder for the name of
+      each file as it is found.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the user's home directory ~ (Korn and C
+      shells), finds all files that have permissions 644 (read and write for the
+      owner, and read permission for the group and others).</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the present working directory, finds files
+      that are over 500 bytes and have not been accessed in the last 21 days and
+      asks if it is okay to remove them.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starting at the present working directory, finds and
+      displays all files named <span class="docEmphasis">core</span> and sends
+      errors to <span class="docEmphasis">/dev/null,</span> the UNIX bit bucket.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints all files on the <span class="docEmphasis">root</span>
+      partition that belong to user <span class="docEmphasis">ellie.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Moves files that are older than 31 days into a
+      directory, <span class="docEmphasis">/old,</span> and prints the files as
+      it moves them.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec28">finger—displays information about local and remote
+users</h3>
+<p class="docText"><br>
+finger&nbsp;[&nbsp;–bfhilmpqsw&nbsp;]&nbsp;[&nbsp;username...&nbsp;]<br>
+finger&nbsp;[–l]&nbsp;username@hostname...<br>
+&nbsp;</p>
+<p class="docText">By default, the <span class="docEmphasis">finger</span>
+command displays information about each logged-in user, including login name,
+full name, terminal name (prepended with a * if write permission is denied),
+idle time, login time, and location if known.</p>
+<h3 class="docSection1Title" id="app14lev1sec29">fmt—simple text formatters</h3>
+<p class="docText"><br>
+fmt&nbsp;[&nbsp;–c&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;[&nbsp;–w&nbsp;width&nbsp;|&nbsp;–width&nbsp;]&nbsp;[&nbsp;inputfile...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">fmt</span> is a simple text
+formatter that fills and joins lines to produce output lines of (up to) the
+number of characters specified in the –w width option. The default width is 72.
+<span class="docEmphasis">fmt</span> concatenates the input files listed as
+arguments. If none are given, <span class="docEmphasis">fmt</span> formats text
+from the standard input.</p>
+<h5 class="docExampleTitle">Example A.23 </h5>
+<pre>fmt -c -w45 letter</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Formats <span class="docEmphasis">letter.</span> The
+    <span class="docEmphasis">–c</span> switch preserves the indentation of the
+    first two lines within the paragraph and aligns the left margin of each
+    subsequent line with that of the second line. The <span class="docEmphasis">
+    –w</span> switch fills the output line of up to 45 columns.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec30">fold—folds long lines</h3>
+<p class="docText"><br>
+fold&nbsp;[&nbsp;–w&nbsp;width&nbsp;|&nbsp;–width&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">Fold the contents of the specified filenames, or the standard
+input if no files are specified, breaking the lines to have maximum width. The
+default for width is 80. Width should be a multiple of 8 if tabs are present, or
+the tabs should be expanded.</p>
+<h3 class="docSection1Title" id="app14lev1sec31">ftp—file transfer program</h3>
+<p class="docText"><br>
+ftp&nbsp;[&nbsp;–dgintv&nbsp;]&nbsp;[&nbsp;hostname&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">ftp</span> command is the user
+interface to the Internet standard File Transfer Protocol (FTP).
+<span class="docEmphasis">ftp</span> transfers files to and from a remote
+network site. The file transfer program is not limited to UNIX machines.</p>
+<h5 class="docExampleTitle">Example A.24 </h5>
+<pre>1   ftp ftp.uu.net
+2   ftp -n 127.150.28.56</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">ftp</span> to the machine
+      <span class="docEmphasis">ftp.uu.net,</span> a large repository run by the
+      UUNET service that handles e-mail and net news for UNIX systems.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Opens a connection to the machine at 127.45.4.1 and
+      does not attempt to auto-login.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec32">getopt(s)—parses command line options</h3>
+<p class="docText">The <span class="docEmphasis">getopts</span> command
+supersedes <span class="docEmphasis">getopt.</span> <span class="docEmphasis">
+getopts</span> is used to break up options in command lines for easy parsing by
+shell procedures and to check for legal options.</p>
+<h3 class="docSection1Title" id="app14lev1sec33">grep—searches a file for a pattern</h3>
+<p class="docText"><br>
+grep&nbsp;[&nbsp;–bchilnsvw&nbsp;]&nbsp;limited–regular–expression<br>
+&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">grep</span> searches files for a
+pattern and prints all lines that contain that pattern. Uses regular expressions
+metacharacters to match the patterns. <span class="docEmphasis">egrep</span> has
+an extended set of metacharacters.</p>
+<h5 class="docExampleTitle">Example A.25 </h5>
+<pre>1   grep Tom file1 file2 file3
+2   grep -in '^tom savage' *</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">Grep</span> displays all
+      lines in <span class="docEmphasis">file1, file2,</span> and
+      <span class="docEmphasis">file3</span> that contain the pattern
+      <span class="docEmphasis">Tom.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">Grep</span> displays all
+      lines with line numbers from the files in the current working directory
+      that contain <span class="docEmphasis">tom savage</span> if
+      <span class="docEmphasis">tom savage</span> is at the beginning of the
+      line, ignoring case.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec34">groups—prints group membership of user</h3>
+<p class="docText"><br>
+groups&nbsp;[&nbsp;user...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The command <span class="docEmphasis">groups</span> prints on
+standard output the groups to which you or the optionally specified user belong.</p>
+<h3 class="docSection1Title" id="app14lev1sec35">id—prints the username, user ID, group name and
+group ID</h3>
+<p class="docText"><br>
+/usr/bin/id&nbsp;[&nbsp;–a&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">id</span> displays your user ID,
+username, group ID, and group name. If your real ID and your effective ID's do
+not match, both are printed.</p>
+<h3 class="docSection1Title" id="app14lev1sec36">jsh—the standard, job control shell</h3>
+<p class="docText"><br>
+jsh&nbsp;[&nbsp;–acefhiknprstuvx&nbsp;]&nbsp;[&nbsp;argument...]<br>
+&nbsp;</p>
+<p class="docText">The command <span class="docEmphasis">jsh</span> is an
+interface to the standard Bourne shell which provides all of the functionality
+of the Bourne shell and enables job control.</p>
+<h3 class="docSection1Title" id="app14lev1sec37">line—reads one line</h3>
+<p class="docText"><span class="docEmphasis">line</span> copies one line (up to
+a newline) from the standard input and writes it on the standard output. It
+returns an exit code of one on EOF and always prints at least a newline. It is
+often used within shell files to read from the user's terminal.</p>
+<h3 class="docSection1Title" id="app14lev1sec38">logname—gets the name of the user running the
+process</h3>
+<h3 class="docSection1Title" id="app14lev1sec39">lp—sends output to a printer (AT&amp;T)</h3>
+<p class="docText"><br>
+lp&nbsp;[&nbsp;–cmsw&nbsp;]&nbsp;[&nbsp;–ddest&nbsp;]&nbsp;[&nbsp;–number&nbsp;]&nbsp;[&nbsp;–ooption&nbsp;]&nbsp;[&nbsp;–ttitle&nbsp;]&nbsp;filename&nbsp;...<br>
+cancel&nbsp;[&nbsp;ids&nbsp;]&nbsp;[&nbsp;printers&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">lp, cancel</span> sends or cancels
+requests to a lineprinter.</p>
+<h5 class="docExampleTitle">Example A.26 </h5>
+<pre>1   lp -n5 filea fileb
+2   lp -dShakespeare filex</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Send five copies of <span class="docEmphasis">filea</span>
+      and <span class="docEmphasis">fileb</span> to the printer.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Specify <span class="docEmphasis">Shakespeare</span> as
+      the printer where <span class="docEmphasis">filex</span> will be printed.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec40">lpr—sends output to a printer (UCB)</h3>
+<p class="docText"><br>
+lpr&nbsp;[&nbsp;–Pprinter&nbsp;]&nbsp;[&nbsp;–#copies&nbsp;]&nbsp;[&nbsp;–Cclass&nbsp;]&nbsp;[&nbsp;–Jjob&nbsp;]<br>
+&nbsp;[&nbsp;–Ttitle&nbsp;]&nbsp;[&nbsp;–i&nbsp;[&nbsp;indent&nbsp;]&nbsp;]&nbsp;[&nbsp;–1234font&nbsp;]&nbsp;[&nbsp;–wcols&nbsp;]<br>
+&nbsp;[&nbsp;–r&nbsp;]&nbsp;[&nbsp;–m&nbsp;]&nbsp;[&nbsp;–h&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;[&nbsp;–filter–option&nbsp;]<br>
+&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">lpr</span> creates a printer job in
+a spooling area for subsequent printing as facilities become available. Each
+printer job consists of a control job and one or more data files.</p>
+<h5 class="docExampleTitle">Example A.27 </h5>
+<pre>1   lpr -#5 filea fileb
+2   lpr -PShakespeare filex</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Send five copies of <span class="docEmphasis">filea</span>
+      and <span class="docEmphasis">fileb</span> to the printer.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Specify Shakespeare as the printer where
+      <span class="docEmphasis">filex</span> will be printed.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec41">lpstat—print information about the status of the LP
+print service (AT&amp;T)</h3>
+<h3 class="docSection1Title" id="app14lev1sec42">lpq—print information about the status of the
+printer (UCB)</h3>
+<h3 class="docSection1Title" id="app14lev1sec43">ls—lists contents of directory</h3>
+<p class="docText"><br>
+ls&nbsp;[&nbsp;–abcCdfFgilLmnopqrRstux1&nbsp;]&nbsp;[&nbsp;names&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">For each directory argument, <span class="docEmphasis">ls</span>
+lists the contents of the directory; for each file argument,
+<span class="docEmphasis">ls</span> repeats its name and any other information
+requested. The output is sorted alphabetically by default. When no argument is
+given, the current directory is listed.</p>
+<h5 class="docExampleTitle">Example A.28 </h5>
+<pre>1   ls -alF
+2   ls -d a*
+3   ls -i</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The <span class="docEmphasis">–a</span> lists invisible
+      files (those files beginning with a dot), the <span class="docEmphasis">–l</span>
+      is a long listing showing attributes of the file, the
+      <span class="docEmphasis">–F</span> puts a slash at the end of directory
+      filenames, a * at the end of executable scriptnames, and an @ symbol at
+      the end of symbolically linked files.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">If the argument to the <span class="docEmphasis">–d</span>
+      switch is a directory, only the name of the directory is displayed, not
+      its contents.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The –i switch causes each filename to be preceded by
+      its inode number.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec44">mail—mail, rmail—read mail or send mail to users</h3>
+<p class="docText"><br>
+Sending&nbsp;mail<br>
+&nbsp;mail&nbsp;[&nbsp;–tw&nbsp;]&nbsp;[&nbsp;–m&nbsp;message_type&nbsp;]&nbsp;recipient...<br>
+&nbsp;rmail&nbsp;[&nbsp;–tw&nbsp;]&nbsp;[&nbsp;–m&nbsp;message_type&nbsp;]&nbsp;recipient...<br>
+Reading&nbsp;mail<br>
+&nbsp;mail&nbsp;[&nbsp;–ehpPqr&nbsp;]&nbsp;[&nbsp;–f&nbsp;filename&nbsp;]<br>
+Forwarding&nbsp;mail<br>
+&nbsp;mail&nbsp;–F&nbsp;recipient...<br>
+Debugging<br>
+&nbsp;mail&nbsp;[&nbsp;–x&nbsp;debug_level&nbsp;]&nbsp;[&nbsp;other_mail_options&nbsp;]&nbsp;recipient...<br>
+&nbsp;mail&nbsp;[&nbsp;–T&nbsp;mailsurr_file&nbsp;]&nbsp;recipient...<br>
+&nbsp;</p>
+<p class="docText">A recipient is usually a username recognized by
+<span class="docEmphasis">login.</span> When recipients are named, mail assumes
+a message is being sent. It reads from the standard input up to an end-of-file
+(Ctrl-D), or if reading from a terminal, until it reads a line consisting of
+just a period. When either of those indicators is received,
+<span class="docEmphasis">mail</span> adds the letter to the mailfile for each
+recipient.</p>
+<h3 class="docSection1Title" id="app14lev1sec45">mailx—interactive message processing system</h3>
+<p class="docText"><br>
+mailx&nbsp;[&nbsp;–deHiInNUvV&nbsp;]&nbsp;[&nbsp;–f&nbsp;[&nbsp;filename|+folder&nbsp;]]<br>
+&nbsp;[&nbsp;–T&nbsp;filename&nbsp;]&nbsp;[&nbsp;–u&nbsp;user&nbsp;]&nbsp;[&nbsp;recipient...&nbsp;]<br>
+mailx&nbsp;[&nbsp;–dFinUv&nbsp;]&nbsp;[&nbsp;–h&nbsp;number&nbsp;]&nbsp;[&nbsp;–r&nbsp;address&nbsp;][&nbsp;–s&nbsp;subject&nbsp;]&nbsp;recipient...<br>
+&nbsp;</p>
+<p class="docText">The mail utilities listed above provide an interactive
+interface for sending, receiving, and manipulating mail messages. Basic
+Networking Utilities must be installed for some of the features to work.
+Incoming mail is stored in a file called <span class="docEmphasis">mailbox,</span>
+and after it is read, is sent to a file called <span class="docEmphasis">mbox.</span></p>
+<h3 class="docSection1Title" id="app14lev1sec46">make—maintains, updates, and regenerates groups of
+related programs and files</h3>
+<p class="docText"><br>
+make&nbsp;[&nbsp;–f&nbsp;makefile&nbsp;]&nbsp;...&nbsp;[&nbsp;–d&nbsp;]&nbsp;[&nbsp;–dd&nbsp;]&nbsp;[&nbsp;–D&nbsp;]<br>
+[&nbsp;–DD&nbsp;]&nbsp;[&nbsp;–e&nbsp;]&nbsp;[&nbsp;–i&nbsp;]&nbsp;[&nbsp;–k&nbsp;]&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–p&nbsp;]&nbsp;[&nbsp;–P&nbsp;]<br>
+[&nbsp;–q&nbsp;]&nbsp;[&nbsp;–r&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;[&nbsp;–S&nbsp;]&nbsp;[&nbsp;–t&nbsp;]&nbsp;[&nbsp;target&nbsp;...&nbsp;]<br>
+[&nbsp;macro=value&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">make</span> updates files according
+to commands listed in a description file, and if the target file is newer than
+the dependency file of the same name, <span class="docEmphasis">make</span> will
+update the target file.</p>
+<h3 class="docSection1Title" id="app14lev1sec47">mesg—permits or denies messages resulting from the
+write command</h3>
+<p class="docText"><br>
+mesg&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–y&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">mesg</span> with argument
+<span class="docEmphasis">–n</span> forbids messages via
+<span class="docEmphasis">write</span> by revoking nonuser write permission on
+the user's terminal. <span class="docEmphasis">mesg</span> with argument
+<span class="docEmphasis">–y</span> reinstates permission. All by itself,
+<span class="docEmphasis">mesg</span> reports the current state without changing
+it.</p>
+<h3 class="docSection1Title" id="app14lev1sec48">mkdir—creates a directory</h3>
+<p class="docText"><br>
+mkdir&nbsp;[&nbsp;–p&nbsp;]&nbsp;dirname&nbsp;...<br>
+&nbsp;</p>
+<h3 class="docSection1Title" id="app14lev1sec49">more—browse or page through a text file</h3>
+<p class="docText"><br>
+more&nbsp;[&nbsp;–cdflrsuw&nbsp;]&nbsp;[&nbsp;–lines&nbsp;]&nbsp;[&nbsp;+linenumber&nbsp;]&nbsp;[&nbsp;+/pattern&nbsp;]<br>
+&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+page&nbsp;[&nbsp;–cdflrsuw&nbsp;]&nbsp;[&nbsp;–lines&nbsp;]&nbsp;[&nbsp;+linenumber&nbsp;]&nbsp;[&nbsp;+/pattern&nbsp;]<br>
+&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">more</span> is a filter that
+displays the contents of a text file on the terminal, one screenful at a time.
+It normally pauses after each screenful, and prints <span class="docEmphasis">
+—More—</span> at the bottom of the screen.</p>
+<h3 class="docSection1Title" id="app14lev1sec50">mv—move or rename files</h3>
+<p class="docText"><br>
+mv&nbsp;[&nbsp;–f&nbsp;]&nbsp;[&nbsp;–i&nbsp;]&nbsp;filename1&nbsp;[&nbsp;filename2&nbsp;...]&nbsp;target<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">mv</span> command moves a
+source filename to a target filename. The filename and the target may not have
+the same name. If <span class="docEmphasis">target</span> is not a directory,
+only one file may be specified before it; if it is a directory, more than one
+file may be specified. If <span class="docEmphasis">target</span> does not
+exist, <span class="docEmphasis">mv</span> creates a file named
+<span class="docEmphasis">target.</span> If <span class="docEmphasis">target</span>
+exists and is not a directory, its contents are overwritten. If
+<span class="docEmphasis">target</span> is a directory the file(s) are moved to
+that directory.</p>
+<h5 class="docExampleTitle">Example A.29 </h5>
+<pre>1   mv file1 newname
+2   mv -i test1 test2 train</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Renames <span class="docEmphasis">file1</span> to
+      <span class="docEmphasis">newname.</span> If <span class="docEmphasis">
+      newname</span> exists its contents are overwritten.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Moves files <span class="docEmphasis">test1</span> and
+      <span class="docEmphasis">test2</span> to the <span class="docEmphasis">
+      train</span> directory. The <span class="docEmphasis">–i</span> switch is
+      for interactive mode, meaning it asks before moving the files.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec51">nawk—pattern scanning and processing language</h3>
+<p class="docText"><br>
+nawk&nbsp;[&nbsp;–F&nbsp;re&nbsp;]&nbsp;[&nbsp;–v&nbsp;var=value&nbsp;]&nbsp;[&nbsp;'prog'&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+nawk&nbsp;[&nbsp;–F&nbsp;re&nbsp;]&nbsp;[&nbsp;–v&nbsp;var=value&nbsp;]&nbsp;[&nbsp;–f&nbsp;progfile&nbsp;][&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">nawk</span> scans each input
+filename for lines that match any of a set of patterns. The command string must
+be enclosed in single quotes (<tt>'</tt>) to protect it from the shell.
+<span class="docEmphasis">Awk</span> programs consist of a set of pattern/action
+statements used to filter specific information from a file, pipe, or
+<span class="docEmphasis">stdin.</span></p>
+<h3 class="docSection1Title" id="app14lev1sec52">newgrp—log in to a new group</h3>
+<p class="docText"><br>
+newgrp&nbsp;[–]&nbsp;[&nbsp;group&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">newgrp</span> logs a user into a
+new group by changing a user's real and effective group ID. The user remains
+logged in and the current directory is unchanged. The execution of
+<span class="docEmphasis">newgrp</span> always replaces the current shell with a
+new shell, even if the command terminates with an error (unknown group).</p>
+<h3 class="docSection1Title" id="app14lev1sec53">news—prints news items</h3>
+<p class="docText"><br>
+news&nbsp;[&nbsp;–a&nbsp;]&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;[&nbsp;items&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">news</span> is used to keep the
+user informed of current events. By convention, these events are described by
+files in the directory <span class="docEmphasis">/var/news.</span> When invoked
+without arguments, <span class="docEmphasis">news</span> prints the contents of
+all current files in <span class="docEmphasis">/var/news,</span> most recent
+first, with each preceded by an appropriate header.</p>
+<h3 class="docSection1Title" id="app14lev1sec54">nice—runs a command at low priority</h3>
+<p class="docText"><br>
+nice&nbsp;[&nbsp;–increment&nbsp;]&nbsp;command&nbsp;[&nbsp;arguments&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">/usr/bin/nice</span> executes a
+command with a lower CPU scheduling priority. The invoking process (generally
+the user's shell) must be in the time-sharing scheduling class. The command is
+executed in the time-sharing class. An increment of 10 is the default. The
+increment value must be in a range between 1 and 19, unless you are the
+superuser. Also a <span class="docEmphasis">csh</span> built-in.</p>
+<h3 class="docSection1Title" id="app14lev1sec55">nohup—makes commands immune to hangups and quits</h3>
+<p class="docText"><br>
+/usr/bin/nohup&nbsp;command&nbsp;[&nbsp;arguments&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">There are three distinct versions of
+<span class="docEmphasis">nohup.</span> <span class="docEmphasis">nohup</span>
+is built in to the C shell and is an executable program available in
+<span class="docEmphasis">/usr/bin/nohup</span> when using the Bourne shell. The
+Bourne shell version of <span class="docEmphasis">nohup</span> executes commands
+such that they are immune to <span class="docEmphasis">HUP</span> (hangup) and
+<span class="docEmphasis">TERM</span> (terminate) signals. If the standard
+output is a terminal, it is redirected to the file <span class="docEmphasis">
+nohup.out.</span> The standard error is redirected to follow the standard
+output. The priority is incremented by five. <span class="docEmphasis">nohup</span>
+should be invoked from the shell with &amp; in order to prevent it from responding
+to interrupts or input from the next user.</p>
+<h5 class="docExampleTitle">Example A.30 </h5>
+<pre>nohup lookup &amp;</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The <span class="docEmphasis">lookup</span> program will
+    run in the background and continue to run until it has completed, even if a
+    the user logs off. Any output generated goes to a file in the current
+    directory called <span class="docEmphasis">nohup.out.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec56">od—octal dump</h3>
+<p class="docText"><br>
+od&nbsp;[&nbsp;–bcCDdFfOoSsvXx&nbsp;]&nbsp;[&nbsp;filename&nbsp;]&nbsp;[&nbsp;[&nbsp;+&nbsp;]&nbsp;offset&nbsp;[&nbsp;.&nbsp;]&nbsp;[&nbsp;b&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">od</span> displays filename in one
+or more formats, as selected by the first argument. If the first argument is
+missing, <span class="docEmphasis">–o</span> is default; e.g., the file can be
+displayed in bytes octal, ASCII, decimal, hex, etc.</p>
+<h3 class="docSection1Title" id="app14lev1sec57">pack—pack, pcat, unpack—compresses and expands
+files</h3>
+<p class="docText"><br>
+pack&nbsp;[&nbsp;–&nbsp;]&nbsp;[&nbsp;–f&nbsp;]&nbsp;name&nbsp;...<br>
+pcat&nbsp;name&nbsp;...<br>
+unpack&nbsp;name&nbsp;...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">pack</span> compresses files.
+Wherever possible (and useful), each input file <span class="docEmphasis">name</span>
+is replaced by a packed file <span class="docEmphasis">name.z</span> with the
+same access modes, access and modified dates, and owner as those of
+<span class="docEmphasis">name.</span> Typically, text files are reduced to
+60–75% of their original size. <span class="docEmphasis">pcat</span> does for
+packed files what <span class="docEmphasis">cat</span> does for ordinary files,
+except that <span class="docEmphasis">pcat</span> cannot be used as a filter.
+The specified files are unpacked and written to the standard output. Thus, to
+view a packed file named <span class="docEmphasis">name.z,</span> use
+<span class="docEmphasis">pcat name.z</span> or just <span class="docEmphasis">
+pcat name.</span> <span class="docEmphasis">Unpack</span> expands files created
+by <span class="docEmphasis">pack.</span></p>
+<h3 class="docSection1Title" id="app14lev1sec58">passwd—changes the login password and password
+attributes</h3>
+<p class="docText"><br>
+passwd&nbsp;[&nbsp;name&nbsp;]<br>
+passwd&nbsp;[&nbsp;–d&nbsp;|&nbsp;–l&nbsp;]&nbsp;[&nbsp;–f&nbsp;]&nbsp;[&nbsp;–n&nbsp;min&nbsp;]&nbsp;[&nbsp;–w&nbsp;warn&nbsp;][&nbsp;–x&nbsp;max&nbsp;]&nbsp;name<br>
+passwd&nbsp;–s&nbsp;[&nbsp;–a&nbsp;]<br>
+passwd&nbsp;–s&nbsp;[&nbsp;name&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">passwd</span> command changes
+the password or lists password attributes associated with the user's login name.
+Additionally, privileged users may use <span class="docEmphasis">passwd</span>
+to install or change passwords and attributes associated with any login name.</p>
+<h3 class="docSection1Title" id="app14lev1sec59">paste—merges same lines of several files or
+subsequent lines of one file</h3>
+<p class="docText"><br>
+paste&nbsp;filename1&nbsp;filename2...<br>
+paste&nbsp;–d&nbsp;list&nbsp;filename1&nbsp;filename2...<br>
+paste&nbsp;–s&nbsp;[&nbsp;–d&nbsp;list&nbsp;]&nbsp;filename1&nbsp;filename2...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">paste</span> concatenates
+corresponding lines of the given input files <span class="docEmphasis">
+filename1,</span> <span class="docEmphasis">filename2,</span> etc. It treats
+each file as a column or columns of a table and pastes them together
+horizontally (see <span class="docEmphasis">cut</span>).</p>
+<h5 class="docExampleTitle">Example A.31 </h5>
+<pre>1   ls | paste - - -
+2   paste -s -d&quot;\t\n&quot; testfile1 testfile2
+3   paste file1 file2
+</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Files are listed in three columns and glued together
+      with a Tab.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Combines a pair of lines into a single line using a Tab
+      and newline as the delimiter, i.e., the first pair of lines are glued with
+      a Tab; the next pair are glued by a newline, the next pair by a Tab, etc.
+      The <span class="docEmphasis">–s</span> switch causes subsequent lines
+      from <span class="docEmphasis">testfile1</span> to be pasted first and
+      then subsequent lines from <span class="docEmphasis">testfile2.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">A line from <span class="docEmphasis">file1</span> is
+      pasted to a line from <span class="docEmphasis">file2,</span> glued
+      together by a Tab so that the file lines appear as two columns.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec60">pcat—(see <span class="docEmphasis">pack</span>)</h3>
+<h3 class="docSection1Title" id="app14lev1sec61">pg—displays files a page at a time</h3>
+<p class="docText"><br>
+pg&nbsp;[&nbsp;–number&nbsp;]&nbsp;[&nbsp;–p&nbsp;string&nbsp;]&nbsp;[&nbsp;–cefnrs&nbsp;]&nbsp;[&nbsp;+linenumber&nbsp;]<br>
+&nbsp;[&nbsp;+/pattern/&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">pg</span> command is a filter
+that allows you to page through filenames one screenful at a time on a terminal.
+If no filename is specified or if it encounters the file name –,
+<span class="docEmphasis">pg</span> reads from standard input. Each screenful is
+followed by a prompt. If the user types a Return, another page is displayed. It
+allows you to back up and review something that has already passed. (See
+<span class="docEmphasis">more.</span>)</p>
+<h3 class="docSection1Title" id="app14lev1sec62">pr—prints files</h3>
+<p class="docText"><br>
+pr&nbsp;[[–columns]&nbsp;[–wwidth]&nbsp;[–a]]&nbsp;[–eck]&nbsp;[–ick]&nbsp;[–drtfp]<br>
+&nbsp;&nbsp;&nbsp;[+page]&nbsp;[–nck]&nbsp;[–ooffset]&nbsp;[–llength]&nbsp;[–sseparator]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[–&nbsp;&nbsp;hheader]&nbsp;[–F]&nbsp;[filename&nbsp;...]<br>
+pr&nbsp;[[–m]&nbsp;[–wwidth]]&nbsp;[–eck]&nbsp;[–ick]&nbsp;[–drtfp]&nbsp;[+page]&nbsp;[–nck]<br>
+&nbsp;&nbsp;&nbsp;[–ooffset]&nbsp;[–llength]&nbsp;[–sseparator]&nbsp;[–hheader]&nbsp;[–F]<br>
+&nbsp;&nbsp;&nbsp;[filename1&nbsp;filename2&nbsp;...]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">pr</span> command formats and
+prints the contents of a file according to different format options. By default,
+the listing is sent to <span class="docEmphasis">stdout</span> and is separated
+into pages, each headed by the page number, the date and time that the file was
+last modified, and the name of the file. If no options are specified, the
+default file format is 66 lines with a five-line header and five-line trailer.</p>
+<h5 class="docExampleTitle">Example A.32 </h5>
+<pre>pr -2dh &quot;TITLE&quot; file1 file2</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints two columns double sided with header &quot;TITLE&quot; for
+    <span class="docEmphasis">file1</span> and <span class="docEmphasis">file2.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec63">ps—reports process status</h3>
+<p class="docText"><br>
+ps&nbsp;[&nbsp;–acdefjl&nbsp;]&nbsp;[&nbsp;–g&nbsp;grplist&nbsp;]&nbsp;[&nbsp;–p&nbsp;proclist&nbsp;]<br>
+&nbsp;[&nbsp;–s&nbsp;sidlist&nbsp;]&nbsp;[&nbsp;–t&nbsp;term&nbsp;]&nbsp;[&nbsp;–u&nbsp;uidlist&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">ps</span> prints information about
+active processes. Without options, <span class="docEmphasis">ps</span> prints
+information about processes associated with the controlling terminal. The output
+contains only the process ID, terminal identifier, cumulative execution time,
+and the command name. Otherwise, the information that is displayed is controlled
+by the options. The <span class="docEmphasis">ps</span> options are not the same
+for AT&amp;T and Berkeley type versions of UNIX.</p>
+<h5 class="docExampleTitle">Example A.33 </h5>
+<pre>1   ps -aux | grep '^linda'      <span class="docEmphasis">#  ucb</span>
+2   ps -ef | grep '^ *linda'     <span class="docEmphasis"># at&amp;t</span></pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints all processes running and pipes the output to
+      the <span class="docEmphasis">grep</span> program, and printing only those
+      processes owned by user <span class="docEmphasis">linda,</span> where
+      <span class="docEmphasis">linda</span> is at the beginning of each line. (UCB
+      version).</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Same as the first example, only the AT&amp;T version.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec64">pwd—displays the present working directory name</h3>
+<h3 class="docSection1Title" id="app14lev1sec65">rcp—remote file copy</h3>
+<p class="docText"><br>
+rcp&nbsp;[&nbsp;–p&nbsp;]&nbsp;filename1&nbsp;filename2<br>
+rcp&nbsp;[&nbsp;–pr&nbsp;]&nbsp;filename...directory<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">rcp</span> command copies files
+between machines in the following form:</p>
+<p class="docText"><br>
+remothostname:path<br>
+user@hostname:file<br>
+user@hostname.domainname:file<br>
+&nbsp;</p>
+<h5 class="docExampleTitle">Example A.34 </h5>
+<pre>1   rcp dolphin:filename /tmp/newfilename
+2   rcp filename broncos:newfilename</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Copy <span class="docEmphasis">filename</span> from
+      remote machine <span class="docEmphasis">dolphin</span> to
+      <span class="docEmphasis">/tmp/newfilename</span> on this machine.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Copy <span class="docEmphasis">filename</span> from
+      this machine to remote machine <span class="docEmphasis">broncos</span>
+      and name it <span class="docEmphasis">newfilename.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec66">rlogin—remote login</h3>
+<p class="docText"><br>
+rlogin&nbsp;[&nbsp;–L&nbsp;]&nbsp;[&nbsp;–8&nbsp;]&nbsp;[&nbsp;–ec&nbsp;]&nbsp;[&nbsp;–l&nbsp;username&nbsp;]&nbsp;hostname<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">rlogin</span> establishes a remote
+login session from your terminal to the remote machine named
+<span class="docEmphasis">hostname.</span> Hostnames are listed in the host's
+database, which may be contained in the <span class="docEmphasis">/etc/hosts</span>
+file, the Network Information Service (NIS) hosts map, the Internet domain name
+server, or a combination of these. Each host has one official name (the first
+name in the database entry), and optionally one or more nicknames. Either
+official hostnames or nicknames may be specified in <span class="docEmphasis">
+hostname.</span> A list of trusted hostnames can be stored in the machine's file
+<span class="docEmphasis">/etc/hosts.equiv.</span></p>
+<h3 class="docSection1Title" id="app14lev1sec67">rm—removes files from directories</h3>
+<p class="docText"><br>
+rm&nbsp;[–f]&nbsp;[–i]&nbsp;filename...<br>
+rm&nbsp;–r&nbsp;[–f]&nbsp;[–i]&nbsp;dirname...[filename...]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">rm</span> removes the entries for
+one or more files from a directory if the file has write permission. If filename
+is a symbolic link, the link will be removed, but the file or directory to which
+it refers will not be deleted. A user does not need write permission on a
+symbolic link to remove it, provided they have write permissions in the
+directory.</p>
+<h5 class="docExampleTitle">Example A.35 </h5>
+<pre>1   rm file1 file2
+2   rm -i *
+3   rm -rf dir</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Removes <span class="docEmphasis">file1</span> and
+      <span class="docEmphasis">file2</span> from the directory.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Removes all files in the present working directory, but
+      asks first if it is okay.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Recursively removes all files and directories below
+      <span class="docEmphasis">dir</span> and ignores error messages.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec68">rmdir—removes a directory</h3>
+<p class="docText"><br>
+rmdir&nbsp;[–p]&nbsp;[–s]&nbsp;dirname...<br>
+&nbsp;</p>
+<p class="docText">Removes a directory if it is empty. With
+<span class="docEmphasis">–p,</span> parent directories are also removed.</p>
+<h3 class="docSection1Title" id="app14lev1sec69">rsh—starts a remote shell</h3>
+<p class="docText"><br>
+rsh&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–l&nbsp;username&nbsp;]&nbsp;hostname&nbsp;command<br>
+rsh&nbsp;hostname&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–l&nbsp;username&nbsp;]&nbsp;command<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">rsh</span> connects to the
+specified hostname and executes the specified command. <span class="docEmphasis">
+rsh</span> copies its standard input to the remote command, the standard output
+of the remote command to its standard output, and the standard error of the
+remote command to its standard error. Interrupt, quit, and terminate signals are
+propagated to the remote command; <span class="docEmphasis">rsh</span> normally
+terminates when the remote command does. If a command is not given, then
+<span class="docEmphasis">rsh</span> logs you on to the remote host using
+<span class="docEmphasis">rlogin.</span></p>
+<h5 class="docExampleTitle">Example A.36 </h5>
+<pre>1   rsh bluebird ps -ef
+2   rsh -l john owl ls; echo $PATH;cat .profile</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Connect to machine <span class="docEmphasis">bluebird</span>
+      and display all processes running on that machine.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Go to the remote machine <span class="docEmphasis">owl</span>
+      as user <span class="docEmphasis">john</span> and execute all three
+      commands.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec70">ruptime—shows the host status of local machines</h3>
+<p class="docText"><br>
+ruptime&nbsp;[&nbsp;–alrtu&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">ruptime</span> gives a status line
+like uptime for each machine on the local network; these are formed from packets
+broadcast by each host on the network once a minute. Machines for which no
+status report has been received for five minutes are shown as being down.
+Normally, the listing is sorted by host name, but this order can be changed by
+specifying one of <span class="docEmphasis">ruptime</span>'s options.</p>
+<h3 class="docSection1Title" id="app14lev1sec71">rwho—who is logged in on local machines</h3>
+<p class="docText"><br>
+rwho&nbsp;[&nbsp;–a&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">rwho</span> command produces
+output similar to <span class="docEmphasis">who,</span> but for all machines on
+your network. However, it does not work through gateways and host must have the
+directory <span class="docEmphasis">/var/spool/rwho</span> as well as the
+<span class="docEmphasis">rwho</span> daemon running. If no report has been
+received from a machine for five minutes, <span class="docEmphasis">rwho</span>
+assumes the machine is down, and does not report users last known to be logged
+into that machine. If a user has not typed to the system for a minute or more,
+<span class="docEmphasis">rwho</span> reports this idle time. If a user has not
+typed to the system for an hour or more, the user is omitted from the output of
+<span class="docEmphasis">rwho,</span> unless the <span class="docEmphasis">–a</span>
+flag is given.</p>
+<h3 class="docSection1Title" id="app14lev1sec72">script—creates a typescript of a terminal session</h3>
+<p class="docText"><br>
+script&nbsp;[&nbsp;–a&nbsp;]&nbsp;[&nbsp;filename&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">script</span> makes a typescript of
+everything printed on your terminal. The typescript is written to a filename. If
+no filename is given, the typescript is saved in the file called
+<span class="docEmphasis">typescript.</span> The script ends when the shell
+exits or when Ctrl-D is typed.</p>
+<h5 class="docExampleTitle">Example A.37 </h5>
+<pre>1   script
+2   script myfile</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starts up a script session in a new shell. Everything
+      displayed on the terminal is stored in a file called
+      <span class="docEmphasis">typescript.</span> Must press ^d or exit to end
+      the session.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Starts up a script session in a new shell, storing
+      everything displayed on the terminal in <span class="docEmphasis">myfile.</span>
+      Must press ^d or exit to end the session.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec73">sed—streamlined editor</h3>
+<p class="docText"><br>
+sed&nbsp;[–n]&nbsp;[–e&nbsp;script]&nbsp;[–f&nbsp;sfilename]&nbsp;[filename&nbsp;...]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">sed</span> copies the named
+<span class="docEmphasis">filename</span> (standard input default) to the
+standard output, edited according to a script of command. Does not change the
+original file.</p>
+<h5 class="docExampleTitle">Example A.38 </h5>
+<pre>1   sed 's/Elizabeth/Lizzy/g' file
+2   sed '/Dork/d' file
+3   sed -n '15,20p' file</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Substitute all occurrences of <span class="docEmphasis">
+      Elizabeth</span> with <span class="docEmphasis">Lizzy</span> in file and
+      display on the terminal screen.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Remove all lines containing <span class="docEmphasis">
+      Dork</span> and print the remaining lines on the screen.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Print only lines 15 through 20.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec74">size—prints section sizes in bytes of object files</h3>
+<p class="docText"><br>
+size&nbsp;[&nbsp;–f&nbsp;]&nbsp;[&nbsp;–F&nbsp;]&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;–o&nbsp;]&nbsp;[&nbsp;–V&nbsp;]&nbsp;[&nbsp;–x&nbsp;]&nbsp;filename...<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">size</span> command produces
+segment or section size information in bytes for each loaded section in
+<span class="docEmphasis">ELF</span> or <span class="docEmphasis">COFF</span>
+object files. <span class="docEmphasis">size</span> prints out the size of the
+text, data, and <span class="docEmphasis">bss</span> (uninitialized data)
+segments (or sections) and their total.</p>
+<h3 class="docSection1Title" id="app14lev1sec75">sleep—suspends execution for some number of seconds</h3>
+<p class="docText"><br>
+sleep&nbsp;time<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">sleep</span> suspends execution for
+time seconds. It is used to execute a command after a certain amount of time.</p>
+<h5 class="docExampleTitle">Example A.39 </h5>
+<pre>1   (sleep 105; command)&amp;
+2   (In Script)
+    while true
+    do
+       command
+       sleep 60
+    done</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">After 105 seconds, command is executed. Prompt returns
+      immediately.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Enters loop; executes command and sleeps for a minute
+      before entering the loop again.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app01lev1sec76">sort—sort and/or merge files</h3>
+<p class="docText"><br>
+sort&nbsp;[&nbsp;–cmu&nbsp;]&nbsp;[&nbsp;–ooutput&nbsp;]&nbsp;[&nbsp;–T&nbsp;directory&nbsp;]&nbsp;[&nbsp;–ykmem&nbsp;]<br>
+&nbsp;[&nbsp;–dfiMnr&nbsp;]&nbsp;[&nbsp;–btx&nbsp;]&nbsp;[&nbsp;+pos1&nbsp;[&nbsp;–pos2&nbsp;]]&nbsp;[&nbsp;filename...]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">sort</span> command sorts
+(ASCII) lines of all the named files together and writes the result on the
+standard output. Comparisons are based on one or more sort keys extracted from
+each line of input. By default, there is one sort key, the entire input line,
+and ordering is lexicographic by bytes in machine collating sequence.</p>
+<h5 class="docExampleTitle">Example A.40 </h5>
+<pre>1   sort filename
+2   sort -u filename
+3   sort -r filename
+4   sort +1 -2 filename
+5   sort -2n filename
+6   sort -t: +2n -3 filename
+7   sort -f filename
+8   sort -b +1 filename</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts the lines alphabetically.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts out duplicate entries.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts in reverse.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts starting on field 1 (fields are separated by
+      whitespace and start at field 0), stopping at field 2 rather than sorting
+      to the end of the line.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts the third field numerically.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts numercially starting at field 2 and stopping at
+      field 3, with the colon designated as the field separator (
+      <span class="docEmphasis">–t:</span> ).</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts folding in upper and lowercase letters.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sorts starting at field 1, removing leading blanks.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec76">spell—finds spelling errors</h3>
+<p class="docText"><br>
+spell&nbsp;[&nbsp;–blvx&nbsp;]&nbsp;[&nbsp;–d&nbsp;hlist&nbsp;]&nbsp;[&nbsp;–s&nbsp;hstop&nbsp;]&nbsp;[&nbsp;+local_file&nbsp;]&nbsp;[&nbsp;filename]...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">spell</span> collects words from
+the named filenames and looks them up in a spelling list. Words that neither
+occur among nor are derivable from (by applying certain inflections, prefixes,
+and/or suffixes) words in the spelling list are printed on the standard output.
+If no filenames are named, words are collected from the standard input.</p>
+<h3 class="docSection1Title" id="app14lev1sec77">split—splits a file into pieces</h3>
+<p class="docText"><br>
+split&nbsp;[&nbsp;–n&nbsp;]&nbsp;[&nbsp;filename&nbsp;[&nbsp;name&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">split</span> reads
+<span class="docEmphasis">filename</span> and writes it in
+<span class="docEmphasis">n</span> line pieces into a set of output files. The
+first output file is named with <span class="docEmphasis">aa</span> appended,
+and so on lexicographically, up to <span class="docEmphasis">zz</span> (a
+maximum of 676 files). The maximum length of <span class="docEmphasis">name</span>
+is 2 characters less than the maximum filename length allowed by the filesystem.
+See <span class="docEmphasis">statvfs.</span> If no output name is given,
+<span class="docEmphasis">x</span> is used as the default (output files will be
+called <span class="docEmphasis">xaa,</span> <span class="docEmphasis">xab,</span>
+and so forth).</p>
+<h5 class="docExampleTitle">Example A.41 </h5>
+<pre>1   split -500 filea
+2   split -1000 fileb out</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Splits <span class="docEmphasis">filea</span> into 500
+      line files. Files are named <span class="docEmphasis">xaa,</span>
+      <span class="docEmphasis">xab,</span> <span class="docEmphasis">xac,</span>
+      etc.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Splits <span class="docEmphasis">fileb</span> into 1000
+      line files named <span class="docEmphasis">out.aa,</span>
+      <span class="docEmphasis">out.ab,</span> etc.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec78">strings—finds any printable strings in an object or
+binary file</h3>
+<p class="docText"><br>
+strings&nbsp;[&nbsp;–a&nbsp;]&nbsp;[&nbsp;–o&nbsp;]&nbsp;[&nbsp;–number&nbsp;]&nbsp;[&nbsp;filename...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">strings</span> command looks
+for ASCII strings in a binary file. A string is any sequence of four or more
+printing characters ending with a newline or a null character.
+<span class="docEmphasis">strings</span> is useful for identifying random object
+files and many other things.</p>
+<h5 class="docExampleTitle">Example A.42 </h5>
+<pre>strings /bin/nawk | head -2</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints any ASCII text in the first two lines of the
+    binary executable <span class="docEmphasis">/bin/nawk.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec79">stty—sets the options for a terminal</h3>
+<p class="docText"><br>
+stty&nbsp;[&nbsp;–a&nbsp;]&nbsp;[&nbsp;–g&nbsp;]&nbsp;[&nbsp;modes&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">stty</span> sets certain terminal
+I/O options for the device that is the current standard input; without
+arguments, it reports the settings of certain options.</p>
+<h5 class="docExampleTitle">Example A.43 </h5>
+<pre>1   stty erase &lt;Press backspace key&gt; or ^h
+2   stty -echo; read secretword; stty echo
+3   stty -a (AT&amp;T) or stty -everything (BSD)</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sets the backspace key to erase.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Turns off echoing; waits for user input; turns echoing
+      back on.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Lists all possible options to <span class="docEmphasis">
+      stty.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec80">su—become superuser or another user</h3>
+<p class="docText"><br>
+su&nbsp;[&nbsp;–&nbsp;]&nbsp;[&nbsp;username&nbsp;[&nbsp;arg&nbsp;...&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">su</span> allows one to become
+another user without logging off. The default username is
+<span class="docEmphasis">root</span> (superuser). To use
+<span class="docEmphasis">su,</span> the appropriate password must be supplied
+(unless the invoker is already root). If the password is correct,
+<span class="docEmphasis">su</span> creates a new shell process that has the
+real and effective user ID, group IDs, and supplementary group list set to those
+of the specified username. The new shell will be the shell specified in the
+shell field of username's password file entry. If no shell is specified,
+<span class="docEmphasis">sh</span> (Bourne shell) is used. To return to normal
+user ID privileges, type Ctrl-D to exit the new shell. The – option specifies a
+complete login.</p>
+<h3 class="docSection1Title" id="app14lev1sec81">sum—calculates a checksum for a file</h3>
+<h3 class="docSection1Title" id="app14lev1sec82">sync—updates the superblock and sends changed
+blocks to disk</h3>
+<h3 class="docSection1Title" id="app14lev1sec83">tabs—set tab stops on a terminal</h3>
+<h3 class="docSection1Title" id="app14lev1sec84">tail—displays the tail end of a file.</h3>
+<p class="docText"><br>
+tail&nbsp;+[–number&nbsp;[&nbsp;lbc&nbsp;]&nbsp;[&nbsp;f&nbsp;]&nbsp;[&nbsp;filename&nbsp;]<br>
+tail&nbsp;+[–number&nbsp;[&nbsp;l&nbsp;]&nbsp;[&nbsp;rf&nbsp;]&nbsp;[&nbsp;filename&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">When a plus sign precedes the number,
+<span class="docEmphasis">tail</span> displays blocks, characters, or lines
+counting from the beginning of the file. If a hyphen precedes the number,
+<span class="docEmphasis">tail</span> counts from the end of the file.</p>
+<h5 class="docExampleTitle">Example A.44 </h5>
+<pre>1   tail +50 filex
+2   tail -20 filex
+3   tail filex</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays contents of <span class="docEmphasis">filex</span>
+      starting at line 50.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the last 20 lines of <span class="docEmphasis">
+      filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the last 10 lines of <span class="docEmphasis">
+      filex.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec85">talk—allows you to talk to another user</h3>
+<p class="docText"><br>
+talk&nbsp;username&nbsp;[&nbsp;ttyname&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">talk</span> is a visual
+communications program that copies lines from your terminal to that of another
+user.</p>
+<h5 class="docExampleTitle">Example A.45 </h5>
+<pre>talk joe@cowboys</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Opens a request to talk to user <span class="docEmphasis">
+    joe</span> on a machine called <span class="docEmphasis">cowboys.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec86">tar—stores and retrieves files from an archive
+file, normally a tape device</h3>
+<p class="docText"><br>
+tar&nbsp;[&nbsp;–&nbsp;]&nbsp;c|r|t|u|x&nbsp;[&nbsp;bBefFhilmopvwX0134778&nbsp;]&nbsp;[&nbsp;tarfile&nbsp;]<br>
+[&nbsp;blocksize&nbsp;]&nbsp;[&nbsp;exclude–file&nbsp;]&nbsp;[&nbsp;–I&nbsp;include–file&nbsp;]<br>
+filename1&nbsp;filename2&nbsp;…&nbsp;–C&nbsp;directory&nbsp;filenameN&nbsp;…<br>
+&nbsp;</p>
+<h5 class="docExampleTitle">Example A.46 </h5>
+<pre>1   tar cvf /dev/diskette
+2   tar tvf /dev/fd0
+3   tar xvf /dev/fd0</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sends all files under the present working directory to
+      tape at device <span class="docEmphasis">/dev/diskette,</span> and prints
+      the files that are being sent.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the table of contents of what is on tape
+      device <span class="docEmphasis">/dev/fd0.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Extracts all files from tape and prints which files
+      were extracted.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec87">tee—replicates the standard output</h3>
+<p class="docText"><br>
+tee&nbsp;[&nbsp;–ai&nbsp;]&nbsp;[&nbsp;filename&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">tee</span> copies the standard
+input to the standard output and one or more files, as in
+<span class="docEmphasis">ls|tee outfile.</span> Output goes to screen and to
+<span class="docEmphasis">outfile.</span></p>
+<h5 class="docExampleTitle">Example A.47 </h5>
+<pre>date | tee nowfile</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The output of the <span class="docEmphasis">date</span>
+    command is displayed on the screen and also stored in
+    <span class="docEmphasis">nowfile.</span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec88">telnet—communicates with a remote host</h3>
+<h5 class="docExampleTitle">Example A.48 </h5>
+<pre>telnet necom.com</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Opens a session with the remote host necom.com</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec89">test—evaluates an expression</h3>
+<p class="docText"><span class="docEmphasis">test</span> evaluates an expression
+and returns an exit status indicating that the expression is either true (zero)
+or false (not zero). Used primarily by Bourne and Korn shell for string,
+numeric, and file testing. The C shell has most of the tests built-in.</p>
+<h5 class="docExampleTitle">Example A.49 </h5>
+<pre>1   test 5 gt 6
+2   echo $? ( Bourne and Korn Shells)
+    (Output is 1, meaning the result of the test is not true.)</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The <span class="docEmphasis">test</span> command
+      performs an integer test to see if 5 is greater than 6.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The $? variable contains the exit status of the last
+      command. If a nonzero status is reported, the test results are not true;
+      if the return status is zero, the the test result is true.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec90">time—displays a summary of time used by this shell
+and its children</h3>
+<h3 class="docSection1Title" id="app14lev1sec91">timex—times a command; reports process data and
+system activity</h3>
+<p class="docText"><br>
+timex&nbsp;[&nbsp;–o&nbsp;]&nbsp;[&nbsp;–p&nbsp;[&nbsp;–fhkmrt&nbsp;]&nbsp;]&nbsp;[&nbsp;–s&nbsp;]&nbsp;command<br>
+&nbsp;</p>
+<p class="docText">The given command is executed; the elapsed time, user time,
+and system time spent in execution are reported in seconds. Optionally, process
+accounting data for the command and all its children can be listed or
+summarized, and total system activity during the execution interval can be
+reported. The output of <span class="docEmphasis">timex</span> is written on
+standard error.</p>
+<h3 class="docSection1Title" id="app14lev1sec92">touch—updates access time and/or modification time
+of a file</h3>
+<p class="docText"><br>
+touch&nbsp;[&nbsp;–amc&nbsp;]&nbsp;[&nbsp;mmddhhmm&nbsp;[&nbsp;yy&nbsp;]&nbsp;]&nbsp;filename...<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">touch</span> causes the access and
+modification times of each argument to be updated. The filename is created if it
+does not exist. If no time is specified the current time is used.</p>
+<h5 class="docExampleTitle">Example A.50 </h5>
+<pre>touch a b c</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Three files, <span class="docEmphasis">a,</span>
+    <span class="docEmphasis">b,</span> and <span class="docEmphasis">c</span>
+    are created. If any of them already exist, the modification time-stamp on
+    the files is updated.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec93">tput—initializes a terminal or queries the
+<span class="docEmphasis">terminfo</span> database</h3>
+<p class="docText"><br>
+tput&nbsp;[&nbsp;–Ttype&nbsp;]&nbsp;capname&nbsp;[&nbsp;parms...]<br>
+tput&nbsp;[&nbsp;–Ttype&nbsp;]&nbsp;init<br>
+tput&nbsp;[&nbsp;–Ttype&nbsp;]&nbsp;reset<br>
+tput&nbsp;[&nbsp;–Ttype&nbsp;]&nbsp;longname<br>
+tput&nbsp;–S&nbsp;&lt;&lt;<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">tput</span> uses the
+<span class="docEmphasis">terminfo</span> database to make the values of
+terminal-dependent capabilities and information available to the shell (see
+<span class="docEmphasis">sh</span>), to initialize or reset the terminal, or
+return the long name of the requested terminal type.</p>
+<h5 class="docExampleTitle">Example A.51 </h5>
+<pre>1   tput longname
+2   bold='tput smso'
+    unbold='tput rmso'
+    echo &quot;${bold}Enter your id: ${offbold}\c&quot;</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays a long name for the terminal from the
+      <span class="docEmphasis">terminfo</span> database.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Sets the shell variable <span class="docEmphasis">bold</span>
+      to turn on the highlighting of displayed text. Then sets the shell
+      variable <span class="docEmphasis">unbold</span> to return to normal text
+      display. The line <span class="docEmphasis">Enter your id:</span> is
+      highlighted in black with white letters. Further text is displayed
+      normally.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec94">tr—translates characters</h3>
+<p class="docText"><br>
+tr&nbsp;[&nbsp;–cds&nbsp;]&nbsp;[&nbsp;string1&nbsp;[&nbsp;string2&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">tr</span> copies the standard input
+to the standard output with substitution or deletion of selected characters.
+Input characters found in <span class="docEmphasis">string1</span> are mapped
+into the corresponding characters of <span class="docEmphasis">string2.</span>
+The forward slash can be used with an octal digit to represent the ASCII code.
+When <span class="docEmphasis">string2</span> (with any repetitions of
+characters) contains fewer characters than <span class="docEmphasis">string1,</span>
+characters in <span class="docEmphasis">string1</span> with no corresponding
+character in <span class="docEmphasis">string2</span> are not translated. Octal
+values for characters may be used when preceded with a backslash:</p>
+<p class="docText"><br>
+\11&nbsp;&nbsp;&nbsp;Tab<br>
+\12&nbsp;&nbsp;&nbsp;Newline<br>
+\042&nbsp;&nbsp;Single&nbsp;quote<br>
+\047&nbsp;&nbsp;Double&nbsp;quote<br>
+&nbsp;</p>
+<h5 class="docExampleTitle">Example A.52 </h5>
+<pre>1   tr 'A' 'B' &lt; filex
+2   tr '[A-Z]' [a-z]' &lt; filex
+3   tr -d ' ' &lt; filex
+4   tr -s '\11' '\11' &lt; filex
+5   tr -s ':' ' ' &lt; filex
+6   tr '\047' '\042'</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Translates <span class="docEmphasis">A</span>s to
+      <span class="docEmphasis">B</span>s in <span class="docEmphasis">filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Translates all uppercase letters to lowercase letters.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Deletes all spaces from <span class="docEmphasis">filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Replaces (squeezes) multiple tabs with single tabs in
+      <span class="docEmphasis">filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Squeezes multiple colons into single spaces in
+      <span class="docEmphasis">filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Translates double quotes to single quotes in text
+      coming from standard input.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec95">true—provide successful exit status</h3>
+<p class="docText"><span class="docEmphasis">true</span> does nothing,
+successfully, meaning that it always returns a zero exit status, indicating
+success. Used in Bourne and Korn shell programs as a command to start an
+infinite loop.</p>
+<p class="docText"><br>
+while&nbsp;true<br>
+do<br>
+&nbsp;command<br>
+done<br>
+&nbsp;</p>
+<h3 class="docSection1Title" id="app14lev1sec96">tsort —topological sort</h3>
+<p class="docText"><br>
+/usr/ccs/bin/tsort&nbsp;[filename]<br>
+&nbsp;</p>
+<p class="docText">The <span class="docEmphasis">tsort</span> command produces,
+on the standard output, an ordered list of items consistent with a partial
+ordering of items mentioned in the input filename. If no filename is specified,
+the standard input is understood. The input consists of pairs of items (nonempty
+strings) separated by blanks. Pairs of different items indicate ordering. Pairs
+of identical items indicate presence, but not ordering.<br>&nbsp;</p>
+
+<h3 class="docSection1Title" id="app14lev1sec97">tty—gets the name of the terminal</h3>
+<p class="docText"><br>
+tty&nbsp;[&nbsp;–l&nbsp;]&nbsp;[&nbsp;–s&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">tty</span> prints the path name of
+the user's terminal.</p>
+<h3 class="docSection1Title" id="app14lev1sec98">umask—sets file-creation mode mask for permissions</h3>
+<p class="docText"><br>
+umask&nbsp;[&nbsp;ooo&nbsp;]<br>
+&nbsp;</p>
+<p class="docText">The user file-creation mode mask is set to
+<span class="docEmphasis">000.</span> The three octal digits refer to
+read/write/execute permissions for owner, group, and other, respectively. The
+value of each specified digit is subtracted from the corresponding ''digit''
+specified by the system for the creation of a file. For example,
+<span class="docEmphasis">umask</span> <span class="docEmphasis">022</span>
+removes write permission for group and other (files normally created with mode
+777 become mode 755; files created with mode 666 become mode 644). If
+<span class="docEmphasis">000</span> is omitted, the current value of the mask
+is printed. <span class="docEmphasis">umask</span> is recognized and executed by
+the shell.</p>
+<h5 class="docExampleTitle">Example A.53 </h5>
+<pre>1   umask
+2   umask 027</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the current file permission mask.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The directory permissions, 777, minus the
+      <span class="docEmphasis">umask</span> 027 is 750. The file permissions,
+      666, minus the <span class="docEmphasis">umask</span> 027 is 640. When
+      created, directories and files will be assigned the permissions created by
+      <span class="docEmphasis">umask.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec99">uname—prints name of current machine</h3>
+<p class="docText"><br>
+uname&nbsp;[&nbsp;–amnprsv&nbsp;]<br>
+uname&nbsp;[&nbsp;–S&nbsp;system_name&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">uname</span> prints information
+about the current system on the standard output. If no options are specified,
+<span class="docEmphasis">uname</span> prints the current operating system's
+name. The options print selected information returned by
+<span class="docEmphasis">uname</span> and/or <span class="docEmphasis">sysinfo.</span></p>
+<h5 class="docExampleTitle">Example A.54 </h5>
+<pre>1   uname -n
+2   uname -a</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the name of the host machine.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the machine hardware name, network nodename,
+      operating system release number, the operating system name, and the
+      operating system version—same as <span class="docEmphasis">–m,</span>
+      <span class="docEmphasis">–n,</span> <span class="docEmphasis">–r,</span>
+      <span class="docEmphasis">–s,</span> and <span class="docEmphasis">–v.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec100">uncompress—restores files to their original state
+after they have been compressed using the compress command</h3>
+<p class="docText"><br>
+uncompress&nbsp;[&nbsp;–cFv&nbsp;]&nbsp;[&nbsp;file&nbsp;.&nbsp;.&nbsp;.&nbsp;]<br>
+&nbsp;</p>
+<h5 class="docExampleTitle">Example A.55 </h5>
+<pre>uncompress file.Z</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Restore <span class="docEmphasis">file.Z</span> back to
+    its original state; i.e., what it was before being compressed.</td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec101">uniq—reports on duplicate lines in a file</h3>
+<p class="docText"><br>
+uniq&nbsp;[&nbsp;[&nbsp;–u&nbsp;]&nbsp;[&nbsp;–d&nbsp;]&nbsp;[&nbsp;–c&nbsp;]&nbsp;[&nbsp;+n&nbsp;]&nbsp;[&nbsp;–n&nbsp;]&nbsp;]&nbsp;[&nbsp;input&nbsp;[&nbsp;output&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">uniq</span> reads the input file,
+comparing adjacent lines. In the normal case, the second and succeeding copies
+of repeated lines are removed; the remainder is written on the output file.
+Input and output should always be different.</p>
+<h5 class="docExampleTitle">Example A.56 </h5>
+<pre>1   uniq file1 file2
+2   uniq -d -2 file3</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Removes duplicate adjacent lines from
+      <span class="docEmphasis">file1</span> and puts output in
+      <span class="docEmphasis">file2.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Displays the duplicate lines where the duplicate starts
+      at third field.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec102">units—converts quantities expressed in standard
+scales to other scales</h3>
+<p class="docText"><span class="docEmphasis">units</span> converts quantities
+expressed in various standard scales to their equivalents in other scales. It
+works interactively in this fashion:</p>
+<p class="docText"><br>
+You&nbsp;have:&nbsp;inch<br>
+You&nbsp;want:&nbsp;cm<br>
+&nbsp;*&nbsp;2.540000e+00<br>
+&nbsp;/&nbsp;3.937008e–01<br>
+&nbsp;</p>
+<h3 class="docSection1Title" id="app14lev1sec103">unpack—expands files created by
+<span class="docEmphasis">pack</span></h3>
+<p class="docText"><span class="docEmphasis">unpack</span> expands files created
+by <span class="docEmphasis">pack.</span> For each filename specified in the
+command, a search is made for a file called <span class="docEmphasis">name.z</span>
+(or just <span class="docEmphasis">name,</span> if <span class="docEmphasis">
+name</span> ends in <span class="docEmphasis">.z</span>). If this file appears
+to be a packed file, it is replaced by its expanded version. The new file has
+the <span class="docEmphasis">.z</span> suffix stripped from its name, and has
+the same access modes, access and modification dates, and owner as those of the
+packed file.</p>
+<h3 class="docSection1Title" id="app14lev1sec104">uucp—copy files to another system, UNIX-to-UNIX
+system copy</h3>
+<p class="docText"><br>
+uucp&nbsp;[&nbsp;–c&nbsp;|&nbsp;–C&nbsp;]&nbsp;[&nbsp;–d&nbsp;|&nbsp;–f&nbsp;]&nbsp;[&nbsp;–ggrade&nbsp;]&nbsp;[&nbsp;–j&nbsp;]&nbsp;[&nbsp;–m&nbsp;]&nbsp;[&nbsp;–nuser&nbsp;]&nbsp;[&nbsp;–r&nbsp;]&nbsp;[&nbsp;–sfile&nbsp;]&nbsp;[&nbsp;–<br>
+xdebug_level&nbsp;]<br>
+&nbsp;source–file&nbsp;destination–file<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">uucp</span> copies files named by
+the source-file arguments to the destination-file argument.</p>
+<h3 class="docSection1Title" id="app14lev1sec105">uuencode—uuencode, uudecode—encode a binary file
+into ASCII text in order to send it through e-mail, or convert it back into its
+original form</h3>
+<p class="docText"><br>
+uuencode&nbsp;[&nbsp;source–file&nbsp;]&nbsp;file–label<br>
+uudecode&nbsp;[&nbsp;encoded–file&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">uuencode</span> converts a binary
+file into an ASCII-encoded representation that can be sent using mail. The label
+argument specifies the output filename to use when decoding. If no file is
+given, <span class="docEmphasis">stdin</span> is encoded.
+<span class="docEmphasis">uudecode</span> reads an encoded file, strips off any
+leading and trailing lines added by mailer programs, and recreates the original
+binary data with the filename and the mode and owner specified in the header.
+The encoded file is an ordinary ASCII text file; it can be edited by any text
+editor. But it is best only to change the mode or file-label in the header to
+avoid corrupting the decoded binary.</p>
+<h5 class="docExampleTitle">Example A.57 </h5>
+<pre>1   uuencode mybinfile decodedname &gt; uumybinfile.tosend
+2   uudecode uumybinfile.tosend</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The first argument, <span class="docEmphasis">mybinfile,</span>
+      is the existing file to be encoded. The second argument is the name to be
+      used for the <span class="docEmphasis">uudecoded</span> file, after
+      mailing the file, and <span class="docEmphasis">uumybinfile.tosend</span>
+      is the file that is sent through the mail.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">This decodes the <span class="docEmphasis">uuencoded</span>
+      file and creates a filename as given as the second argument to
+      <span class="docEmphasis">uuencode.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec106">wc—counts lines, words, and characters</h3>
+<p class="docText"><br>
+wc&nbsp;[&nbsp;–lwc&nbsp;]&nbsp;[&nbsp;filename&nbsp;...&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">wc</span> counts lines, words, and
+characters in a file or in the standard input if no filename is given. A word is
+a string of characters delimited by a space, tab, or newline.</p>
+<h5 class="docExampleTitle">Example A.58 </h5>
+<pre>1   wc filex
+2   who | wc -l
+3   wc -l filex</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the number of lines, words, and characters in
+      <span class="docEmphasis">filex.</span></span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The output of the <span class="docEmphasis">who</span>
+      command is piped to <span class="docEmphasis">wc,</span> displaying the
+      number of lines counted.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prints the number of lines in <span class="docEmphasis">
+      filex.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec107">what—extracts SCCS version information from a file
+by printing information found after the @(#) pattern</h3>
+<p class="docText"><br>
+what&nbsp;[&nbsp;–s]&nbsp;filename<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">what</span> searches each filename
+for the occurrence of the pattern @(#), which the SCCS <span class="docEmphasis">
+get</span> command substitutes for the <span class="docEmphasis">%Z%</span>
+keyword, and prints what follows up to a &quot; &gt;, newline, \, or null character.</p>
+<h3 class="docSection1Title" id="app14lev1sec108">which—locates a command and displays its pathname
+or alias (UCB)</h3>
+<p class="docText"><br>
+which&nbsp;[&nbsp;filename&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">which</span> takes a list of names
+and looks for the files that would be executed had the names been given as
+commands. Each argument is expanded if it is aliased, and searched for along the
+user's path. Both aliases and path are taken from the user's
+<span class="docEmphasis">.cshrc</span> file. Only <span class="docEmphasis">.cshrc</span>
+file is used.</p>
+<h3 class="docSection1Title" id="app14lev1sec109">whereis—locates the binary, source, and manual page
+files for a command (UCB)</h3>
+<p class="docText"><br>
+whereis&nbsp;[&nbsp;–bmsu&nbsp;]&nbsp;[&nbsp;–BMS&nbsp;directory&nbsp;...&nbsp;–f&nbsp;]&nbsp;filename<br>
+&nbsp;</p>
+
+<h3 class="docSection1Title" id="app14lev1sec110">who—displays who is logged on the system</h3>
+<h3 class="docSection1Title" id="app14lev1sec111">write—writes a message to another user</h3>
+<p class="docText"><br>
+write&nbsp;username&nbsp;[&nbsp;ttyname&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">write</span> copies lines from your
+terminal to another user's terminal.</p>
+<h3 class="docSection1Title" id="app14lev1sec112">xargs—constructs an argument list(s) and executes a
+command</h3>
+<p class="docText"><br>
+xargs&nbsp;[&nbsp;flags&nbsp;]&nbsp;[&nbsp;command&nbsp;[&nbsp;initial–arguments&nbsp;]&nbsp;]<br>
+&nbsp;</p>
+<p class="docText"><span class="docEmphasis">xargs</span> allows you to transfer
+contents of files into a command line and dynamically build command lines.</p>
+<h5 class="docExampleTitle">Example A.59 </h5>
+<pre>1   ls $1 | xargs -i -t mv $1/{} $2/{}
+2   ls | xargs -p -l rm -rf</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Moves all files from directory $1 to directory $2, and
+      echos each <span class="docEmphasis">mv</span> command just before
+      executing.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Prompts (<span class="docEmphasis">-p</span>) the user
+      which files are to be removed one at a time and removes each one.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app14lev1sec113">zcat—uncompress a compressed file to standard
+output. Same as <span class="docEmphasis">uncompress –c</span></h3>
+<p class="docText"><br>
+zcat&nbsp;[&nbsp;file&nbsp;.&nbsp;.&nbsp;.&nbsp;]<br>
+&nbsp;</p>
+<h5 class="docExampleTitle">Example A.60 </h5>
+<pre>zcat book.doc.Z | more</pre>
+<table cellSpacing="0" width="90%" border="1" cellpadding="5" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Uncompresses <span class="docEmphasis">book.doc.Z</span>
+    and pipes the output to <span class="docEmphasis">more.</span></td>
+  </tr>
+</table><p>&nbsp;</p>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 13.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="Appendix B.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table>
+</body>
+
+</html>

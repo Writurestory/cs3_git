@@ -1,0 +1,22 @@
+                                       NMAP实验报告
+                                       ============
+
+作者: 温俊瑞(20101152025)
+日期: 2013-04-24 10:50:16 CST
+
+
+实验环境
+  - Ubuntu
+    
+
+1 Simple Example 
+-----------------
+  1. let's begin
+     nmap 202.203.132.244
+  [nmapuse]
+  2. no reverse NDS lookup
+     nmap -n 202.203.132.244
+     
+
+     [nmapuse]: file:test1.jpg
+

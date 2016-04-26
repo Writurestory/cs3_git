@@ -1,0 +1,203 @@
+#+TITLE:     Compile the kernel to add a system function calls
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:15pt;}</style>
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+*What i know about system_call*:
+
+#+begin_src 
+    In linux,system_call as a abnormal type to achieve,it will
+    run the machine Code to create a abnormal signal,create an
+    interrupt or abnormal is important to the system_call to
+    transform the user mode to kernel mode.
+
+    only can user mode program trap into kernel by gate(execute interrupt
+    operation),does the user mode program can use some special function,until
+    finishing a system_call,system execute iret(interrupt return operation),
+    then system back to the user mode,and give control to process;
+#+end_src
+    - an example of getuid() ::
+     [[http://img1.51cto.com/attachment/201103/21/1444712_13006787643dsO.png]]
+
+------
+
+- Table of Contents ::
+* preparation
+** Download the source
+  #+begin_src 
+  you have your source file in /usr/src/,if it's empty,
+  
+  get it at [[http://kernel.org]] and [[ftp://ftp.kernel.org]]
+
+  mine is 2.6.37.1
+  : wget http://cs3.swfu.edu.cn/~101152025/git/kernel_source/linux-2.6.37.1.tar.bz2
+  #+end_src
+** Change your Makefile
+   VERSION ＝ 2
+   
+   PATCHLEVEL ＝ 6
+   
+   SUBLEVEL ＝ 37
+   
+   EXTRAVERSION ＝ yourname(whatever!)
+   /change to your version（2.6.37.xxx）/
+
+   file:./Makefile.png
+** Modify the source file
+   assume a new syscall as
+
+   mycall(int number)
+
+   It's a simplest function of *cp*
+   #+begin_example
+   asmlinkage int sys_mysyscall(const char* s_file, const char* t_file) 
+   
+   { 
+   
+   //printk("hello,world!\n"); 
+   
+   int bytes_read, bytes_write; 
+   
+   int from_fd, to_fd;             //文件标识符  
+   
+   char buffer[100];    
+   
+   char *ptr;  
+   
+   mm_segment_t old_fs;   
+   
+   old_fs = get_fs();                  //保存原来的段 
+   
+   set_fs(KERNEL_DS);              //设置为数据段 
+   
+   if ((from_fd = sys_open(s_file,O_RDONLY,0)) == -1)    
+   
+   return -1;   
+   
+   if ((to_fd = sys_open(t_file,O_WRONLY|O_CREAT,S_IRUSR|S_IWUSR)) == -1)    
+   
+   return -2;   
+   
+   while(bytes_read=sys_read(from_fd,buffer,1))   //读源文件,一个字符一个字符的读 
+   
+   {  
+   
+   if((bytes_read==-1)) break;  
+   
+   else if(bytes_read>0)  
+   
+   {   
+   
+   
+   
+   ptr=buffer; 
+   
+   while(bytes_write=sys_write(to_fd,ptr,bytes_read))   //写入文件 
+   
+   {  
+   
+   if((bytes_write==-1))break;  
+   
+   /* 写完了所有读的字节 */  
+   
+   else if(bytes_write==bytes_read) break;  
+   
+   else if(bytes_write>0)  
+   
+   {  
+   
+   ptr+=bytes_write;  
+   
+   bytes_read-=bytes_write;  
+   
+   }  
+   
+   } 
+   
+   if(bytes_write==-1)break; 
+   
+   }  
+   
+   } 
+   
+   set_fs(old_fs);  
+   
+   return 0; 
+   
+   } 
+   #+end_example
+** Link the new systemCall
+   after add a new systemCall in sys.c,next mission is to make the kernel know the systemCall in there
+
+   so we need edit two files:
+
+   - 1. unistd_32.h this file has a list of systemcall ::
+
+   *format:*
+   #define __NR_name NNN
+   
+   add *#define __NR_mysyscall* in it
+   
+   [[file:./unistd_32.png]]
+
+   - 2. /usr/src/linux—2.6.37.1/arch/x86/kernel/syscall_table_32.s ::
+
+     add *.long sys_name to the end of file*
+     
+     this file contains pointer that point to the kernel function
+   
+
+-----
+     
+* compile the kernel
+
+** cd /usr/src/linux;
+
+** make mrproper
+
+** make xconfig or make menuconfig
+
+** make dep
+
+** make clean
+
+** make bzImage
+
+** make modules
+
+** make modules_install
+
+** cp /usr/src/linux/arch/i386/boot/bzImage /boot/vmlinuz
+
+** cp /usr/src/linux/arch/i386/boot/System.map /boot/System.map
+
+** edit /etc/lilo.conf(LILO) or /boot/grub/grub.conf(GRUB)
+   now grub had upgraded to grub2
+
+** reboot
+
+* Test
+
+** after reboot you can test your program 
+#+begin_example
+#include <stdio.h> 
+void main() 
+{ 
+    syscall(341, "./sourcefile.c", "./destination.c");
+    /*first arg is syscall_number,second arg is source,
+    third arg is destination file*/
+} 
+#+end_example
+
+success!
+
+Now we had finished a simple systemcall
+
+-----
+

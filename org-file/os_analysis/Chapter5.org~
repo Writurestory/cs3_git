@@ -1,0 +1,165 @@
+#+TITLE:     Chapter_5
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs2.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfu.edu.cn/~101152025/public/org-info/solarized-light.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+#+STARTUP:overview
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+实验环境
+  - OS version:(Linux 3.9-1-686-pae #1 SMP Debian 3.9.6-1) =uname -srv=
+  - Kernel source versionv(3.9-1-686-pae/) =ls /lib/modules/=
+
+* Kernel prototype
+** Hello World in linux
+   1. source code
+      #+BEGIN_EXAMPLE
+; 编译链接方法
+; (ld 的‘-s’选项意为“strip all”)
+;
+; $ nasm -f elf hello.asm -o hello.o
+; $ ld -s hello.o -o hello
+; $ ./hello
+; Hello, world!
+; $
+
+[section .data]	; 数据在此
+
+strHello	db	"Hello, world!", 0Ah
+STRLEN		equ	$ - strHello
+
+[section .text]	; 代码在此
+
+global _start	; 我们必须导出 _start 这个入口，以便让链接器识别
+
+_start:
+	mov	edx, STRLEN
+	mov	ecx, strHello
+	mov	ebx, 1
+	mov	eax, 4		; sys_write
+	int	0x80		; 系统调用
+	mov	ebx, 0
+	mov	eax, 1		; sys_exit
+	int	0x80		; 系统调用
+
+      #+END_EXAMPLE
+   2. compile and link
+      #+BEGIN_EXAMPLE
+      nasm -f elf hello.asm -o hello.o
+      ld -s hello.o -o hello
+      #+END_EXAMPLE
+   3. run and success
+      : ./hello
+      : Hello, world!
+** ASM and C
+   - Calling relationships ::
+     1. relationships between foo.asm and bar.c
+	
+	[[file:img/asm.png][asmandc]]
+	
+     2. foo.asm
+	#+BEGIN_EXAMPLE
+; 编译链接方法
+; (ld 的‘-s’选项意为“strip all”)
+;
+; $ nasm -f elf foo.asm -o foo.o
+; $ gcc -c bar.c -o bar.o
+; $ ld -s hello.o bar.o -o foobar
+; $ ./foobar
+; the 2nd one
+; $
+
+extern choose	; int choose(int a, int b);
+
+[section .data]	; 数据在此
+
+num1st		dd	3
+num2nd		dd	4
+
+[section .text]	; 代码在此
+
+global _start	; 我们必须导出 _start 这个入口，以便让链接器识别。
+global myprint	; 导出这个函数为了让 bar.c 使用
+
+_start:
+	push	dword [num2nd]	; `.
+	push	dword [num1st]	;  |
+	call	choose		;  | choose(num1st, num2nd);
+	add	esp, 8		; /
+
+	mov	ebx, 0
+	mov	eax, 1		; sys_exit
+	int	0x80		; 系统调用
+
+; void myprint(char* msg, int len)
+myprint:
+	mov	edx, [esp + 8]	; len
+	mov	ecx, [esp + 4]	; msg
+	mov	ebx, 1
+	mov	eax, 4		; sys_write
+	int	0x80		; 系统调用
+	ret
+	
+
+	#+END_EXAMPLE
+     3. bar.c
+	#+BEGIN_SRC c
+void myprint(char* msg, int len);
+
+int choose(int a, int b)
+{
+	if(a >= b){
+		myprint("the 1st one\n", 13);
+	}
+	else{
+		myprint("the 2nd one\n", 13);
+	}
+
+	return 0;
+}
+
+	#+END_SRC
+** ELF(Executable and Linkable Format)
+   1. Structure
+      
+      [[file:img/cs3.swfu.edu.cn-~101152025-git-books-ORANGE’S：一个操作系统的实现.pdf(2).png][ELF]]
+
+   2. This is data Structure
+      #+BEGIN_SRC c
+      typedef struct
+{
+unsigned char e_ident[EI_NIDENT];     /* 魔数和相关信息 */
+Elf32_Half    e_type;                 /* 目标文件类型 */
+Elf32_Half    e_machine;              /* 硬件体系 */
+Elf32_Word    e_version;              /* 目标文件版本 */
+Elf32_Addr    e_entry;                /* 程序进入点 */
+Elf32_Off     e_phoff;                /* 程序头部偏移量 */
+Elf32_Off     e_shoff;                /* 节头部偏移量 */
+Elf32_Word    e_flags;                /* 处理器特定标志 */
+Elf32_Half    e_ehsize;               /* ELF头部长度 */
+Elf32_Half    e_phentsize;            /* 程序头部中一个条目的长度 */
+Elf32_Half    e_phnum;                /* 程序头部条目个数  */
+Elf32_Half    e_shentsize;            /* 节头部中一个条目的长度 */
+Elf32_Half    e_shnum;                /* 节头部条目个数 */
+Elf32_Half    e_shstrndx;             /* 节头部字符表索引 */
+} Elf32_Ehdr;
+      #+END_SRC
+
+   3. ELF File include ELF Header Table, Program Header Table, Section, Section Header Table.
+
+   4. 
+      

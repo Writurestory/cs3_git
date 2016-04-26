@@ -1,0 +1,854 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 2</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body><table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 1.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter 3.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 2. The UNIX Toolbox</h2><ul><li>&nbsp;<a class="docLink" href="#ch02lev1sec1">2.1 Regular Expressions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch02lev1sec2">2.2 Combining Regular Expression Metacharacters</a></li>
+</ul>
+<p class="docText">
+<img alt="graphics/ch02.gif" src="ch02.gif" border="0" width="497" height="350"></p>
+<p class="docText">There are hundreds of UNIX utilities available, and many of 
+them are everyday commands such as <span class="docEmphasis">ls, pwd,</span>
+<span class="docEmphasis">who</span>, and <span class="docEmphasis">vi</span>. 
+Just as there are essential tools that a carpenter uses, there are also 
+essential tools the shell programmer needs to write meaningful and efficient 
+scripts. The three major utilities that will be discussed in detail here are
+<span class="docEmphasis">grep, sed</span>, and <span class="docEmphasis">awk</span>. 
+These programs are the most important UNIX tools available for manipulating 
+text, output from a pipe, or standard input. In fact, <span class="docEmphasis">
+sed</span> and <span class="docEmphasis">awk</span> are often used as scripting 
+languages by themselves. Before you fully appreciate the power of
+<span class="docEmphasis">grep,</span> <span class="docEmphasis">sed</span>, and
+<span class="docEmphasis">awk</span>, you must have a good foundation on the use 
+of regular expressions and regular expression metacharacters. A complete list of 
+useful UNIX utilities is found in
+<a class="docLink" href="Appendix A.htm">Appendix A</a> of 
+this book.</p>
+<h3 class="docSection1Title" id="ch02lev1sec1">2.1 Regular Expressions</h3>
+<h4 class="docSection2Title" id="ch02lev2sec1">2.1.1 Definition and Example</h4>
+<p class="docText">For users already familiar with the concept of regular 
+expression metacharacters, this section may be bypassed. However, this 
+preliminary material is crucial to understanding the variety of ways in which
+<span class="docEmphasis">grep, sed</span>, and <span class="docEmphasis">awk</span> 
+are used to display and manipulate data.</p>
+<p class="docText">What is a regular expression? A regular expression<span id="ENB2-1"><a class="docLink" href="#EN2-1"><sup>[1]</sup></a></span> 
+is just a pattern of characters used to match the same characters in a search. 
+In most programs, a regular expression is enclosed in forward slashes; for 
+example, <span class="docEmphasis">/love/</span> is a regular expression 
+delimited by forward slashes, and the pattern <span class="docEmphasis">love</span> 
+will be matched any time the same pattern is found in the line being searched. 
+What makes regular expressions interesting is that they can be controlled by 
+special metacharacters. If you are new to the idea of regular expressions, let 
+us look at an example that will help you understand what this whole concept is 
+about. Suppose that you are working in the <span class="docEmphasis">vi</span> 
+editor on an e-mail message to your friend. It looks like this:</p>
+<pre>% <span class="docEmphStrong">vi letter</span>
+------------------------------------------------------------------
+Hi tom,
+I think I failed my anatomy test yesterday. I had a terrible
+stomach ache. I ate too many fried green tomatoes.
+Anyway, Tom, I need your help. I'd like to make the test up
+tomorrow, but don't know where to begin studying. Do you
+think you could help me? After work, about 7 PM, come to
+my place and I'll treat you to pizza in return for your help. Thanks.
+                                      Your pal,
+                                      guy@phantom
+
+~
+~
+~
+~
+------------------------------------------------------------------
+</pre>
+<p class="docText">Now, suppose you find out that Tom never took the test 
+either, but David did. You also notice that in the greeting, you spelled
+<span class="docEmphasis">Tom</span> with a lowercase <span class="docEmphasis">
+t.</span> So you decide to make a global substitution to replace all occurrences 
+of <span class="docEmphasis">tom</span> with <span class="docEmphasis">David</span>, 
+as follows:</p>
+<pre>% <span class="docEmphStrong">vi letter</span>
+------------------------------------------------------------------
+Hi <span class="docEmphasis">David,</span>
+I think I failed my ana<span class="docEmphasis">David</span>y test yeserday. I had a terrible
+s<span class="docEmphasis">David</span>achache. I think I ate too many fried green <span class="docEmphasis">David</span>atoes.
+Anyway, Tom, I need your help. I'd like to make the test up
+<span class="docEmphasis">David</span>orrow, but don't know where to begin studying. Do you
+think you could help me? After work, about 7 PM, come to
+my place and I'll treat you to pizza in return for your help. Thanks.
+                                      Your pal,
+                                      guy@phan<span class="docEmphasis">David</span>
+
+~
+~
+~
+
+
+--&gt; <span class="docEmphStrong">:1,$s/tom/David/g</span>
+------------------------------------------------------------------
+</pre>
+<p class="docText">The regular expression in the search string is
+<span class="docEmphasis">tom.</span> The replacement string is
+<span class="docEmphasis">David.</span> The <span class="docEmphasis">vi</span> 
+command reads &quot;for lines 1 to the end of the file ($), substitute
+<span class="docEmphasis">tom</span> everywhere it is found on each line and 
+replace it with <span class="docEmphasis">David</span>.&quot; Hardly what you want! 
+And one of the occurrences of <span class="docEmphasis">Tom</span> was untouched 
+because you only asked for <span class="docEmphasis">tom</span>, not
+<span class="docEmphasis">Tom</span>, to be replaced with
+<span class="docEmphasis">David</span>. So what to do?</p>
+<p class="docText">Regular expression metacharacters are special characters that 
+allow you to delimit a pattern in some way so that you can control what 
+substitutions will take place. There are metacharacters to anchor a word to the 
+beginning or end of a line. There are metacharacters that allow you to specify 
+any characters, or some number of characters, to find both upper- and lowercase 
+characters, digits only, and so forth. For example, to change the name
+<span class="docEmphasis">tom</span> or <span class="docEmphasis">Tom</span> to
+<span class="docEmphasis">David</span>, the following <span class="docEmphasis">
+vi</span> command would have done the job:</p>
+<pre><span class="docEmphStrong">:1,$s/\&lt;[Tt]om\&gt;/David/g</span>
+</pre>
+<p class="docText">This command reads, &quot;From the first line to the last line of 
+the file (<span class="docEmphasis">1,$</span>), substitute (<span class="docEmphasis">s</span>) 
+the word <span class="docEmphasis">Tom</span> or <span class="docEmphasis">tom</span> 
+with <span class="docEmphasis">David</span>,&quot; and the <span class="docEmphasis">
+g</span> flag says to do this globally (i.e., make the substitution if it occurs 
+more than once on the same line). The regular expression metacharacters are \&lt; 
+and \&gt; for beginning and end of a word, and the pair of brackets, [<span class="docEmphasis">Tt</span>], 
+match for one of the characters enclosed within them (in this case, for either
+<span class="docEmphasis">T</span> or <span class="docEmphasis">t</span>). There 
+are five basic metacharacters that all UNIX pattern-matching utilities 
+recognize, and then an extended set of metacharacters that vary from program to 
+program.</p>
+<h4 class="docSection2Title" id="ch02lev2sec2">2.1.2 Regular Expression Metacharacters</h4>
+<p class="docText"><a class="docLink" href="#ch02table01">Table 2.1</a> presents 
+regular expression metacharacters that can be used in all versions of
+<span class="docEmphasis">vi, ex, grep, egrep, sed</span>, and
+<span class="docEmphasis">awk.</span> Additional metacharacters are described 
+for each of the utilities where applicable.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch02table01" class="docTableTitle">Table 2.1. Regular Expression Metacharacters</h5>
+  </caption>
+  <colgroup span="4" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Metacharacter</span></th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Function</span></th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Example</span></th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Matches</span></th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">^</span></td>
+    <td class="docTableCell" vAlign="top">Beginning-of-line anchor</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/^love/</span></td>
+    <td class="docTableCell" vAlign="top">Matches all lines beginning with
+    <span class="docEmphasis">love.</span></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">$</span></td>
+    <td class="docTableCell" vAlign="top">End-of-line anchor</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/love$/</span></td>
+    <td class="docTableCell" vAlign="top">Matches all lines ending with
+    <span class="docEmphasis">love.</span></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">.</td>
+    <td class="docTableCell" vAlign="top">Matches one character</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/l..e/</span></td>
+    <td class="docTableCell" vAlign="top">Matches lines containing an
+    <span class="docEmphasis">l</span>, followed by two characters, followed by 
+    an <span class="docEmphasis">e</span>.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">*</span></td>
+    <td class="docTableCell" vAlign="top">Matches zero or more of the preceding 
+    characters</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/ *love/</span></td>
+    <td class="docTableCell" vAlign="top">Match lines with zero or more spaces, 
+    followed by the pattern <span class="docEmphasis">love</span>.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[ ]</span></td>
+    <td class="docTableCell" vAlign="top">Matches one in the set</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/[Ll]ove/</span></td>
+    <td class="docTableCell" vAlign="top">Matches lines containing
+    <span class="docEmphasis">love</span> or <span class="docEmphasis">Love</span>.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[x–y]</span></td>
+    <td class="docTableCell" vAlign="top">Matches one character within a range 
+    in the set</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/[A–Z]ove/</span></td>
+    <td class="docTableCell" vAlign="top">Matches letters from
+    <span class="docEmphasis">A</span> through <span class="docEmphasis">Z</span> 
+    followed by <span class="docEmphasis">ove</span>.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[^ ]</span></td>
+    <td class="docTableCell" vAlign="top">Matches one character not in the set</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/[^A–Z]/</span></td>
+    <td class="docTableCell" vAlign="top">Matches any character not in the range 
+    between <span class="docEmphasis">A</span> and <span class="docEmphasis">Z</span>.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">\</span></td>
+    <td class="docTableCell" vAlign="top">Used to escape a metacharacter</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/love\./</span></td>
+    <td class="docTableCell" vAlign="top">Matches lines containing
+    <span class="docEmphasis">love</span>, followed by a literal period. 
+    Normally the period matches one of any character.</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" colSpan="4">
+    <span class="docEmphBoldItalic">Additional metacharacters are supported by 
+    many UNIX programs that use RE metacharacters:</span></td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">\&lt;</span></td>
+    <td class="docTableCell" vAlign="top">Beginning-of-word anchor</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/\&lt;love/</span></td>
+    <td class="docTableCell" vAlign="top">Matches lines containing a word that 
+    begins with <span class="docEmphasis">love</span> (supported by
+    <span class="docEmphasis">vi</span> and <span class="docEmphasis">grep</span>).</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">\&gt;</span></td>
+    <td class="docTableCell" vAlign="top">End-of-word anchor</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">/love\&gt;/</span></td>
+    <td class="docTableCell" vAlign="top">Matches lines containing a word that 
+    ends with <span class="docEmphasis">love</span> (supported by
+    <span class="docEmphasis">vi</span> and <span class="docEmphasis">grep</span>).</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">\(..\)</span></td>
+    <td class="docTableCell" vAlign="top">Tags match characters to be used later</td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">
+    /\(love\)able \1er/</span></td>
+    <td class="docTableCell" vAlign="top">May use up to nine tags, starting with 
+    the first tag at the left-most part of the pattern. For example, the pattern
+    <span class="docEmphasis">love</span> is saved as tag 1, to be referenced 
+    later as <span class="docEmphasis">\1</span>; in this example, the search 
+    pattern consists of <span class="docEmphasis">lovable</span> followed by
+    <span class="docEmphasis">lover</span> (supported by
+    <span class="docEmphasis">sed, vi,</span> and <span class="docEmphasis">grep</span>).</td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">x{m\}</span>or
+    <span class="docEmphasis">x{m,\}</span>or <span class="docEmphasis">x{m,n\}</span></td>
+    <td class="docTableCell" vAlign="top">Repetition of character x, m times, at 
+    least m times, at least m and not more than n times<sup class="docFootnote"><a class="docLink" href="#ch02tabfn01">[a]</a></sup></td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">o{5,10\}</span></td>
+    <td class="docTableCell" vAlign="top">Matches if line contains between 5 and
+    <span class="docEmphasis">10</span> consecutive occurrences of the letter
+    <span class="docEmphasis">o</span> (supported by <span class="docEmphasis">
+    vi</span> and <span class="docEmphasis">grep</span>).</td>
+  </tr>
+</table>
+<blockquote>
+  <p class="docFootnote"><sup><a name="ch02tabfn01">[a]</a></sup> Not dependable 
+  on all versions of UNIX or all pattern-matching utilities; usually works with
+  <span class="docEmphasis">vi</span> and <span class="docEmphasis">grep</span>.</p>
+</blockquote>
+<p class="docText">Assuming that you know how the <span class="docEmphasis">vi</span> 
+editor works, each metacharacter is described in terms of the
+<span class="docEmphasis">vi</span> search string. In the following examples, 
+characters are highlighted to demonstrate what <span class="docEmphasis">vi</span> 
+will find in its search.</p>
+<h5 id="ch02list01" class="docExampleTitle">Example 2.1 </h5>
+<pre>(A Simple Regular Expression Search)
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a <span class="docEmphBoldItalic">love</span>ly time on our little picnic.
+Lovers were all around us. It is springtime. Oh
+<span class="docEmphBoldItalic">love,</span> how much I adore you. Do you know
+the extent of my <span class="docEmphBoldItalic">love?</span> Oh, by the way, I think
+I lost my g<span class="docEmphBoldItalic">love</span>s somewhere out in that field of
+c<span class="docEmphBoldItalic">love</span>r. Did you see them? I can only hope <span class="docEmphBoldItalic">love</span>
+is forever. I live for you. It's hard to get back in the
+groove.
+
+
+~
+~
+~
+<span class="docEmphStrong">/love/</span>
+-----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The regular expression is <span class="docEmphasis">love</span>. 
+    The pattern <span class="docEmphasis">love</span> is found by itself and as 
+    part of other words, such as <span class="docEmphasis">lovely</span>,
+    <span class="docEmphasis">gloves</span>, and <span class="docEmphasis">
+    clover</span>.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list02" class="docExampleTitle">Example 2.2 </h5>
+<pre>(The Beginning-of-Line Anchor (^))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a lovely time on our little picnic.
+Lovers were all around us. It is springtime. Oh
+<span class="docEmphBoldItalic">love,</span> how much I adore you. Do you know
+the extent of my love? Oh, by the way, I think
+I lost my gloves somewhere out in that field of
+clover. Did you see them? I can only hope love
+is forever. I live for you. It's hard to get back in the
+groove.
+~
+~
+~
+<span class="docEmphStrong">/^love/</span>
+-----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The caret (<span class="docEmphasis">^</span>) is called 
+    the beginning-of-line anchor. <span class="docEmphasis">Vi</span> will find 
+    only those lines where the regular expression <span class="docEmphasis">love</span> 
+    is matched at the beginning of the line, i.e., <span class="docEmphasis">
+    love</span> is the first set of characters on the line; it cannot be 
+    preceded by even one space.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list03" class="docExampleTitle">Example 2.3 </h5>
+<pre>(The End-of-Line Anchor ($))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a lovely time on our little picnic.
+Lovers were all around us. It is springtime. Oh
+love, how much I adore you. Do you know
+the extent of my love? Oh, by the way, I think
+I lost my gloves somewhere out in that field of
+clover. Did you see them? I can only hope <span class="docEmphBoldItalic">love</span>
+is forever. I live for you. It's hard to get back in the
+groove.
+
+~
+~
+~
+<span class="docEmphStrong">/love$/</span>
+----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The dollar sign (<span class="docEmphasis">$</span>) is 
+    called the end-of-line anchor. <span class="docEmphasis">Vi</span> will find 
+    only those lines where the regular expression <span class="docEmphasis">love</span> 
+    is matched at the end of the line, i.e., <span class="docEmphasis">love</span> 
+    is the last set of characters on the line and is directly followed by a 
+    newline.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list04" class="docExampleTitle">Example 2.4 </h5>
+<pre>(Any Single Character (.))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a <span class="docEmphBoldItalic">love</span>ly time on our little picnic.
+Lovers were all around us. It is springtime. Oh
+<span class="docEmphBoldItalic">love,</span> how much I adore you. Do you know
+the extent of my <span class="docEmphBoldItalic">love</span>? Oh, by the way, I think
+I lost my g<span class="docEmphBoldItalic">love</span>s somewhere out in that field of
+c<span class="docEmphBoldItalic">love</span>r. Did you see them? I can only hope <span class="docEmphBoldItalic">love</span>
+is forever. I <span class="docEmphBoldItalic">live</span> for you. It's hard to get back in the
+groove.
+
+~
+~
+~
+<span class="docEmphStrong">/l.ve/</span>
+-----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The dot (.) matches any one character, except the newline.
+    <span class="docEmphasis">Vi</span> will find those lines where the regular 
+    expression consists of an <span class="docEmphasis">l</span>, followed by 
+    any single character, followed by a <span class="docEmphasis">v</span> and 
+    an <span class="docEmphasis">e</span>. It finds combinations of
+    <span class="docEmphasis">love</span> and <span class="docEmphasis">live</span>.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list05" class="docExampleTitle">Example 2.5 </h5>
+<pre>(Zero or More of the Preceding Character (*))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a l<span class="docEmphBoldItalic">ove</span>ly time on our little picnic.
+L<span class="docEmphBoldItalic">ove</span>rs were all around us. It is springtime. Oh
+l<span class="docEmphBoldItalic">ove,</span> how much I adore you. Do you know
+the extent of my l<span class="docEmphBoldItalic">ove</span>? Oh, by the way, I think
+I lost my gl<span class="docEmphBoldItalic">ove</span>s somewhere out in that field of
+clover. Did you see them? I can only hope l<span class="docEmphBoldItalic">ove</span>
+is forever. I live for you. It's hard to get back in the
+gr<span class="docEmphBoldItalic">oove.</span>
+
+~
+~
+~
+<span class="docEmphStrong">/o*ve/</span>
+-----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The asterisk (*) matches zero or more of the preceding 
+    character.<span id="ENB2-2"><a class="docLink" href="#EN2-2"><sup>[2]</sup></a></span> 
+    It is as though the asterisk were glued to the character directly before it 
+    and controls only that character. In this case, the asterisk is glued to the 
+    letter <span class="docEmphasis">o.</span> It matches for only the letter
+    <span class="docEmphasis">o</span> and as many consecutive occurrences of 
+    the letter <span class="docEmphasis">o</span> as there are in the pattern, 
+    even no occurrences of <span class="docEmphasis">o</span> at all.
+    <span class="docEmphasis">Vi</span> searches for zero or more occurrences of 
+    the letter <span class="docEmphasis">o</span> followed by a
+    <span class="docEmphasis">v</span> and an <span class="docEmphasis">e,</span> 
+    finding <span class="docEmphasis">love, loooove, lve</span>, and so forth.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list06" class="docExampleTitle">Example 2.6 </h5>
+<pre>(A Set of Characters ([]))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a <span class="docEmphBoldItalic">love</span>ly time on our little picnic.
+<span class="docEmphBoldItalic">Love</span>rs were all around us. It is springtime. Oh
+<span class="docEmphBoldItalic">love,</span> how much I adore you. Do you know
+the extent of my <span class="docEmphBoldItalic">love</span>? Oh, by the way, I think
+I lost my g<span class="docEmphBoldItalic">love</span>s somewhere out in that field of
+c<span class="docEmphBoldItalic">love</span>r. Did you see them? I can only hope <span class="docEmphBoldItalic">love</span>
+is forever. I live for you. It's hard to get back in the
+groove.
+
+~
+~
+~
+<span class="docEmphStrong">/[Ll]ove/</span>
+----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The square brackets match for one of a set of characters.
+    <span class="docEmphasis">Vi</span> will search for the regular expression 
+    containing either an uppercase or lowercase <span class="docEmphasis">l</span> 
+    followed by an <span class="docEmphasis">o,</span> <span class="docEmphasis">
+    v</span>, and <span class="docEmphasis">e</span>.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list07" class="docExampleTitle">Example 2.7 </h5>
+<pre>(A Range of Characters ( [ - ] ))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a l<span class="docEmphBoldItalic">ovel</span>y time on our little picnic.
+L<span class="docEmphBoldItalic">over</span>s were all around us. It is springtime. Oh
+love, how much I adore you. Do you know
+the extent of my love? Oh, by the way, I think
+I lost my gl<span class="docEmphBoldItalic">oves</span> somewhere out in that field of
+cl<span class="docEmphBoldItalic">over.</span> Did you see them? I can only hope love
+is forever. I live for you. It's hard to get back in the
+groove.
+
+~
+~
+~
+<span class="docEmphStrong">/ove[a-z]/</span>
+-----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The dash between characters enclosed in square brackets 
+    matches one character in a range of characters. <span class="docEmphasis">Vi</span> 
+    will search for the regular expression containing an
+    <span class="docEmphasis">o,</span> <span class="docEmphasis">v,</span> and
+    <span class="docEmphasis">e,</span> followed by any character in the ASCII 
+    range between <span class="docEmphasis">a</span> and
+    <span class="docEmphasis">z.</span> Since this is an ASCII range, the range 
+    cannot be represented as [<span class="docEmphasis">z</span>–<span class="docEmphasis">a</span>].</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list08" class="docExampleTitle">Example 2.8 </h5>
+<pre>(Not One of the Characters in the Set ([^]))
+% <span class="docEmphStrong">vi picnic</span>
+----------------------------------------------------------------
+I had a lovely time on our little picnic.
+Lovers were all around us. It is springtime. Oh
+l<span class="docEmphBoldItalic">ove,</span> how much I adore you. Do you know
+the extent of my l<span class="docEmphStrong">ove?</span> Oh, by the way, I think
+I lost my gloves somewhere out in that field of
+clover. Did you see them? I can only hope love
+is forever. I live for you. It's hard to get back in the
+gro<span class="docEmphBoldItalic">ove.</span>
+
+~
+~
+~<span class="docEmphStrong">/ove[^a-zA-Z0-9]/</span>
+----------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The caret inside square brackets is a negation 
+    metacharacter. <span class="docEmphasis">Vi</span> will search for the 
+    regular expression containing an <span class="docEmphasis">o,</span>
+    <span class="docEmphasis">v,</span> and <span class="docEmphasis">e,</span> 
+    followed by any character <span class="docEmphasis">not</span> in the ASCII 
+    range between <span class="docEmphasis">a</span> and
+    <span class="docEmphasis">z,</span> <span class="docEmphasis">not</span> in 
+    the range between <span class="docEmphasis">A</span> and
+    <span class="docEmphasis">Z,</span> and <span class="docEmphasis">not</span> 
+    a digit between <span class="docEmphasis">0</span> and
+    <span class="docEmphasis">9.</span> For example, it will find
+    <span class="docEmphasis">ove</span> followed by a comma, a space, a period, 
+    and so on, because those characters are <span class="docEmphasis">not</span> 
+    in the set.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch02lev1sec2">2.2 Combining Regular Expression Metacharacters</h3>
+<p class="docText">Now that basic regular expression metacharacters have been 
+explained, they can be combined into more complex expressions. Each of the 
+regular expression examples enclosed in forward slashes is the search string and 
+is matched against each line in the text file.</p>
+<h5 id="ch02list09" class="docExampleTitle">Example 2.9 </h5>
+<pre>Note: <span class="docEmphasis">The line numbers are NOT part of the text file. The vertical</span>
+<span class="docEmphasis">bars mark the left and right margins.</span>
+   ---------------------------------------------------------------
+1  |Christian Scott lives here and will put on a Christmas party.|
+2  |There are around 30 to 35 people invited.                    | 
+3  |They are:                                                    |
+4  |                                                          Tom|
+5  |Dan                                                          |
+6  |   Rhonda Savage                                             | 
+7  |Nicky and Kimberly.                                          |
+8  |Steve, Suzanne, Ginger and Larry.                            |
+   <span class="docEmphStrong">---------------------------------------------------------------</span></pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="a">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">/^[A–Z]..$/</span></p>
+      <p class="docList">Will find all lines beginning with a capital letter, 
+      followed by two of any character, followed by a newline. Will find
+      <span class="docEmphasis">Dan</span> on line 5.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">/^[A–Z][a–z ]*3[0–5]/</span></p>
+      <p class="docList">Will find all lines beginning with an uppercase letter, 
+      followed by zero or more lowercase letters or spaces, followed by the 
+      number <span class="docEmphasis">3</span> and another number between
+      <span class="docEmphasis">0</span> and <span class="docEmphasis">5.</span> 
+      Will find line 2.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">/[a–z]*\./</span></p>
+      <p class="docList">Will find lines containing zero or more lowercase 
+      letters, followed by a literal period. Will find lines 1, 2, 7, and 8.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">/^ *[A–Z][a–z][a–z]$/</span></p>
+      <p class="docList">Will find a line that begins with zero or more spaces 
+      (tabs do not count as spaces), followed by an uppercase letter, two 
+      lowercase letters, and a newline. Will find <span class="docEmphasis">Tom</span> 
+      on line 4 and Dan on line 5.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">/^[A–Za–z]*[^,][A–Za–z]*$/</span></p>
+      <p class="docList">Will find a line that begins with zero or more 
+      uppercase and/or lowercase letters, followed by a noncomma, followed by 
+      zero or more upper- or lowercase letters and a newline. Will find line 5.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch02lev2sec3">2.2.1 More Regular Expression Metacharacters</h4>
+<p class="docText">The following metacharacters are not necessarily portable 
+across all utilities using regular expressions, but can be used in the
+<span class="docEmphasis">vi</span> editor and some versions of
+<span class="docEmphasis">sed</span> and <span class="docEmphasis">grep.</span> 
+There is an extended set of metacharacters available with
+<span class="docEmphasis">egrep</span> and <span class="docEmphasis">awk,</span> 
+which will be discussed in later sections.</p>
+<h5 id="ch02list10" class="docExampleTitle">Example 2.10 </h5>
+<pre>    (Beginning-of-Word (\&lt;) and End-of-Word (\&gt;) Anchors)
+    % <span class="docEmphStrong">vi textfile</span>
+    -------------------------------------------------------------
+    Unusual occurrences happened at the fair.
+--&gt; Patty won <span class="docEmphasis">fourth</span> place in the 50 yard dash square and fair.
+    Occurrences like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+    /\&lt;fourth\&gt;/
+    -------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Will find the word <span class="docEmphasis">fourth</span> 
+    on each line. The \&lt; is the beginning-of-word anchor and the \&gt; is the 
+    end-of-word anchor. A word can be separated by spaces, end in punctuation, 
+    start at the beginning of a line, end at the end of a line, and so forth.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list11" class="docExampleTitle">Example 2.11 </h5>
+<pre>    % <span class="docEmphStrong">vi textfile</span>
+    -------------------------------------------------------------
+    Unusual occurrences happened at the fair.
+--&gt; Patty won <span class="docEmphBoldItalic">f</span><span class="docEmphasis">our</span><span class="docEmphBoldItalic">th</span> place in the 50 yard dash square and fair.
+    Occurrences like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+--&gt; Guy <span class="docEmphBoldItalic">f</span><span class="docEmphasis">ell down while running around the sou</span><span class="docEmphBoldItalic">th</span> bend in his last
+    event.
+    ~
+    ~
+    ~
+    /\&lt;f.*th\&gt;/
+    -------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Will find any word (or group of words) beginning with an
+    <span class="docEmphasis">f,</span> followed by zero or more of any 
+    character (.*), and a string ending with <span class="docEmphasis">th.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list12" class="docExampleTitle">Example 2.12 </h5>
+<pre>(Remembered Patterns \( and \))
+    % <span class="docEmphStrong">vi textfile</span> <span class="docEmphasis">(Before Substitution)</span>
+    -------------------------------------------------------------
+    Unusual <span class="docEmphBoldItalic">occurences</span> happened at the fair.
+    Patty won fourth place in the 50 yard dash square and fair.
+    <span class="docEmphBoldItalic">Occurences</span> like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+1   <span class="docEmphStrong">:1,$s/\([0o]ccur\)ence/\1rence/</span>
+    -------------------------------------------------------------
+    % <span class="docEmphStrong">vi textfile</span> (<span class="docEmphasis">After Substitution</span>)
+    -------------------------------------------------
+--&gt; Unusual <span class="docEmphBoldItalic">occurrences</span> happened at the fair.
+    Patty won fourth place in the 50 yard dash square and fair.
+--&gt; <span class="docEmphBoldItalic">Occurrences</span> like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+    -------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The editor searches for the entire string
+      <span class="docEmphasis">occurence</span> or <span class="docEmphasis">
+      Occurrence</span> (note: the words are misspelled), and if found, the 
+      pattern portion enclosed in parentheses is tagged (i.e., either
+      <span class="docEmphasis">occur</span> or <span class="docEmphasis">Occur</span> 
+      is tagged). Since this is the first pattern tagged, it is called tag 1. 
+      The pattern is stored in a memory register called register 1. On the 
+      replacement side, the contents of the register are replaced for \<span class="docEmphasis">1</span> 
+      and the rest of the word<span class="docEmphasis">, rence,</span> is 
+      appended to it. We started with <span class="docEmphasis">occurence</span> 
+      and ended up with <span class="docEmphasis">occurrence.</span></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<center>
+<h5 id="ch02fig01" class="docFigureTitle">Figure 2.1. Remembered patterns and tags.</h5>
+<p class="docText">
+<img alt="graphics/02fig01.gif" src="02fig01.gif" border="0" width="475" height="520"></p>
+</center>
+<h5 id="ch02list13" class="docExampleTitle">Example 2.13 </h5>
+<pre>  % <span class="docEmphStrong">vi textfile</span> <span class="docEmphasis">(Before Substitution)</span>
+    -------------------------------------------------------------
+    Unusual occurrences happened at the fair.
+    Patty won fourth place in the 50 yard dash <span class="docEmphBoldItalic">square and fair.</span>
+    Occurrences like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+1   <span class="docEmphStrong">:s/\(square\) and \(fair\)/\2 and \1/</span>
+    -------------------------------------------------------------
+
+    % <span class="docEmphStrong">vi textfile</span> <span class="docEmphasis">(After Substitution)</span>
+    -------------------------------------------------------------
+    Unusual occurrences happened at the fair.
+--&gt; Patty won fourth place in the 50 yard dash <span class="docEmphBoldItalic">fair and square.</span>
+    Occurrences like this are rare.
+    The winning ticket is 55222.
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+    -------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The editor searches for the regular expression
+      <span class="docEmphasis">square and fair</span>, and tags
+      <span class="docEmphasis">square</span> as 1 and <span class="docEmphasis">
+      fair</span> as 2. On the replacement side, the contents of register 2 are 
+      substituted for \2 and the contents of register 1 are substituted for \<span class="docEmphasis">1</span>. 
+      See <a class="docLink" href="#ch02fig02">Figure 2.2</a>.</p>
+      <center>
+      <h5 id="ch02fig02" class="docFigureTitle">Figure 2.2. Using more than one tag.</h5>
+      <p class="docText">
+      <img alt="graphics/02fig02.gif" src="02fig02.gif" border="0" width="475" height="270"></p>
+      </center></span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch02list14" class="docExampleTitle">Example 2.14 </h5>
+<pre>(Repetition of Patterns ( \{n\} ))
+    % <span class="docEmphStrong">vi textfile</span>
+    -------------------------------------------
+    Unusual occurrences happened at the fair.
+    Patty won fourth place in the 50 yard dash square and fair.
+    Occurrences like this are rare.
+--&gt; The winning ticket is <span class="docEmphBoldItalic">55222.</span>
+    The ticket I got is 54333 and Dee got 55544.
+    Guy fell down while running around the south bend in his last
+    event.
+    ~
+    ~
+    ~
+    ~
+1   <span class="docEmphStrong">/5\{2\}2\{3\}\./</span>
+    -------------------------------------------------------------
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">Searches for lines containing two occurrences of the 
+      number 5, followed by three occurrences of the number 2, followed by a 
+      literal period.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<blockquote>
+<p class="docFootnote" id="EN2-1"><a class="docLink" href="#ENB2-1">[1]</a>&nbsp;&nbsp;If you receive an error message that contains the string
+<span class="docEmphasis">RE</span>, there is a problem with the regular 
+expression you are using in the program.</p><p class="docFootnote" id="EN2-2"><a class="docLink" href="#ENB2-2">[2]</a>&nbsp;&nbsp;Do not confuse 
+  this metacharacter with the shell wildcard (*). They are totally different. 
+  The shell asterisk matches for zero or more of any character, whereas the 
+  regular expression asterisk matches for zero or more of the preceding 
+  character.</p></blockquote>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 1.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter 3.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table></body>
+
+</html>

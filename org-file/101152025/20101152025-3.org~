@@ -1,0 +1,131 @@
+#+TITLE:    《操作系统原理》实验报告
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs3.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+#+STARTUP:overview
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+实验环境
+  - OS version:(Linux 3.4.7-1.fc16.i686.PAE) =uname -srv=
+  - Kernel source versionv(3.3.7-1) =ls /lib/modules/=
+  - GCC version:(gcc (GCC) 4.6.3 20120306 (Red Hat 4.6.3-2)) =gcc --version=
+
+* Memory management
+** experimental content
+   - [[http://cs2.swfc.edu.cn/~wx672/lecture_notes/os/lab.html#sec-5][come on! go ahead.]]
+** steps of experiment
+*** Basic commands
+    1. top
+       : top
+    2. size, objdump, nm
+#+begin_src c
+     /* 
+ * gcc -o size size.c && echo; size size; echo; ls -l size; echo
+ *
+ * to see binary info:        [objdump -x size]
+ * to see binary dump:        [hexdump -C size]    
+ * to see process memory map: [pmap I'd]
+ */
+
+/* uninitialized global data will be stored in BSS segment */
+char x[1024000];    
+
+/* initialized global data will be stored in DATA segment */
+//char x[1024000]={[1 ... 1023999] = 1}; //GCC-only syntax
+ /* char x[1024000]={1}; */
+
+int main (void)
+{
+ // while(1) sleep();
+  /*
+   * local variable will be stored in the stack
+   */
+  /* int i=1; */       
+  return 0;
+}  
+#+end_src
+
+    Compile the above c program with
+    : gcc -Wall size.c
+
+    Then, use size to see its size of text, data, and BB's data
+    : size a.out
+
+    This is output
+    
+    [[file:./size1.jpg]]
+
+    If you exam its size with ls -l, you should get
+    : -rwxr-xr-x   1 matriux          matriux        4770 Oct 18 18:05 a.out
+
+    Tell me something about the outputs
+
+    1. What does the 4770 mean?
+       : The total size of what gets loaded into memory is only 4770 bytes, in a file that
+       : is 102,5277 bytes long
+       
+    2. What do the 961, 284, 1024032, and 1025277 mean?
+       see this table
+       
+       | program memory   | address space segment | excutable file section |
+       | Code             | Text                  | Text                   |
+       | Initialized data | data                  | data                   |
+       | bss              | data                  | bss                    |
+       | heap             | data                  |                        |
+       | stack            | stack                 |                        |
+       
+       #+begin_example
+       961 in program memory is Code
+       284 in program memory is Initialized data
+       1024032 in program memory is bss
+       1025277 is the total size of Code + Initialized data + bss(961+284+1024032)
+       #+end_example
+*** Shared Memory Segments
+    - Your tasks ::
+      1. Follow Beej's Guide to Unix IPC, section 9 step by step to learn how to use
+         shared memory segments.
+      2. Use ipcrm to remove the segment you just created while running the example code.
+	 1. before the ipcrm
+     
+	    [[file:./shmdemo3.jpg]]
+	    
+	 2. after the ipcrm
+     
+	    file:./shmdemo2.jpg
+	    
+      3. Add semaphore mechanism into the sample program (shmdemo.c) to enforce mutual-exclusive access to the shared data area.
+*** Memory Mapped Files
+    1. Follow Beej's Guide to Unix IPC, section 10 step by step to learn how to use memory
+       mapped files.
+       [[file:./mmapdemo1.png]]
+    2. Write a small program to find out the page size of your Linux PC.
+       : i dont't know how to write a program
+       : i use this way
+       
+       [[file:./mmapdemo2.png]]
+    3. Add semaphore mechanism into the sample program (mmapdemo.c) to enforce
+       mutual-exclusive access to the shared data area.
+       
+** gains
+   : This part is the end of the IPC, and also a comprehensive exercise,
+   : i had made a systematic study on IPC, and i find it's fun to exploit
+   : and use in different situation; ultimatelly i had finished it, i deem the
+   : most significant thing i had learned is how to solve the problem by myself
+   : and how to do some google, which is the best teacher bymyside, with full of
+   : interests and the best teacher nobody can stop my steps!
+

@@ -1,0 +1,124 @@
+#+TITLE:     Ext2 File System Analysis
+#+AUTHOR:    20101152025
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+
+Table of Contents
+* FS Creation
+  To create 1M ext2 file system:
+  #+begin_example
+matriux@localhost:/tmp$ touch fs.img
+matriux@localhost:/tmp$ dd if=/dev/zero of=fs.img bs=1k count=1000
+1000+0 records in
+1000+0 records out
+1024000 bytes (1.0 MB) copied, 0.00619397 s, 165 MB/s
+matriux@localhost:/tmp$ sudo mke2fs fs.img 
+  #+end_example
+
+  [[file:./mkfs.jpg]]
+  
+* Analysis
+  #+begin_example
+  sudo dumpe2fs fs.img
+  #+end_example
+  [[file:./dumpe2fs.jpg]]
+  [[file:./dumpe2fs2.jpg]]
+
+  #+begin_example
+  hexdump -C fs.img
+  #+end_example
+  [[file:./hexdump.jpg]]
+  [[file:./hexdump2.jpg]]
+  [[file:./hexdump3.jpg]]
+** Block 0: Boot block
+*** 00000000 - 000003ff
+**** empty
+     [[file:./block0.jpg]]
+** Block 1: Superblock
+*** 00000400 - 000007ff
+    [[file:./block1.jpg]]
+    
+    There are some problems i had in this Block 1
+    1. why i had figured out *Filesystem size in blocks* is 1000Byte, not 1024Byte ?
+    2. why *block size* and *Fragment size* like this 00 00 00 00 ?
+    
+** Block 2: group descriptor
+*** 00000800 - 00000bff
+   [[file:./block2.jpg]]
+** Block 3-5: Reserved GDT blocks
+*** 00000c00 - 000017ff
+   [[file:./block3-5.jpg]]
+** Block 6: block bitmap
+*** 00001800 - 00001bff
+   [[file:./block6.jpg]]
+** Block 7: inode bitmap
+*** 00001c00 - 00001fff
+   [[file:./block7.jpg]]
+** Block 8-23: inode table
+*** 00002000 - 00005fff
+   [[file:./block8-23.jpg]]
+**** inode 0: deleted file
+***** nil
+**** inode 1: /proc, /sys…
+***** 00002000 - 0000207f
+**** inode 2: /
+***** 00002080 - 000020ff
+      inode2: root inode
+**** inode 11: /lost+found
+***** 00002500 - 0000257f
+**** inode 12: hello
+***** 00002580 - 00002600
+** Block 24: data block for / dir
+*** 00006000 - 000063ff
+   [[file:./block24.jpg]]
+*** First entry in / dir:"."
+    #+begin_example
+    02 00 00 00 0c 00 01 02
+    #+end_example
+*** Second entry in / dir:".."
+    #+begin_example
+    2e 00 00 00 02 00 00 00
+    #+end_example
+*** Third entry in / dir:"lost+found"
+    #+begin_example
+    0c 00 02 02 2e 2e 00 00
+    #+end_example
+*** Fourth entry in / dir:"hello"
+    #+begin_example
+    0b 00 00 00 14 00 0a 02
+    #+end_example
+** Block 25-36: 12 data blocks for /lost+found
+*** 00006400 - 00008fff
+   [[file:./block25-36.jpg]]
+*** First entry in /lost+found dir:"."
+    #+begin_example
+    0b 00 00 00 0c 00 01 02
+    #+end_example
+*** Second entry in /lost+found dir:".."
+    #+begin_example
+    2e 00 00 00 02 00 00 00
+    #+end_example
+** Block 38: data block for hello
+*** 00009800 - 00009cff
+   [[file:./block38.jpg]]
+    helloworld
+* Finding a file
+  1. Mount fs.img on /tmp/fs
+     #+begin_example
+     sudo mount -o loop ./fs.img /tmp/fs
+     #+end_example
+  2. Create a simple 10-byte text file named hello in /tmp/fs
+     #+begin_example
+     root@localhost:~# echo -n "helloworld" > /tmp/fs/hello
+     root@localhost:/tmp/fs# ls -il
+     total 13
+     12 -rw-r--r-- 1 root root    10 Nov 22 22:49 hello
+     11 drwx------ 2 root root 12288 Nov 22 20:02 lost+found
+     #+end_example
+  3. Find hello by hd fs.img
+     - find file hello's inode here:
+       
+       [[file:./inode.jpg]]
+     - find file hello's datablock here:
+       
+       [[file:./datablock.jpg]]

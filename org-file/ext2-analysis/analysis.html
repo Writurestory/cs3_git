@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cn" xml:lang="cn">
+<head>
+<title>Ext2 File System Analysis</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Ext2 File System Analysis"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-11-22 23:06:41 HKT"/>
+<meta name="author" content="20101152025"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="http://cs2.swfc.edu.cn/org-info-js/stylesheet.css" type="text/css"><style>code {font-weight:bold; font-size:100%; color:darkblue} body {font-size:14pt}</style>
+<script type="text/javascript" src="http://cs2.swfc.edu.cn/org-info-js/org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Ext2 File System Analysis</h1>
+
+<p>Table of Contents
+</p>
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 FS Creation</a></li>
+<li><a href="#sec-2">2 Analysis</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Block 0: Boot block</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 00000000 - 000003ff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2 Block 1: Superblock</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1 00000400 - 000007ff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3 Block 2: group descriptor</a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1 00000800 - 00000bff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-4">2.4 Block 3-5: Reserved GDT blocks</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1 00000c00 - 000017ff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5 Block 6: block bitmap</a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1 00001800 - 00001bff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6 Block 7: inode bitmap</a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1 00001c00 - 00001fff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-7">2.7 Block 8-23: inode table</a>
+<ul>
+<li><a href="#sec-2-7-1">2.7.1 00002000 - 00005fff</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-8">2.8 Block 24: data block for / dir</a>
+<ul>
+<li><a href="#sec-2-8-1">2.8.1 00006000 - 000063ff</a></li>
+<li><a href="#sec-2-8-2">2.8.2 First entry in / dir:"."</a></li>
+<li><a href="#sec-2-8-3">2.8.3 Second entry in / dir:".."</a></li>
+<li><a href="#sec-2-8-4">2.8.4 Third entry in / dir:"lost+found"</a></li>
+<li><a href="#sec-2-8-5">2.8.5 Fourth entry in / dir:"hello"</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-9">2.9 Block 25-36: 12 data blocks for /lost+found</a>
+<ul>
+<li><a href="#sec-2-9-1">2.9.1 00006400 - 00008fff</a></li>
+<li><a href="#sec-2-9-2">2.9.2 First entry in /lost+found dir:"."</a></li>
+<li><a href="#sec-2-9-3">2.9.3 Second entry in /lost+found dir:".."</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-10">2.10 Block 38: data block for hello</a>
+<ul>
+<li><a href="#sec-2-10-1">2.10.1 00009800 - 00009cff</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Finding a file</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> FS Creation</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  To create 1M ext2 file system:
+</p>
+
+
+<pre class="example">matriux@localhost:/tmp$ touch fs.img
+matriux@localhost:/tmp$ dd if=/dev/zero of=fs.img bs=1k count=1000
+1000+0 records in
+1000+0 records out
+1024000 bytes (1.0 MB) copied, 0.00619397 s, 165 MB/s
+matriux@localhost:/tmp$ sudo mke2fs fs.img 
+</pre>
+
+
+<p>
+  <img src="./mkfs.jpg"  alt="./mkfs.jpg" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Analysis</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="example">sudo dumpe2fs fs.img
+</pre>
+
+<p>
+  <img src="./dumpe2fs.jpg"  alt="./dumpe2fs.jpg" />
+  <img src="./dumpe2fs2.jpg"  alt="./dumpe2fs2.jpg" />
+</p>
+
+
+
+<pre class="example">hexdump -C fs.img
+</pre>
+
+<p>
+  <img src="./hexdump.jpg"  alt="./hexdump.jpg" />
+  <img src="./hexdump2.jpg"  alt="./hexdump2.jpg" />
+  <img src="./hexdump3.jpg"  alt="./hexdump3.jpg" />
+</p>
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Block 0: Boot block</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> 00000000 - 000003ff</h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+<ul>
+<li id="sec-2-1-1-1">empty<br/>
+     <img src="./block0.jpg"  alt="./block0.jpg" />
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Block 1: Superblock</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+</div>
+
+<div id="outline-container-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> 00000400 - 000007ff</h4>
+<div class="outline-text-4" id="text-2-2-1">
+
+<p>    <img src="./block1.jpg"  alt="./block1.jpg" />
+</p>
+<p>    
+    There are some problems i had in this Block 1
+</p><ol>
+<li>why i had figured out <b>Filesystem size in blocks</b> is 1000Byte, not 1024Byte ?
+</li>
+<li>why <b>block size</b> and <b>Fragment size</b> like this 00 00 00 00 ?
+</li>
+</ol>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Block 2: group descriptor</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+</div>
+
+<div id="outline-container-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> 00000800 - 00000bff</h4>
+<div class="outline-text-4" id="text-2-3-1">
+
+<p>   <img src="./block2.jpg"  alt="./block2.jpg" />
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Block 3-5: Reserved GDT blocks</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+</div>
+
+<div id="outline-container-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> 00000c00 - 000017ff</h4>
+<div class="outline-text-4" id="text-2-4-1">
+
+<p>   <img src="./block3-5.jpg"  alt="./block3-5.jpg" />
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Block 6: block bitmap</h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+</div>
+
+<div id="outline-container-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> 00001800 - 00001bff</h4>
+<div class="outline-text-4" id="text-2-5-1">
+
+<p>   <img src="./block6.jpg"  alt="./block6.jpg" />
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Block 7: inode bitmap</h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+</div>
+
+<div id="outline-container-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> 00001c00 - 00001fff</h4>
+<div class="outline-text-4" id="text-2-6-1">
+
+<p>   <img src="./block7.jpg"  alt="./block7.jpg" />
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Block 8-23: inode table</h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+</div>
+
+<div id="outline-container-2-7-1" class="outline-4">
+<h4 id="sec-2-7-1"><span class="section-number-4">2.7.1</span> 00002000 - 00005fff</h4>
+<div class="outline-text-4" id="text-2-7-1">
+
+<p>   <img src="./block8-23.jpg"  alt="./block8-23.jpg" />
+</p><ul>
+<li id="sec-2-7-1-1">inode 0: deleted file<br/>
+<ul>
+<li id="sec-2-7-1-1-1">nil<br/>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-2-7-1-2">inode 1: /proc, /sys…<br/>
+<ul>
+<li id="sec-2-7-1-2-1">00002000 - 0000207f<br/>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-2-7-1-3">inode 2: /<br/>
+<ul>
+<li id="sec-2-7-1-3-1">00002080 - 000020ff<br/>
+      inode2: root inode
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-2-7-1-4">inode 11: /lost+found<br/>
+<ul>
+<li id="sec-2-7-1-4-1">00002500 - 0000257f<br/>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-2-7-1-5">inode 12: hello<br/>
+<ul>
+<li id="sec-2-7-1-5-1">00002580 - 00002600<br/>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Block 24: data block for / dir</h3>
+<div class="outline-text-3" id="text-2-8">
+
+
+</div>
+
+<div id="outline-container-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> 00006000 - 000063ff</h4>
+<div class="outline-text-4" id="text-2-8-1">
+
+<p>   <img src="./block24.jpg"  alt="./block24.jpg" />
+</p></div>
+
+</div>
+
+<div id="outline-container-2-8-2" class="outline-4">
+<h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> First entry in / dir:"."</h4>
+<div class="outline-text-4" id="text-2-8-2">
+
+
+
+
+<pre class="example">02 00 00 00 0c 00 01 02
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-3" class="outline-4">
+<h4 id="sec-2-8-3"><span class="section-number-4">2.8.3</span> Second entry in / dir:".."</h4>
+<div class="outline-text-4" id="text-2-8-3">
+
+
+
+
+<pre class="example">2e 00 00 00 02 00 00 00
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-4" class="outline-4">
+<h4 id="sec-2-8-4"><span class="section-number-4">2.8.4</span> Third entry in / dir:"lost+found"</h4>
+<div class="outline-text-4" id="text-2-8-4">
+
+
+
+
+<pre class="example">0c 00 02 02 2e 2e 00 00
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-5" class="outline-4">
+<h4 id="sec-2-8-5"><span class="section-number-4">2.8.5</span> Fourth entry in / dir:"hello"</h4>
+<div class="outline-text-4" id="text-2-8-5">
+
+
+
+
+<pre class="example">0b 00 00 00 14 00 0a 02
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Block 25-36: 12 data blocks for /lost+found</h3>
+<div class="outline-text-3" id="text-2-9">
+
+
+</div>
+
+<div id="outline-container-2-9-1" class="outline-4">
+<h4 id="sec-2-9-1"><span class="section-number-4">2.9.1</span> 00006400 - 00008fff</h4>
+<div class="outline-text-4" id="text-2-9-1">
+
+<p>   <img src="./block25-36.jpg"  alt="./block25-36.jpg" />
+</p></div>
+
+</div>
+
+<div id="outline-container-2-9-2" class="outline-4">
+<h4 id="sec-2-9-2"><span class="section-number-4">2.9.2</span> First entry in /lost+found dir:"."</h4>
+<div class="outline-text-4" id="text-2-9-2">
+
+
+
+
+<pre class="example">0b 00 00 00 0c 00 01 02
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-3" class="outline-4">
+<h4 id="sec-2-9-3"><span class="section-number-4">2.9.3</span> Second entry in /lost+found dir:".."</h4>
+<div class="outline-text-4" id="text-2-9-3">
+
+
+
+
+<pre class="example">2e 00 00 00 02 00 00 00
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Block 38: data block for hello</h3>
+<div class="outline-text-3" id="text-2-10">
+
+
+</div>
+
+<div id="outline-container-2-10-1" class="outline-4">
+<h4 id="sec-2-10-1"><span class="section-number-4">2.10.1</span> 00009800 - 00009cff</h4>
+<div class="outline-text-4" id="text-2-10-1">
+
+<p>   <img src="./block38.jpg"  alt="./block38.jpg" />
+    helloworld
+</p></div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Finding a file</h2>
+<div class="outline-text-2" id="text-3">
+
+<ol>
+<li>Mount fs.img on /tmp/fs
+
+
+
+<pre class="example">sudo mount -o loop ./fs.img /tmp/fs
+</pre>
+
+</li>
+<li>Create a simple 10-byte text file named hello in /tmp/fs
+
+
+
+<pre class="example">root@localhost:~# echo -n "helloworld" &gt; /tmp/fs/hello
+root@localhost:/tmp/fs# ls -il
+total 13
+12 -rw-r--r-- 1 root root    10 Nov 22 22:49 hello
+11 drwx------ 2 root root 12288 Nov 22 20:02 lost+found
+</pre>
+
+</li>
+<li>Find hello by hd fs.img
+<ul>
+<li>find file hello's inode here:
+
+<p>       
+       <img src="./inode.jpg"  alt="./inode.jpg" />
+</p></li>
+<li>find file hello's datablock here:
+
+<p>       
+       <img src="./datablock.jpg"  alt="./datablock.jpg" />
+</p></li>
+</ul>
+
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="author">Author: 20101152025 (<a href="mailto:mclyte.rabbit@gmail.com">mclyte.rabbit@gmail.com</a>)</p>
+<p class="date">Date: 2012-11-22 23:06:41 HKT</p>
+
+</div>
+</body>
+</html>

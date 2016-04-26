@@ -1,0 +1,1668 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Chapter 3</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body><table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 2.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter 4.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table>
+
+
+<h2 class="docChapterTitle">Chapter 3. The grep Family</h2><ul><li>&nbsp;<a class="docLink" href="#ch03lev1sec1">3.1 The <span class="docEmphasis">grep</span> Command</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec2">3.2 <span class="docEmphasis">grep</span> Examples with Regular Expressions</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec3">3.3 <span class="docEmphasis">grep</span> with Pipes</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec4">3.4 <span class="docEmphasis">grep</span> with Options</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec5">3.5 <span class="docEmphasis">egrep</span> (Extended <span class="docEmphasis">grep</span>)</a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec6">3.6 Fixed <span class="docEmphasis">grep</span> or Fast <span class="docEmphasis">grep</span></a></li>
+<li>&nbsp;<a class="docLink" href="#ch03lev1sec7">UNIX TOOLS LAB EXERCISE</a></li>
+</ul>
+<p class="docText">
+<img alt="graphics/ch03.gif" src="ch03.gif" border="0" width="500" height="411"></p>
+<p class="docText">The <span class="docEmphasis">grep</span> family consists of 
+the commands <span class="docEmphasis">grep, egrep,</span> and
+<span class="docEmphasis">fgrep.</span> The <span class="docEmphasis">grep</span> 
+command globally searches for regular expressions in files and prints all lines 
+that contain the expression. The <span class="docEmphasis">egrep</span> and
+<span class="docEmphasis">fgrep</span> commands are simply variants of
+<span class="docEmphasis">grep.</span> The <span class="docEmphasis">egrep</span> 
+command is an extended <span class="docEmphasis">grep,</span> supporting more 
+regular expression metacharacters. The <span class="docEmphasis">fgrep</span> 
+command, called <span class="docEmphasis">fixed grep,</span> and sometimes
+<span class="docEmphasis">fast grep,</span> treats all characters as literals; 
+that is, regular expression metacharacters aren't special—they match themselves. 
+The Free Software Foundation provides a free version of
+<span class="docEmphasis">grep,</span> called GNU <span class="docEmphasis">grep.</span> 
+These versions of <span class="docEmphasis">grep</span> are the ones used on 
+Linux systems, and can be found in <span class="docEmphasis">/usr/xpg4/bin</span> 
+on Sun's Solaris OS. The GNU version of <span class="docEmphasis">grep</span> 
+has extended the basic regular expression metacharacter set, added POSIX 
+compliancy, and included a number of new command line options. They also provide 
+a recursive <span class="docEmphasis">grep</span> called
+<span class="docEmphasis">rgrep</span> for descending entire directory trees.</p>
+<h3 class="docSection1Title" id="ch03lev1sec1">3.1 The <span class="docEmphasis">grep</span> 
+Command</h3>
+<h4 class="docSection2Title" id="ch03lev2sec1">3.1.1 The Meaning of <span class="docEmphasis">grep</span></h4>
+<p class="docText">The name <span class="docEmphasis">grep</span> can be traced 
+back to the <span class="docEmphasis">ex</span> editor. If you invoked that 
+editor and wanted to search for a string, you would type at the
+<span class="docEmphasis">ex</span> prompt:</p>
+<pre>: /pattern/p
+</pre>
+<p class="docText">The first line containing the string
+<span class="docEmphasis">pattern</span> would be printed as &quot;<span class="docEmphasis">p</span>&quot; 
+by the <span class="docEmphasis">print</span> command. If you wanted all the 
+lines that contained <span class="docEmphasis">pattern</span> to be printed, you 
+would type:</p>
+<pre>: g/pattern/p
+</pre>
+<p class="docText">When <span class="docEmphasis">g</span> precedes
+<span class="docEmphasis">pattern,</span> it means &quot;all lines in the file,&quot; or 
+&quot;perform a global substitution.&quot;</p>
+<p class="docText">Because the search pattern is called a
+<span class="docEmphasis">regular expression,</span> we can substitute
+<span class="docEmphasis">RE</span> for <span class="docEmphasis">pattern</span> 
+and the command reads:</p>
+<pre>: g/RE/p
+</pre>
+<p class="docText">And there you have it: the meaning of
+<span class="docEmphasis">grep</span> and the origin of its name. It means &quot;<span class="docEmphasis">g</span>lobally 
+search for the <span class="docEmphasis">r</span>egular
+<span class="docEmphasis">e</span>xpression (<span class="docEmphasis">RE</span>) 
+and <span class="docEmphasis">p</span>rint out the line.&quot; The nice part of using
+<span class="docEmphasis">grep</span> is that you do --not have to invoke an 
+editor to perform a search, and you do not need to enclose the regular 
+expression in forward slashes. It is much faster than using
+<span class="docEmphasis">ex</span> or <span class="docEmphasis">vi.</span></p>
+<h4 class="docSection2Title" id="ch03lev2sec2">3.1.2 How <span class="docEmphasis">grep</span> 
+Works</h4>
+<p class="docText">The <span class="docEmphasis">grep</span> command searches 
+for a pattern of characters in a file or multiple files. If the pattern contains 
+whitespace, it must be quoted. The pattern is either a quoted string or a single 
+word<span id="ENB3-1"><a class="docLink" href="#EN3-1"><sup>[1]</sup></a></span>, 
+and all other words following it are treated as filenames.
+<span class="docEmphasis">Grep</span> sends its output to the screen and does 
+not change or affect the input file in any way.</p>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">FORMAT</h2>
+    <pre>grep word filename filename
+</pre>
+    </td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list01" class="docExampleTitle">Example 3.1 </h5>
+<pre><span class="docEmphStrong">grep Tom /etc/passwd</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText"><span class="docEmphasis">Grep</span> will search for the 
+    pattern <span class="docEmphasis">Tom</span> in a file called
+    <span class="docEmphasis">/etc/passwd.</span> If successful, the line from 
+    the file will appear on the screen; if the pattern is not found, there will 
+    be no output at all; and if the file is not a legitimate file, an error will 
+    be sent to the screen. If the pattern is found, <span class="docEmphasis">
+    grep</span> returns an exit status of 0, indicating success; if the pattern 
+    is not found, the exit status returned is 1; and if the file is not found, 
+    the exit status is 2.</p>
+    <p class="docText">The <span class="docEmphasis">grep</span> program can get 
+    its input from a standard input or a pipe, as well as from files. If you 
+    forget to name a file, <span class="docEmphasis">grep</span> will assume it 
+    is getting input from standard input, the keyboard, and will stop until you 
+    type something. If coming from a pipe, the output of a command will be piped 
+    as input to the <span class="docEmphasis">grep</span> command, and if a 
+    desired pattern is matched, <span class="docEmphasis">grep</span> will print 
+    the output to the screen.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list02" class="docExampleTitle">Example 3.2 </h5>
+<pre>% <span class="docEmphStrong">ps -ef | grep root</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The output of the <span class="docEmphasis">ps</span> 
+    command (<span class="docEmphasis">ps –ef</span> displays all processes 
+    running on this system) is sent to <span class="docEmphasis">grep</span> and 
+    all lines containing <span class="docEmphasis">root</span> are printed.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<p class="docText">The <span class="docEmphasis">grep</span> command supports a 
+number of regular expression metacharacters (see
+<a class="docLink" href="#ch03table01">Table 3.1</a>) to help further define the 
+search pattern. It also provides a number of options (see
+<a class="docLink" href="#ch03table02">Table 3.2</a>) to modify the way it does 
+its search or displays lines. For example, you can provide options to turn off 
+case sensitivity, display line numbers, display errors only, and so on.</p>
+<h5 id="ch03list03" class="docExampleTitle">Example 3.3 </h5>
+<pre>% <span class="docEmphStrong">grep -n  '^jack:' /etc/passwd</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText"><span class="docEmphasis">Grep</span> searches the
+    <span class="docEmphasis">/etc/passwd</span> file for
+    <span class="docEmphasis">jack;</span> if <span class="docEmphasis">jack</span> 
+    is at the beginning of a line, <span class="docEmphasis">grep</span> prints 
+    out the number of the line on which <span class="docEmphasis">jack</span> 
+    was found and where in the line <span class="docEmphasis">jack</span> was 
+    found.</td>
+  </tr>
+</table>
+  </center>
+</div>
+
+<p>&nbsp;</p>
+
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table01" class="docTableTitle">Table 3.1. <span class="docEmphasis">grep</span>'s 
+  Regular Expression Metacharacters</h5>
+  </caption>
+  <colgroup span="4" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Metacharacter</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Function</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Example</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Matches</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">^</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Beginning-of-line anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'^love'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches all lines beginning with
+    <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">$</span>
+    </td>
+    <td class="docTableCell" vAlign="top">End-of-line anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'love$'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches all lines ending with
+    <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">. </td>
+    <td class="docTableCell" vAlign="top">Matches one character </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'l..e'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing an
+    <span class="docEmphasis">l,</span> followed by two characters, followed by 
+    an <span class="docEmphasis">e.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">* </td>
+    <td class="docTableCell" vAlign="top">Matches zero or more characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">' *love'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines with zero or more 
+    spaces, followed by the pattern <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[ ]</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one character in the set </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'[Ll]ove'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing
+    <span class="docEmphasis">love</span> or <span class="docEmphasis">Love.</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[^]</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one character not in the set
+    </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'[^A–K]ove'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines not containing a 
+    character in the range <span class="docEmphasis">A</span> through
+    <span class="docEmphasis">K,</span> followed by <span class="docEmphasis">
+    ove.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">\&lt; </td>
+    <td class="docTableCell" vAlign="top">Beginning-of-word anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'\&lt;love'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing a word that 
+    begins with <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">\&gt; </td>
+    <td class="docTableCell" vAlign="top">End-of-word anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'love\&gt;'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing a word that 
+    ends with <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top">\(..\) </td>
+    <td class="docTableCell" vAlign="top">Tags matched characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'\(love\)ing'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Tags marked portion in a register to 
+    be remembered later as number 1. To reference later, use \<span class="docEmphasis">1</span> 
+    to repeat the pattern. May use up to nine tags, starting with the first tag 
+    at the left-most part of the pattern. For example, the pattern
+    <span class="docEmphasis">love</span> is saved in register 1 to be 
+    referenced later as \<span class="docEmphasis">1.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">x\{m\} 
+    x\{m,\} x\{m,n\}</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn01">[a]</a></sup>
+    </td>
+    <td class="docTableCell" vAlign="top">Repetition of character x: m times, at 
+    least m times, or between m and n times </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'o\{5\}' 
+    'o\{5,\}' 'o\{5,10\}'</span> </td>
+    <td class="docTableCell" vAlign="top">Matches if line has 5 occurences of
+    <span class="docEmphasis">o</span>, at least 5 occurences of
+    <span class="docEmphasis">o</span>, or between 5 and 10 occurrences of
+    <span class="docEmphasis">o</span>. </td>
+  </tr>
+</table>
+<blockquote>
+  <p class="docFootnote"><sup><a name="ch03tabfn01">[a]</a></sup> The \{ \} 
+  metacharacters are not supported on all versions of UNIX or all 
+  pattern-matching utilities; they usually work with <span class="docEmphasis">
+  vi</span> and <span class="docEmphasis">grep.</span></p>
+</blockquote>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table02" class="docTableTitle">Table 3.2. <span class="docEmphasis">grep</span>'s 
+  Options</h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Option</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Does</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–b</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Precedes each line by the block number 
+    on which it was found. This is sometimes useful in locating disk block 
+    numbers by context. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–c</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Displays a count of matching lines 
+    rather than displaying the lines that match. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–h</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Does not display filenames. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–i</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Ignores the case of letters in making 
+    comparisons (i.e., upper-- and lowercase are considered identical). </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–l</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Lists only the names of files with 
+    matching lines (once), separated by newline characters. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–n</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Precedes each line by its relative 
+    line number in the file. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–s</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Works silently, that is, displays 
+    nothing except error messages. This is useful for checking the exit status.
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–v</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Inverts the search to display only 
+    lines that do not match. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">–w</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Searches for the expression as a word, 
+    as if surrounded by <span class="docEmphasis">\&lt;</span> and
+    <span class="docEmphasis">\&gt;.</span> This applies to
+    <span class="docEmphasis">grep</span> only. (Not all versions of
+    <span class="docEmphasis">grep</span> support this feature; e.g., SCO UNIX 
+    does not.) </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec3">3.1.3 <span class="docEmphasis">grep</span> and 
+Exit Status</h4>
+<p class="docText">The <span class="docEmphasis">grep</span> command is very 
+useful in shell scripts, because it always returns an exit status to indicate 
+whether it was able to locate the pattern or the file you were looking for. If 
+the pattern is found, <span class="docEmphasis">grep</span> returns an exit 
+status of 0, indicating success; if <span class="docEmphasis">grep</span> cannot 
+find the pattern, it returns 1 as its exit status; and if the file cannot be 
+found, <span class="docEmphasis">grep</span> returns an exit status of 2. (Other 
+UNIX utilities that search for patterns, such as <span class="docEmphasis">sed</span> 
+and <span class="docEmphasis">awk,</span> do not use the exit status to indicate 
+the success or failure of locating a pattern; they report failure only if there 
+is a syntax error in a command.)</p>
+<p class="docText">In the following example, <span class="docEmphasis">john</span> 
+is not found in the <span class="docEmphasis">/etc/passwd</span> file.</p>
+<h5 id="ch03list04" class="docExampleTitle">Example 3.4 </h5>
+<pre>1   % <span class="docEmphStrong">grep 'john' /etc/passwd</span>
+2   % <span class="docEmphStrong">echo $status</span> <span class="docEmphasis">(csh)</span>
+    <span class="docEmphasis">1</span>
+
+    or
+
+    $ <span class="docEmphStrong">echo $?</span>  <span class="docEmphasis">(sh, ksh)</span>
+    <span class="docEmphasis">1</span></pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <span style="FONT-WEIGHT: bold">
+    <ol class="docList" type="1">
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList"><span class="docEmphasis">Grep</span> searches for
+      <span class="docEmphasis">john</span> in the <span class="docEmphasis">
+      /etc/passwd</span> file, and if successful, <span class="docEmphasis">grep</span> 
+      exits with a status of 0. If <span class="docEmphasis">john</span> is not 
+      found in the file, <span class="docEmphasis">grep</span> exits with 1. If 
+      the file is not found, an exit status of 2 is returned.</span></li>
+      <li><span style="FONT-WEIGHT: normal">
+      <p class="docList">The C shell variable, <span class="docEmphasis">status,</span> 
+      and the Bourne/Korn shell variable, ?, are assigned the exit status of the 
+      last command that was executed.</span></li>
+    </ol>
+    </span></td>
+  </tr>
+</table>
+
+  </center>
+</div>
+
+<h3 class="docSection1Title" id="ch03lev1sec2">3.2 <span class="docEmphasis">grep</span> Examples 
+with Regular Expressions</h3>
+<p class="docText">The file being used for these examples is called
+<span class="docEmphasis">datafile.</span></p>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest           NW   Charles Main       3.0    .98    3     34</span>
+<span class="docEmphasis">western             WE   Sharon Gray        5.3    .97    5     23</span>
+<span class="docEmphasis">southwest           SW   Lewis Dalsass      2.7    .8     2     18</span>
+<span class="docEmphasis">southern            SO   Suan Chin          5.1    .95    4     15</span>
+<span class="docEmphasis">southeast           SE   Patricia Hemenway  4.0    .7     4     17</span>
+<span class="docEmphasis">eastern             EA   TB Savage          4.4    .84    5     20</span>
+<span class="docEmphasis">northeast           NE   AM Main Jr.        5.1    .94    3     13</span>
+<span class="docEmphasis">north               NO   Margot Weber       4.5    .89    5      9</span>
+<span class="docEmphasis">central             CT   Ann Stephens       5.7    .94    5     13</span>
+</pre>
+<h5 id="ch03list05" class="docExampleTitle">Example 3.5 </h5>
+<pre><span class="docEmphStrong">grep NW datafile</span>
+<span class="docEmphasis">northwest    NW    Charles Main    3.0   .98    3    34</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing the regular expression
+    <span class="docEmphasis">NW</span> in a file called
+    <span class="docEmphasis">datafile.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list06" class="docExampleTitle">Example 3.6 </h5>
+<pre><span class="docEmphStrong">grep NW d*</span>
+<span class="docEmphasis">datafile: northwest  NW   Charles Main   3.0  .98  3    34</span>
+<span class="docEmphasis">db:northwest         NW   Joel Craig     30   40   5    123</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing the regular expression
+    <span class="docEmphasis">NW</span> in all files starting with a
+    <span class="docEmphasis">d.</span> The shell expands
+    <span class="docEmphasis">d*</span> to all files that begin with a
+    <span class="docEmphasis">d,</span> in this case the filenames are
+    <span class="docEmphasis">db</span> and <span class="docEmphasis">datafile.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list07" class="docExampleTitle">Example 3.7 </h5>
+<pre><span class="docEmphStrong">grep '^n' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.      5.1  .94   3   13</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5    9</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines beginning with an
+    <span class="docEmphasis">n.</span> The caret (<span class="docEmphasis">^</span>) 
+    is the beginning-of-line anchor.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list08" class="docExampleTitle">Example 3.8 </h5>
+<pre><span class="docEmphStrong">grep '4$' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines ending with a <span class="docEmphasis">
+    4.</span> The dollar sign (<span class="docEmphasis">$</span>) is the end of 
+    line anchor.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list09" class="docExampleTitle">Example 3.9 </h5>
+<pre><span class="docEmphStrong">grep TB Savage datafile</span>
+<span class="docEmphasis">grep: Savage: No such file or directory</span>
+<span class="docEmphasis">datafile:eastern   EA TB Savage           4.4  .84   5   20</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Since the first argument is the pattern and all of the 
+    remaining arguments are filenames, <span class="docEmphasis">grep</span> 
+    will search for <span class="docEmphasis">TB</span> in a file called
+    <span class="docEmphasis">Savage</span> and a file called
+    <span class="docEmphasis">datafile.</span> To search for
+    <span class="docEmphasis">TB Savage,</span> see the next example.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list10" class="docExampleTitle">Example 3.10 </h5>
+<pre><span class="docEmphStrong">grep 'TB Savage' datafile</span>
+<span class="docEmphasis">eastern          EA     TB Savage         4.4  .84    5   20</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing the pattern
+    <span class="docEmphasis">TB Savage.</span> Without quotes (in this example, 
+    either single or double quotes will do), the whitespace between
+    <span class="docEmphasis">TB</span> and <span class="docEmphasis">Savage</span> 
+    would cause <span class="docEmphasis">grep</span> to search for
+    <span class="docEmphasis">TB</span> in a file called
+    <span class="docEmphasis">Savage</span> and a file called
+    <span class="docEmphasis">datafile,</span> as in the previous example.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest          NW    Charles Main       3.0    .98    3    34</span>
+<span class="docEmphasis">western            WE    Sharon Gray        53     .97    5    23</span>
+<span class="docEmphasis">southwest          SW    Lewis Dalsass      2.7    .8     2    18</span>
+<span class="docEmphasis">southern           SO    Suan Chin          5.1    .95    4    15</span>
+<span class="docEmphasis">southeast          SE    Patricia Hemenway  4.0    .7     4    17</span>
+<span class="docEmphasis">eastern            EA    TB Savage          4.4    .84    5    20</span>
+<span class="docEmphasis">northeast          NE    AM Main Jr.        5.1    .94    3    13</span>
+<span class="docEmphasis">north              NO    Margot Weber       4.5    .89    5     9</span>
+<span class="docEmphasis">central            CT    Ann Stephens       5.7    .94    5    13</span>
+</pre>
+<h5 id="ch03list11" class="docExampleTitle">Example 3.11 </h5>
+<pre><span class="docEmphStrong">grep '5\..' datafile</span>
+<span class="docEmphasis">western          WE     Sharon Gray       5.3  .97   5   23</span>
+<span class="docEmphasis">southern         SO     Suan Chin         5.1  .95   4   15</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.       5.1  .94   3   13</span>
+<span class="docEmphasis">central          CT     Ann Stephens      5.7  .94   5   13</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints a line containing the number
+    <span class="docEmphasis">5,</span> followed by a literal period and any 
+    single character. The &quot;dot&quot; metacharacter represents a single character, 
+    unless it is escaped with a backslash. When escaped, the character is no 
+    longer a special metacharacter, but represents itself, a literal period.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list12" class="docExampleTitle">Example 3.12 </h5>
+<pre><span class="docEmphStrong">grep '\.5' datafile</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5   9</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints any line containing the expression
+    <span class="docEmphasis">.5.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list13" class="docExampleTitle">Example 3.13 </h5>
+<pre><span class="docEmphStrong">grep '^[we]' datafile</span>
+<span class="docEmphasis">western          WE     Sharon Gray     5.3  .97   5   23</span>
+<span class="docEmphasis">eastern          EA     TB Savage       4.4  .84   5   20</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints lines beginning with either a
+    <span class="docEmphasis">w</span> or an <span class="docEmphasis">e.</span> 
+    The caret (<span class="docEmphasis">^</span>) is the beginning-of-line 
+    anchor, and either one of the characters in the brackets will be matched.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list14" class="docExampleTitle">Example 3.14 </h5>
+<pre><span class="docEmphStrong">grep '[^0-9]' datafile</span>
+<span class="docEmphasis">northwest        NW    Charles Main          3.0  .98  3   34</span>
+<span class="docEmphasis">western          WE    Sharon Gray           5.3  .97  5   23</span>
+<span class="docEmphasis">southwest        SW    Lewis Dalsass         2.7  .8   2   18</span>
+<span class="docEmphasis">southern         SO    Suan Chin             5.1  .95  4   15</span>
+<span class="docEmphasis">southeast        SE    Patricia Hemenway     4.0  .7   4   17</span>
+<span class="docEmphasis">eastern          EA    TB Savage             4.4  .84  5   20</span>
+<span class="docEmphasis">northeast        NE    AM Main Jr.           5.1  .94  3   13</span>
+<span class="docEmphasis">north            NO    Margot Weber          4.5  .89  5   9</span>
+<span class="docEmphasis">central          CT    Ann Stephens          5.7  .94  5   13</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing one non-digit. Because all 
+    lines have at least one non-digit, all lines are printed. (See the
+    <span class="docEmphasis">–v</span> option.)</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list15" class="docExampleTitle">Example 3.15 </h5>
+<pre><span class="docEmphStrong">grep '[A-Z][A-Z] [A-Z]' datafile</span>
+<span class="docEmphasis">eastern          EA     TB Savage       4.4  .84   5   20</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.     5.1  .94   3   13</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing two capital letters followed 
+    by a space and a capital letter, e.g., <span class="docEmphasis">TB Savage</span> 
+    and <span class="docEmphasis">AM Main.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list16" class="docExampleTitle">Example 3.16 </h5>
+<pre><span class="docEmphStrong">grep 'ss* ' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+<span class="docEmphasis">southwest        SW     Lewis Dalsass    2.7  .8    2   18</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing an <span class="docEmphasis">
+    s</span> followed by zero or more consecutive occurrences of the letter
+    <span class="docEmphasis">s</span> and a space. Finds
+    <span class="docEmphasis">Charles</span> and <span class="docEmphasis">
+    Dalsass.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest           NW     Charles Main       3.0  .98  3    34</span>
+<span class="docEmphasis">western             WE     Sharon Gray        53   .97  5    23</span>
+<span class="docEmphasis">southwest           SW     Lewis Dalsass      2.7  .8   2    18</span>
+<span class="docEmphasis">southern            SO     Suan Chin          5.1  .95  4    15</span>
+<span class="docEmphasis">southeast           SE     Patricia Hemenway  4.0  .7   4    17</span>
+<span class="docEmphasis">eastern             EA     TB Savage          4.4  .84  5    20</span>
+<span class="docEmphasis">northeast           NE     AM Main Jr.        5.1  .94  3    13</span>
+<span class="docEmphasis">north               NO     Margot Weber       4.5  .89  5     9</span>
+<span class="docEmphasis">central             CT     Ann Stephens       5.7  .94  5    13</span>
+</pre>
+<h5 id="ch03list17" class="docExampleTitle">Example 3.17 </h5>
+<pre><span class="docEmphStrong">grep '[a-z]\{9\}' datafile</span>
+<span class="docEmphasis">northwest        NW    Charles Main      3.0  .98   3   34</span>
+<span class="docEmphasis">southwest        SW    Lewis Dalsass     2.7  .8    2   18</span>
+<span class="docEmphasis">southeast        SE    Patricia Hemenway 4.0  .7    4   17</span>
+<span class="docEmphasis">northeast        NE    AM Main Jr.       5.1  .94   3   13</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines where there are at least nine 
+    consecutive lowercase letters, for example<span class="docEmphasis">, 
+    northwest, southwest, southeast,</span> and <span class="docEmphasis">
+    northeast.</span></td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list18" class="docExampleTitle">Example 3.18 </h5>
+<pre><span class="docEmphStrong">grep '\(3\)\.[0-9].*\1     *\1' datafile</span>
+<span class="docEmphasis">northwest        NW      Charles Main     3.0  .98   3   34</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints the line if it contains a
+    <span class="docEmphasis">3</span> followed by a period and another number, 
+    followed by any number of characters (<span class="docEmphasis">.*</span> ), 
+    another <span class="docEmphasis">3</span> (originally tagged), any number 
+    of tabs, and another <span class="docEmphasis">3.</span> Since the
+    <span class="docEmphasis">3</span> was enclosed in parentheses,
+    <span class="docEmphasis">\(3\),</span> it can be later referenced with
+    <span class="docEmphasis">\1.</span> <span class="docEmphasis">\1</span> 
+    means that this was the first expression to be tagged with the
+    <span class="docEmphasis">\( \)</span> pair.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list19" class="docExampleTitle">Example 3.19 </h5>
+<pre><span class="docEmphStrong">grep '\&lt;north' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.      5.1  .94   3   13</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5    9</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing a word starting with
+    <span class="docEmphasis">north.</span> The <span class="docEmphasis">\&lt;</span> 
+    is the beginning-of-word anchor.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list20" class="docExampleTitle">Example 3.20 </h5>
+<pre><span class="docEmphStrong">grep '\&lt;north\&gt;' datafile</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5   9</span></pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">EXPLANATION</h2>
+      <p class="docText">Prints the line if it contains the word
+      <span class="docEmphasis">north.</span> The <span class="docEmphasis">\&lt;</span> 
+      is the beginning-of-word anchor, and the <span class="docEmphasis">\&gt;</span> 
+      is the end-of-word anchor.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h5 id="ch03list21" class="docExampleTitle">Example 3.21 </h5>
+<pre><span class="docEmphStrong">grep '\&lt;[a-z].*n\&gt;' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main    3.0  .98   3   34</span>
+<span class="docEmphasis">western          WE     Sharon Gray     5.3  .97   5   23</span>
+<span class="docEmphasis">southern         SO     Suan Chin       5.1  .95   4   15</span>
+<span class="docEmphasis">eastern          EA     TB Savage       4.4  .84   5   20</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.     5.1  .94   3   13</span>
+<span class="docEmphasis">central          CT     Ann Stephens    5.7  .94   5   13</span></pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">EXPLANATION</h2>
+      <p class="docText">Prints all lines containing a word starting with a 
+      lowercase letter, followed by any number of characters, and a word ending 
+      in <span class="docEmphasis">n.</span> Watch the
+      <span class="docEmphBoldItalic">.*</span> symbol. It means any character, 
+      including whitespace.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<h3 class="docSection1Title" id="ch03lev1sec3">3.3 <span class="docEmphasis">grep</span> with 
+Pipes</h3>
+<p class="docText">Instead of taking its input from a file,
+<span class="docEmphasis">grep</span> often gets its input from a pipe.</p>
+<h5 id="ch03list22" class="docExampleTitle">Example 3.22 </h5>
+<pre>% <span class="docEmphStrong">ls -l</span>
+<span class="docEmphasis">drwxrwxrwx  2  ellie    2441 Jan 6 12:34    dir1</span>
+<span class="docEmphasis">-rw-r--r--  1  ellie    1538 Jan 2 15:50    file1</span>
+<span class="docEmphasis">-rw-r--r--  1  ellie    1539 Jan 3 13:36    file2</span>
+<span class="docEmphasis">drwxrwxrwx  2  ellie    2341 Jan 6 12:34    grades</span>
+
+% <span class="docEmphStrong">ls -l | grep '^d'</span>
+<span class="docEmphasis">drwxrwxrwx  2  ellie    2441 Jan 6 12:34    dir1</span>
+<span class="docEmphasis">drwxrwxrwx  2  ellie    2341 Jan 6 12:34    grades</span></pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The output of the <span class="docEmphasis">ls</span> 
+    command is piped to <span class="docEmphasis">grep.</span> All lines of 
+    output that begin with a <span class="docEmphasis">d</span> are printed; 
+    that is, all directories are printed.</td>
+  </tr>
+</table>
+
+<h3 class="docSection1Title" id="ch03lev1sec4">3.4 <span class="docEmphasis">grep</span> with 
+Options</h3>
+<p class="docText">The <span class="docEmphasis">grep</span> command has a 
+number of options that control its behavior. Not all versions of UNIX support 
+exactly the same options, so be sure to check your man pages for a complete 
+list.</p>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest          NW   Charles Main      3.0    .98    3    34</span>
+<span class="docEmphasis">western            WE   Sharon Gray       53     .97    5    23</span>
+<span class="docEmphasis">southwest          SW   Lewis Dalsass     2.7    .8     2    18</span>
+<span class="docEmphasis">southern           SO   Suan Chin         5.1    .95    4    15</span>
+<span class="docEmphasis">southeast          SE   Patricia Hemenway 4.0    .7     4    17</span>
+<span class="docEmphasis">eastern            EA   TB Savage         4.4    .84    5    20</span>
+<span class="docEmphasis">northeast          NE   AM Main Jr.       5.1    .94    3    13</span>
+<span class="docEmphasis">north              NO   Margot Weber      4.5    .89    5     9</span>
+<span class="docEmphasis">central            CT   Ann Stephens      5.7    .94    5    13</span>
+</pre>
+<h5 id="ch03list23" class="docExampleTitle">Example 3.23 </h5>
+<pre><span class="docEmphStrong">grep –n '^south' datafile</span>
+<span class="docEmphasis">3:southwest      SW     Lewis Dalsass       2.7   .8    2   18</span>
+<span class="docEmphasis">4:southern       SO     Suan Chin           5.1   .95   4   15</span>
+<span class="docEmphasis">5:southeast      SE     Patricia Hemenway   4.0   .7    4   17</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The <span class="docEmphasis">–n</span> option precedes 
+    each line with the number of the line where the pattern was found, followed 
+    by the line.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list24" class="docExampleTitle">Example 3.24 </h5>
+<pre><span class="docEmphStrong">grep –i 'pat' datafile</span>
+<span class="docEmphasis">southeast        SE     Patricia Hemenway    4.0   .7    4    17</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The <span class="docEmphasis">–i</span> option turns off 
+    case sensitivity. It does not matter if the expression
+    <span class="docEmphasis">pat</span> contains any combination of upper- or 
+    lowercase letters.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list25" class="docExampleTitle">Example 3.25 </h5>
+<pre><span class="docEmphStrong">grep –v 'Suan Chin' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main         3.0  .98  3  34</span>
+<span class="docEmphasis">western          WE     Sharon Gray          5.3  .97  5  23</span>
+<span class="docEmphasis">southwest        SW     Lewis Dalsass        2.7  .8   2  18</span>
+<span class="docEmphasis">southeast        SE     Patricia Hemenway    4.0  .7   4  17</span>
+<span class="docEmphasis">eastern          EA     TB Savage            4.4  .84  5  20</span>
+<span class="docEmphasis">northeast        NE     AM Main Jr.          5.1  .94  3  13</span>
+<span class="docEmphasis">north            NO     Margot Weber         4.5  .89  5  9</span>
+<span class="docEmphasis">central          CT     Ann Stephens         5.7  .94  5  13</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Here, the <span class="docEmphasis">–v</span> option 
+    prints all lines <span class="docEmphasis">not</span> containing the pattern
+    <span class="docEmphasis">Suan Chin.</span> This option is used when 
+    deleting a specific entry from the input file. To really remove the entry, 
+    you would redirect the output of <span class="docEmphasis">grep</span> to a 
+    temporary file, and then change the name of the temporary file back to the 
+    name of the original file as shown here:</p>
+    <pre>grep -v 'Suan Chin' datafile &gt; temp
+mv temp datafile
+</pre>
+    <p class="docText">Remember that you must use a temporary file when 
+    redirecting the output from <span class="docEmphasis">datafile.</span> If 
+    you redirect from <span class="docEmphasis">datafile</span> to
+    <span class="docEmphasis">datafile,</span> the shell will &quot;clobber&quot; the
+    <span class="docEmphasis">datafile.</span> (See &quot;Redirection&quot; on page 16.)</td>
+  </tr>
+</table>
+  </center>
+</div>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest          NW    Charles Main       3.0    .98    3    34</span>
+<span class="docEmphasis">western            WE    Sharon Gray        53     .97    5    23</span>
+<span class="docEmphasis">southwest          SW    Lewis Dalsass      2.7    .8     2    18</span>
+<span class="docEmphasis">southern           SO    Suan Chin          5.1    .95    4    15</span>
+<span class="docEmphasis">southeast          SE    Patricia Hemenway  4.0    .7     4    17</span>
+<span class="docEmphasis">eastern            EA    TB Savage          4.4    .84    5    20</span>
+<span class="docEmphasis">northeast          NE    AM Main Jr.        5.1    .94    3    13</span>
+<span class="docEmphasis">north              NO    Margot Weber       4.5    .89    5     9</span>
+<span class="docEmphasis">central            CT    Ann Stephens       5.7    .94    5    13</span>
+</pre>
+<h5 id="ch03list26" class="docExampleTitle">Example 3.26 </h5>
+<pre><span class="docEmphStrong">grep –l 'SE'  *</span>
+<span class="docEmphasis">datafile</span>
+<span class="docEmphasis">datebook</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The <span class="docEmphasis">–l</span> option causes
+    <span class="docEmphasis">grep</span> to print out only the filenames where 
+    the pattern is found instead of the line of text</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list27" class="docExampleTitle">Example 3.27 </h5>
+<pre><span class="docEmphStrong">grep –c 'west' datafile</span>
+<span class="docEmphasis">3</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The –<span class="docEmphasis">c</span> option causes
+    <span class="docEmphasis">grep</span> to print the number of lines where the 
+    pattern was found. This does not mean the number of occurrences of the 
+    pattern. For example, if <span class="docEmphasis">west</span> is found 
+    three times on a line, it only counts the line once.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list28" class="docExampleTitle">Example 3.28 </h5>
+<pre><span class="docEmphStrong">grep  –w 'north' datafile</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5   9</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The <span class="docEmphasis">–w</span> option causes
+    <span class="docEmphasis">grep</span> to find the pattern only if it is a 
+    word,<span id="ENB3-2"><a class="docLink" href="#EN3-2"><sup>[2]</sup></a></span> 
+    not part of a word. Only the line containing the word
+    <span class="docEmphasis">north</span> is printed, not
+    <span class="docEmphasis">northwest,</span> <span class="docEmphasis">
+    northeast,</span> etc.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h5 id="ch03list29" class="docExampleTitle">Example 3.29 </h5>
+<pre><span class="docEmphStrong">echo $LOGNAME</span>
+<span class="docEmphasis">lewis</span>
+<span class="docEmphStrong">grep -i &quot;$LOGNAME&quot; datafile</span>
+<span class="docEmphasis">southwest        SW     Lewis Dalsass   2.7  .8   2   18</span></pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">The value of the shell ENV variable,
+    <span class="docEmphasis">LOGNAME,</span> is printed. It contains the user's 
+    login name. If the variable is enclosed in double quotes, it will still be 
+    expanded by the shell, and in case there is more than one word assigned to 
+    the variable, whitespace is shielded from shell interpretation. If single 
+    quotes are used, variable substitution does not take place; that is,
+    <span class="docEmphasis">$LOGNAME</span> is printed.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch03lev2sec4">3.4.1 <span class="docEmphasis">grep</span> Review</h4>
+<p class="docText"><a class="docLink" href="#ch03table03">Table 3.3</a> contains 
+examples of <span class="docEmphasis">grep</span> commands and what they do.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table03" class="docTableTitle">Table 3.3. Review of <span class="docEmphasis">grep</span></h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">grep</span>
+    <span class="docEmphBoldItalic">Command</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Does</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep 
+    '\&lt;Tom\&gt;' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing the word
+    <span class="docEmphasis">Tom.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep 'Tom 
+    Savage' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing
+    <span class="docEmphasis">Tom Savage.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep 
+    '^Tommy' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines if
+    <span class="docEmphasis">Tommy</span> is at the beginning of the line. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep '\.bak$' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines ending in
+    <span class="docEmphasis">.bak.</span> Single quotes protect the dollar sign 
+    (<span class="docEmphasis">$</span>) from interpretation. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep '[Pp]yramid' 
+    *</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines from all files containing
+    <span class="docEmphasis">pyramid</span> or <span class="docEmphasis">
+    Pyramid</span> in the current working directory. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep '[A–Z]' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing at least one 
+    capital letter. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep '[0–9]' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing at least one 
+    number. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep 
+    '[A–Z]…[0–9]' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing five-character 
+    patterns starting with a capital letter and ending with a number. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –w '[tT]est' 
+    files</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines with the word
+    <span class="docEmphasis">Test</span> and/or <span class="docEmphasis">test.</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –s 
+    &quot;Mark Todd&quot; file</span> </td>
+    <td class="docTableCell" vAlign="top">Finds lines containing
+    <span class="docEmphasis">Mark Todd,</span> but does not print the line. Can 
+    be used when checking <span class="docEmphasis">grep</span>'s exit status.
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –v 
+    'Mary' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints all lines not containing
+    <span class="docEmphasis">Mary.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –i 'sam' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints all lines containing
+    <span class="docEmphasis">sam,</span> regardless of case (e.g.,
+    <span class="docEmphasis">SAM, sam, SaM, sAm</span>). </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –l 
+    'Dear Boss' *</span> </td>
+    <td class="docTableCell" vAlign="top">Lists all filenames containing
+    <span class="docEmphasis">Dear Boss.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep –n 
+    'Tom' file</span> </td>
+    <td class="docTableCell" vAlign="top">Precedes matching lines with line 
+    numbers. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep &quot;$name&quot; 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Expands the value of variable
+    <span class="docEmphasis">name</span> and prints lines containing that 
+    value. Must use double quotes. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">grep '$5' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing literal
+    <span class="docEmphasis">$5.</span> Must use single quotes. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">ps –ef| grep 
+    &quot;^ *user1&quot;</span> </td>
+    <td class="docTableCell" vAlign="top">Pipes output of
+    <span class="docEmphasis">ps –ef</span> to <span class="docEmphasis">grep,</span> 
+    searching for <span class="docEmphasis">user1</span> at the beginning of a 
+    line, even if it is preceded by zero or more spaces. </td>
+  </tr>
+</table>
+
+<h3 class="docSection1Title" id="ch03lev1sec5">3.5 <span class="docEmphasis">egrep</span> 
+(Extended <span class="docEmphasis">grep</span>)</h3>
+<p class="docText">The main advantage of using <span class="docEmphasis">egrep</span> 
+is that additional regular expression metacharacters (see
+<a class="docLink" href="#ch03table04">Table 3.4</a>) have been added to the set 
+provided by <span class="docEmphasis">grep.</span> The <span class="docEmphasis">
+\(\)</span> and <span class="docEmphasis">\{\},</span> however, are not allowed. 
+(See GNU <span class="docEmphasis">grep –E</span> if using Linux.)</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table04" class="docTableTitle">Table 3.4. <span class="docEmphasis">egrep</span>'s 
+  Regular Expression Metacharacters</h5>
+  </caption>
+  <colgroup span="4" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Metacharacter</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Function</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Example</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Matches</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">^</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Beginning-of-line anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'^love'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches all lines beginning with
+    <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">$</span>
+    </td>
+    <td class="docTableCell" vAlign="top">End-of-line anchor </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'love$'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches all lines ending with
+    <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">.</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one character </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'l..e'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing an
+    <span class="docEmphasis">l,</span> followed by two characters, followed by 
+    an <span class="docEmphasis">e.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">*</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches zero or more characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'*love'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines with zero or more spaces 
+    of the preceding characters followed by the pattern
+    <span class="docEmphasis">love.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[ ]</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one character in the set </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'[Ll]ove'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines containing
+    <span class="docEmphasis">love</span> or <span class="docEmphasis">Love.</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">[^ ]</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one character not in the set
+    </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'[^A–KM–Z]ove'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches lines not containing
+    <span class="docEmphasis">A</span> through <span class="docEmphasis">K</span> 
+    or <span class="docEmphasis">M</span> through <span class="docEmphasis">Z,</span> 
+    followed by <span class="docEmphasis">ove.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top" colSpan="4">
+    <span class="docEmphBoldItalic">New with</span>
+    <span class="docEmphBoldItalic">egrep:</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">+</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one or more of the preceding 
+    characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'[a–z]+ove'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches one or more lowercase letters, 
+    followed by <span class="docEmphasis">ove.</span> Would find
+    <span class="docEmphasis">move,</span> <span class="docEmphasis">approve,</span>
+    <span class="docEmphasis">love,</span> <span class="docEmphasis">behoove,</span> 
+    etc. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">?</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches zero or one of the preceding 
+    characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'lo?ve'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches for an
+    <span class="docEmphasis">l</span> followed by either one or not any 
+    occurrences of the letter <span class="docEmphasis">o.</span> Would find
+    <span class="docEmphasis">love</span> or <span class="docEmphasis">lve.</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">a|b</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches either a or b </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'love|hate'</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Matches for either expression,
+    <span class="docEmphasis">love</span> or <span class="docEmphasis">hate.</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">()</span>
+    </td>
+    <td class="docTableCell" vAlign="top">Groups characters </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">'love(able|ly) 
+    (ov)+'</span> </td>
+    <td class="docTableCell" vAlign="top">Matches for <span class="docEmphasis">
+    lovable</span> or <span class="docEmphasis">lovely.</span> Matches for one 
+    or more occurrences of <span class="docEmphasis">ov.</span> </td>
+  </tr>
+</table>
+<h4 class="docSection2Title" id="ch03lev2sec5">3.5.1 <span class="docEmphasis">egrep</span> 
+Examples</h4>
+<p class="docText">The following example illustrates only the way the new 
+extended set of regular expression metacharacters is used with
+<span class="docEmphasis">egrep.</span> The <span class="docEmphasis">grep</span> 
+examples presented earlier illustrate the use of the standard metacharacters, 
+which behave the same way with <span class="docEmphasis">egrep.</span>
+<span class="docEmphasis">Egrep</span> also uses the same options at the command 
+line as <span class="docEmphasis">grep.</span></p>
+<pre>% <span class="docEmphStrong">cat datafile</span>
+<span class="docEmphasis">northwest          NW   Charles Main       3.0    .98    3    34</span>
+<span class="docEmphasis">western            WE   Sharon Gray        53     .97    5    23</span>
+<span class="docEmphasis">southwest          SW   Lewis Dalsass      2.7    .8     2    18</span>
+<span class="docEmphasis">southern           SO   Suan Chin          5.1    .95    4    15</span>
+<span class="docEmphasis">southeast          SE   Patricia Hemenway  4.0    .7     4    17</span>
+<span class="docEmphasis">eastern            EA   TB Savage          4.4    .84    5    20</span>
+<span class="docEmphasis">northeast          NE   AM Main Jr.        5.1    .94    3    13</span>
+<span class="docEmphasis">north              NO   Margot Weber       4.5    .89    5     9</span>
+<span class="docEmphasis">central            CT   Ann Stephens       5.7    .94    5    13</span>
+</pre>
+<h5 id="ch03list30" class="docExampleTitle">Example 3.30 </h5>
+<pre><span class="docEmphStrong">egrep 'NW|EA' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main    3.0  .98   3   34</span>
+<span class="docEmphasis">eastern          EA     TB Savage       4.4  .84   5   20</span>
+</pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints the line if it contains either the expression
+    <span class="docEmphasis">NW</span> or the expression
+    <span class="docEmphasis">EA.</span></td>
+  </tr>
+</table>
+<h5 id="ch03list31" class="docExampleTitle">Example 3.31 </h5>
+<pre><span class="docEmphStrong">egrep '3+' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+<span class="docEmphasis">western          WE     Sharon Gray      5.3  .97   5   23</span>
+<span class="docEmphasis">northeast        NE     AM Main          5.1  .94   3   13</span>
+<span class="docEmphasis">central          CT     Ann Stephens     5.7  .94   5   13</span>
+</pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing one or more occurrences of 
+    the number <span class="docEmphasis">3.</span></td>
+  </tr>
+</table>
+<h5 id="ch03list32" class="docExampleTitle">Example 3.32 </h5>
+<pre><span class="docEmphStrong">egrep '2\.?[0–9]' datafile</span>
+<span class="docEmphasis">western          WE     Sharon Gray     5.3  .97   5   23</span>
+<span class="docEmphasis">southwest        SW     Lewis Dalsass   2.7  .8    2   18</span>
+<span class="docEmphasis">eastern          EA     TB Savage       4.4  .84   5   20</span>
+</pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing a <span class="docEmphasis">
+    2,</span> followed by zero or one period, followed by a number.</td>
+  </tr>
+</table>
+<h5 id="ch03list33" class="docExampleTitle">Example 3.33 </h5>
+<pre><span class="docEmphStrong">egrep '(no)+' datafile</span>
+<span class="docEmphasis">northwest        NW     Charles Main     3.0  .98   3   34</span>
+<span class="docEmphasis">northeast        NE     AM Main          5.1  .94   3   13</span>
+<span class="docEmphasis">north            NO     Margot Weber     4.5  .89   5    9</span>
+</pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints lines containing one or more consecutive 
+    occurrences of the pattern group <span class="docEmphasis">no.</span></td>
+  </tr>
+</table>
+<h5 id="ch03list34" class="docExampleTitle">Example 3.34 </h5>
+<pre><span class="docEmphStrong">egrep 'S(h|u)' datafile</span>
+<span class="docEmphasis">western          WE     Sharon Gray     5.3  .97   5   23</span>
+<span class="docEmphasis">southern         SO     Suan Chin       5.1  .95   4   15</span>
+</pre>
+<table cellSpacing="0" width="90%" border="1" align="center">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Prints all lines containing <span class="docEmphasis">S,</span> 
+    followed by either <span class="docEmphasis">h</span> or
+    <span class="docEmphasis">u.</span></td>
+  </tr>
+</table>
+<h5 id="ch03list35" class="docExampleTitle">Example 3.35 </h5>
+<pre><span class="docEmphStrong">egrep 'Sh|u' datafile</span>
+<span class="docEmphasis">western          WE    Sharon Gray       5.3  .97   5   23</span>
+<span class="docEmphasis">southern         SO    Suan Chin         5.1  .95   4   15</span>
+<span class="docEmphasis">southwest        SW    Lewis Dalsass     2.7  .8    2   18</span>
+<span class="docEmphasis">southeast        SE    Patricia Hemenway 4.0  .7    4   17</span></pre>
+<div align="center">
+  <center>
+  <table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+    <tr>
+      <td>
+      <h2 class="docSidebarTitle">EXPLANATION</h2>
+      <p class="docText">Prints all lines containing the expression
+      <span class="docEmphasis">Sh</span> or <span class="docEmphasis">u.</span></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4 class="docSection2Title" id="ch03lev2sec6">3.5.2 <span class="docEmphasis">egrep</span> Review</h4>
+<p class="docText"><a class="docLink" href="#ch03table05">Table 3.5</a> contains 
+examples of <span class="docEmphasis">egrep</span> commands and what they do.</p>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <caption>
+  <h5 id="ch03table05" class="docTableTitle">Table 3.5. Review of <span class="docEmphasis">egrep</span></h5>
+  </caption>
+  <colgroup span="2" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    egrep</span> <span class="docEmphBoldItalic">Command</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">What 
+    It Does</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep '^ +' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines beginning with one or 
+    more spaces. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep '^ *' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines beginning with zero or 
+    more spaces<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep '(Tom 
+    | Dan) Savage' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing
+    <span class="docEmphasis">Tom Savage</span> or <span class="docEmphasis">Dan 
+    Savage.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep '(ab)+' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines with one or more 
+    occurrences of <span class="docEmphasis">ab.</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep 
+    '^X[0–9]?' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines beginning with
+    <span class="docEmphasis">X</span> followed by zero or one single digit.
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep 
+    'fun\.$' *</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines ending in
+    <span class="docEmphasis">fun.</span> from all files.<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep 
+    '[A–Z]+' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing one or more 
+    capital letters. </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep 
+    '[0–9]' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing a number.<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep 
+    '[A–Z]…[0–9]' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing five-character 
+    patterns starting with a capital letter, followed by three of any character, 
+    and ending with a number.<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep '[tT]est' 
+    files</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines with
+    <span class="docEmphasis">Test</span> and/or <span class="docEmphasis">test.</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep &quot;Susan 
+    Jean&quot; file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints lines containing
+    <span class="docEmphasis">Susan Jean.</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep –v 
+    'Mary' file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints all lines NOT containing
+    <span class="docEmphasis">Mary.</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep –i 'sam' 
+    file</span> </td>
+    <td class="docTableCell" vAlign="top">Prints all lines containing
+    <span class="docEmphasis">sam,</span> regardless of case (e.g.,
+    <span class="docEmphasis">SAM, sam, SaM, sAm,</span> etc.).<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep –l 
+    'Dear Boss' *</span> </td>
+    <td class="docTableCell" vAlign="top">Lists all filenames containing
+    <span class="docEmphasis">Dear Boss.</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep –n 
+    'Tom' file</span> </td>
+    <td class="docTableCell" vAlign="top">Precedes matching lines with line 
+    numbers.<sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphasis">egrep –s 
+    &quot;$name&quot; file</span> </td>
+    <td class="docTableCell" vAlign="top">Expands variable name, finds it, but 
+    prints nothing. Can be used to check the exit status of
+    <span class="docEmphasis">egrep.</span><sup class="docFootnote"><a class="docLink" href="#ch03tabfn02">[a]</a></sup>
+    </td>
+  </tr>
+</table>
+<blockquote>
+  <p class="docFootnote"><sup><a name="ch03tabfn02">[a]</a></sup>
+  <span class="docEmphasis">egrep</span> and <span class="docEmphasis">grep</span> 
+  handle this pattern in the same way.</p>
+</blockquote>
+
+<h3 class="docSection1Title" id="ch03lev1sec6">3.6 Fixed <span class="docEmphasis">grep</span> or 
+Fast <span class="docEmphasis">grep</span></h3>
+<p class="docText">The <span class="docEmphasis">fgrep</span> command behaves 
+like <span class="docEmphasis">grep,</span> but does not recognize any regular 
+expression metacharacters as being special. All characters represent only 
+themselves. A caret is simply a caret, a dollar sign is a dollar sign, and so 
+forth. (See GNU <span class="docEmphasis">grep –F</span> if using Linux.)</p>
+<h5 id="ch03list36" class="docExampleTitle">Example 3.36 </h5>
+<pre>% <span class="docEmphStrong">fgrep '[A-Z]****[0-9]..$5.00'  file</span>
+</pre>
+<div align="center">
+  <center>
+<table cellSpacing="0" width="90%" border="1" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+  <tr>
+    <td>
+    <h2 class="docSidebarTitle">EXPLANATION</h2>
+    <p class="docText">Finds all lines in the file containing the literal string
+    <span class="docEmphasis">[A–Z]****[0–9]..$5.00.</span> All characters are 
+    treated as themselves. There are no special characters.</td>
+  </tr>
+</table>
+  </center>
+</div>
+<h3 class="docSection1Title" id="ch03lev1sec7">UNIX TOOLS LAB EXERCISE</h3>
+<h4 class="docSection2Title" id="ch03lev2sec7">Lab 1: <span class="docEmphasis">grep</span> 
+Exercise</h4>
+<p class="docText">Steve Blenheim:238-923-7366:95 Latham Lane, Easton, PA 
+83755:11/12/56:20300</p>
+<p class="docText">Betty Boop:245-836-8357:635 Cutesy Lane, Hollywood, CA 
+91464:6/23/23:14500</p>
+<p class="docText">Igor Chevsky:385-375-8395:3567 Populus Place, Caldwell, NJ 
+23875:6/18/68:23400</p>
+<p class="docText">Norma Corder:397-857-2735:74 Pine Street, Dearborn, MI 
+23874:3/28/45:245700</p>
+<p class="docText">Jennifer Cowan:548-834-2348:583 Laurel Ave., Kingsville, TX 
+83745:10/1/35:58900</p>
+<p class="docText">Jon DeLoach:408-253-3122:123 Park St., San Jose, CA 
+04086:7/25/53:85100</p>
+<p class="docText">Karen Evich:284-758-2857:23 Edgecliff Place, Lincoln, NB 
+92743:7/25/53:85100</p>
+<p class="docText">Karen Evich:284-758-2867:23 Edgecliff Place, Lincoln, NB 
+92743:11/3/35:58200</p>
+<p class="docText">Karen Evich:284-758-2867:23 Edgecliff Place, Lincoln, NB 
+92743:11/3/35:58200</p>
+<p class="docText">Fred Fardbarkle:674-843-1385:20 Parak Lane, DeLuth, MN 
+23850:4/12/23:780900</p>
+<p class="docText">Fred Fardbarkle:674-843-1385:20 Parak Lane, DeLuth, MN 
+23850:4/12/23:780900</p>
+<p class="docText">Lori Gortz:327-832-5728:3465 Mirlo Street, Peabody, MA 
+34756:10/2/65:35200</p>
+<p class="docText">Paco Gutierrez:835-365-1284:454 Easy Street, Decatur, IL 
+75732:2/28/53:123500</p>
+<p class="docText">Ephram Hardy:293-259-5395:235 CarltonLane, Joliet, IL 
+73858:8/12/20:56700</p>
+<p class="docText">James Ikeda:834-938-8376:23445 Aster Ave., Allentown, NJ 
+83745:12/1/38:45000</p>
+<p class="docText">Barbara Kertz:385-573-8326:832 Ponce Drive, Gary, IN 
+83756:12/1/46:268500</p>
+<p class="docText">Lesley Kirstin:408-456-1234:4 Harvard Square, Boston, MA 
+02133:4/22/62:52600</p>
+<p class="docText">William Kopf:846-836-2837:6937 Ware Road, Milton, PA 
+93756:9/21/46:43500</p>
+<p class="docText">Sir Lancelot:837-835-8257:474 Camelot Boulevard, Bath, WY 
+28356:5/13/69:24500</p>
+<p class="docText">Jesse Neal:408-233-8971:45 Rose Terrace, San Francisco, CA 
+92303:2/3/36:25000</p>
+<p class="docText">Zippy Pinhead:834-823-8319:2356 Bizarro Ave., Farmount, IL 
+84357:1/1/67:89500</p>
+<p class="docText">Arthur Putie:923-835-8745:23 Wimp Lane, Kensington, DL 
+38758:8/31/69:126000</p>
+<p class="docText">Popeye Sailor:156-454-3322:945 Bluto Street, Anywhere, USA 
+29358:3/19/35:22350</p>
+<p class="docText">Jose Santiago:385-898-8357:38 Fife Way, Abilene, TX 
+39673:1/5/58:95600</p>
+<p class="docText">Tommy Savage:408-724-0140:1222 Oxbow Court, Sunnyvale, CA 
+94087:5/19/66:34200</p>
+<p class="docText">Yukio Takeshida:387-827-1095:13 Uno Lane, Ashville, NC 
+23556:7/1/29:57000</p>
+<p class="docText">Vinh Tranh:438-910-7449:8235 Maple Street, Wilmington, VM 
+29085:9/23/63:68900</p>
+<p class="docText">(Refer to the database called <span class="docEmphasis">
+datebook</span> on the CD.)</p>
+<table cellSpacing="16" cellpadding="5" border="0">
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>1:</b></td>
+    <td>
+    <p class="docText">Print all lines containing the string
+    <span class="docEmphasis">San.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>2:</b></td>
+    <td>
+    <p class="docText">Print all lines where the person's first name starts with
+    <span class="docEmphasis">J.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>3:</b></td>
+    <td>
+    <p class="docText">Print all lines ending in <span class="docEmphasis">700.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>4:</b></td>
+    <td>
+    <p class="docText">Print all lines that don't contain
+    <span class="docEmphasis">834.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>5:</b></td>
+    <td>
+    <p class="docText">Print all lines where birthdays are in
+    <span class="docEmphasis">December.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>6:</b></td>
+    <td>
+    <p class="docText">Print all lines where the phone number is in the
+    <span class="docEmphasis">408</span> area code.</td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>7:</b></td>
+    <td>
+    <p class="docText">Print all lines containing an uppercase letter, followed 
+    by four lowercase letters, a comma, a space, and one uppercase letter.</td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>8:</b></td>
+    <td>
+    <p class="docText">Print lines where the last name begins with
+    <span class="docEmphasis">K</span> or <span class="docEmphasis">k.</span></td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>9:</b></td>
+    <td>
+    <p class="docText">Print lines preceded by a line number where the salary is 
+    a six-figure number.</td>
+  </tr>
+  <tr vAlign="top">
+    <td class="docText" align="right"><b>10:</b></td>
+    <td>
+    <p class="docText">Print lines containing <span class="docEmphasis">Lincoln</span> 
+    or <span class="docEmphasis">lincoln</span> (remember that
+    <span class="docEmphasis">grep</span> is insensitive to case).</td>
+  </tr>
+</table>
+<blockquote>
+<p class="docFootnote" id="EN3-1"><a class="docLink" href="#ENB3-1">[1]</a>&nbsp;&nbsp;A word is also 
+  called a token.</p><p class="docFootnote" id="EN3-2"><a class="docLink" href="#ENB3-2">[2]</a>&nbsp;&nbsp;A word ia a 
+  sequence of alphanumeric characters starting at the beginning of a line or 
+  preceded by whitespace and ending in whitespace, punctuation, or a newline</p></blockquote>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="_chapter 2.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><a href="_chapter 4.htm"><img src="Rarrow.gif" width="17" height="19" border="0"></a></td></tr></table></body>
+
+</html>

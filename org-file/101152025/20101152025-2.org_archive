@@ -1,0 +1,26 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/matrix/org-mode/101152025/20101152025-2.org
+
+* Task
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-22 一 09:00
+  :ARCHIVE_FILE: ~/org-mode/101152025/20101152025-2.org
+  :ARCHIVE_OLPATH: Process management/steps of experiment/Process creation
+  :ARCHIVE_CATEGORY: 20101152025-2
+  :END:
+  1. Read the NOTES section of wait manual page (man 2 wait) to get a clear idea about zombie processes.
+     And tell me why zombie is not welcomed.
+     *answer:* there are two way to create zombies
+     1. when the child process want to terminated,he will send
+	a signal to father,but father ignored it;
+     2. the father still there,but didn't wait or waitpid a
+	child process.
+  2. At the end of wait manual page (man 2 wait), there is an example program.
+     Play with it, and tell me about WUNTRACED, WCONTINUED, WIFEXITED
+     , WEXITSTATUS, WIFSIGNALED, WTERMSIG, WIFSTOPPED, WSTOPSIG,
+     WIFCONTINUED, pause().
+  3. Compile and run the following small program
+
+

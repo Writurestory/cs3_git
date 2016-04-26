@@ -1,0 +1,128 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Fri Dec 14 23:14:09 2012
+;; Desktop file format version 206
+;; Emacs version 24.2.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("system" "scroll" "pipe" "linked" "jpg" "file" "pipeN" "pipe" "src" "begin_src" "include <stdio.h>" "zombie av" "src" "htmli"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/matriux/org-mode/101152025/20101152025.org" "/home/matriux/org-mode/101152025/readme.org" "/home/matriux/org-mode/101152025/20101152025-4.org" "/home/matriux/org-mode/101152025/shmdemo_new.c" "/home/matriux/org-mode/101152025/mmapdemo_new.c" "/home/matriux/org-mode/101152025/semdemo.c" "/home/matriux/org-mode/101152025/mmapdemo.c" "/home/matriux/org-mode/101152025/semdemo.c" "/home/matriux/org-mode/101152025/20101152025-2.org" "/home/matriux/org-mode/101152025/system_call.org" "/home/matriux/org-mode/101152025/pipe.c" "/usr/src/"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/readme.org"
+  "readme.org"
+  'org-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  72
+  '(37 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025.org"
+  "20101152025.org"
+  'org-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1144
+  '(1144 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-4.org"
+  "20101152025-4.org"
+  'org-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1234
+  '(1158 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-3.org"
+  "20101152025-3.org"
+  'org-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  7496
+  '(7507 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/semdemo.c"
+  "semdemo.c"
+  'c-mode
+  '(abbrev-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode gtags-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-2.org"
+  "20101152025-2.org"
+  'org-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  2343
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-3.html"
+  "20101152025-3.html"
+  'html-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-2.html"
+  "20101152025-2.html"
+  'html-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/20101152025-4.html"
+  "20101152025-4.html"
+  'html-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/matriux/org-mode/101152025/readme.html"
+  "readme.html"
+  'html-mode
+  '(auto-fill-mode linum-mode hi-lock-mode yas-minor-mode flyspell-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+

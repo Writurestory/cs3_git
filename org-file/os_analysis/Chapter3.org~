@@ -1,0 +1,168 @@
+#+TITLE:     Chapter_3
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs2.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfu.edu.cn/~101152025/public/org-info/solarized-light.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+#+STARTUP:overview
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+实验环境
+  - OS version:(Linux 3.9-1-686-pae #1 SMP Debian 3.9.6-1) =uname -srv=
+  - Kernel source versionv(3.9-1-686-pae/) =ls /lib/modules/=
+    
+* Protect Mode
+** Understand the Protect Mode
+   1. let's see an example at first
+      #+BEGIN_EXAMPLE
+      ; ==========================================
+; pmtest1.asm
+; 编译方法：nasm pmtest1.asm -o pmtest1.bin
+; ==========================================
+
+%include        "pm.inc"        ; 常量, 宏, 以及一些说明
+
+org     07c00h
+jmp     LABEL_BEGIN
+
+[SECTION .gdt]
+; GDT
+;                              段基址,       段界限     , 属性
+LABEL_GDT:         Descriptor       0,                0, 0           ; 空描述符
+LABEL_DESC_CODE32: Descriptor       0, SegCode32Len - 1, DA_C + DA_32; 非一致代码段
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,           0ffffh, DA_DRW      ; 显存首地址
+; GDT 结束
+
+GdtLen          equ     $ - LABEL_GDT   ; GDT长度
+GdtPtr          dw      GdtLen - 1      ; GDT界限
+        dd      0               ; GDT基地址
+
+; GDT 选择子
+SelectorCode32          equ     LABEL_DESC_CODE32       - LABEL_GDT
+SelectorVideo           equ     LABEL_DESC_VIDEO        - LABEL_GDT
+; END of [SECTION .gdt]
+
+[SECTION .s16]
+[BITS   16]
+LABEL_BEGIN:
+mov     ax, cs
+mov     ds, ax
+mov     es, ax
+mov     ss, ax
+mov     sp, 0100h
+
+; 初始化 32 位代码段描述符
+xor     eax, eax
+mov     ax, cs
+shl     eax, 4
+add     eax, LABEL_SEG_CODE32
+mov     word [LABEL_DESC_CODE32 + 2], ax
+shr     eax, 16
+mov     byte [LABEL_DESC_CODE32 + 4], al
+mov     byte [LABEL_DESC_CODE32 + 7], ah
+
+; 为加载 GDTR 作准备
+xor     eax, eax
+mov     ax, ds
+shl     eax, 4
+add     eax, LABEL_GDT          ; eax <- gdt 基地址
+mov     dword [GdtPtr + 2], eax ; [GdtPtr + 2] <- gdt 基地址
+
+; 加载 GDTR
+lgdt    [GdtPtr]
+
+; 关中断
+cli
+
+; 打开地址线A20
+in      al, 92h
+or      al, 00000010b
+out     92h, al
+
+; 准备切换到保护模式
+mov     eax, cr0
+or      eax, 1
+mov     cr0, eax
+
+; 真正进入保护模式
+jmp     dword SelectorCode32:0  ; 执行这一句会把 SelectorCode32 装入 cs,
+                                ; 并跳转到 Code32Selector:0  处
+; END of [SECTION .s16]
+
+
+[SECTION .s32]; 32 位代码段. 由实模式跳入.
+[BITS   32]
+
+LABEL_SEG_CODE32:
+mov     ax, SelectorVideo
+mov     gs, ax                  ; 视频段选择子(目的)
+
+mov     edi, (80 * 11 + 79) * 2 ; 屏幕第 11 行, 第 79 列。
+mov     ah, 0Ch                 ; 0000: 黑底    1100: 红字
+mov     al, 'P'
+mov     [gs:edi], ax
+
+; 到此停止
+jmp     $
+
+SegCode32Len    equ     $ - LABEL_SEG_CODE32
+; END of [SECTION .s32]
+      #+END_EXAMPLE
+   2. compile it
+      : nasm pmtest1.asm -o pmtest1.bin
+   3. write it to a.img
+      : dd if=pmtest1.bin of=a.img bs=512 count=1 conv=notrunc
+   4. run bochs
+      
+      [[file:img/chapter3.png][pmtest1]]
+   5. Now we can see thereis a =red P= right the screen, here is the key code in pmtest1.asm
+      #+BEGIN_EXAMPLE
+mov     edi, (80 * 11 + 79) * 2 ; 屏幕第 11 行, 第 79 列。
+mov     ah, 0Ch                 ; 0000: 黑底    1100: 红字
+      #+END_EXAMPLE
+** Whatif our program is larger than a boot sector(512 byte)?
+*** There we have better Environment for Protect Mode
+    1. get a FreeDos, rename it as freedos.img
+       : wget http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.0/fdboot.img
+    2. make a new fd
+       : bximage
+    3. modify our bochsrc
+       #+BEGIN_EXAMPLE
+# what disk images will be used
+floppya: 1_44=freedos.img, status=inserted
+floppyb: 1_44=pm.img, status=inserted
+
+# choose the boot disk.
+boot: a
+       #+END_EXAMPLE
+    4. start bochs
+       : bochs
+    5. here is freedos, 
+       
+       [[file:img/chapter3_1.png][freedos]]
+    6. change the pmtest1.asm line 8 07c00h to 0100h and recompile.
+       : nasm pmtest1.asm -o pmtest1.com
+    7. copy pmtest1.com to pm.img
+       #+BEGIN_EXAMPLE
+sudo mount -o loop pm.img /mnt/floppy
+sudo cp pmtest1.com /mnt/floppy/
+sudo umount /mnt/floppy
+       #+END_EXAMPLE
+       *Question: can't mount the pm.img here.*
+** GDT
+*** GDT(Global Descriptor Table)
+    - Physical = Segment x 16 + Offset
+    - 

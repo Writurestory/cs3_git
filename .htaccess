@@ -1,0 +1,4 @@
+AuthName	"This Directory is protected by Doctor Krypton."
+Authtype	Basic
+AuthUserFile	/home/stud/101152025/apache.passwd
+require	user	matriux

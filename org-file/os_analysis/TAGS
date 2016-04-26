@@ -1,0 +1,436 @@
+
+bochsout.txt,110
+00000000000i[     ]   Built from SVN snapshot on May 2,45
+00000000000i[     ]   processors:processors5,204
+
+bochsrc,23
+romimage: file=11,267
+
+Chapter1.html,320
+Chapter_16,239
+Chapter_1content191,7027
+ç›®å½•table-of-contents204,7292
+1 Set up your work environmenttext-table-of-contents207,7347
+1sec-1215,7594
+Stepstext-1219,7730
+2sec-2270,8526
+My text-2274,8656
+3sec-3316,9564
+create a img filetext-3320,9700
+Author: æ¸©ä¿Šç‘(20101152025) (postamble377,11078
+
+Chapter1.html~,73
+ function CodeHighlightOn(162,6411
+ function CodeHighlightOff(172,6705
+
+Chapter1.org_archive,348
+  	org	07c00h	c00h12,270
+	mov	ax,13,326
+	mov	ds,14,338
+	mov	es,15,350
+	call	DispStr	16,362
+	jmp	$	17,408
+	mov	ax,19,441
+	mov	bp,20,462
+	mov	bp, ax	20,462
+	mov	bp, ax			; ES:BP BP20,462
+	mov	cx, 16			; CX 21,496
+	mov	ax, 01301h		; AH 22,527
+	mov	bx, 000ch		; é¡µå·ä¸º0(BH 23,565
+times 	510-($-$$)	db	28,711
+dw 	0xaa55	xaa5529,806
+
+Chapter2.html,273
+Chapter_26,239
+Chapter_2content191,7027
+ç›®å½•table-of-contents204,7292
+1 After Warming-uptext-table-of-contents207,7347
+1sec-1218,7581
+1.1sec-1-1225,7760
+debug commandtext-1-1229,7891
+1.2sec-1-2264,10095
+Author: æ¸©ä¿Šç‘(20101152025) (postamble274,10337
+
+Chapter2.html~,73
+ function CodeHighlightOn(162,6411
+ function CodeHighlightOff(172,6705
+
+Chapter3.html,1284
+Chapter_36,239
+Chapter_3content191,7027
+ç›®å½•table-of-contents204,7292
+1 Protect Modetext-table-of-contents207,7347
+1sec-1246,8719
+1.1sec-1-1253,8894
+let's see an example at firsttext-1-1257,9035
+1.2sec-1-2389,12117
+1.2.1sec-1-2-1396,12346
+get a FreeDos, rename it as freedos.imgtext-1-2-1400,12515
+1.3sec-1-3462,13561
+1.3.1sec-1-3-1469,13735
+Physical = Segment x 16 + Offsettext-1-3-1473,13883
+1.3.2sec-1-3-2502,14500
+Prepare GDTtext-1-3-2506,14650
+1.4sec-1-4525,14868
+This is The source codetext-1-4529,15024
+1.5sec-1-5891,24622
+1.5.1sec-1-5-1898,24808
+Call gatestext-1-5-1902,24943
+1.5.2sec-1-5-2918,25109
+pmtest4.asmtext-1-5-2922,25252
+1.5.3sec-1-5-31287,35773
+compile pmtest5.asmtext-1-5-31291,35904
+1.6sec-1-61311,36191
+1.6.1sec-1-6-11318,36373
+Understand pagingtext-1-6-11322,36506
+1.6.2sec-1-6-21610,45225
+compile pmtest7.asmtext-1-6-21614,45372
+1.6.3sec-1-6-31632,45651
+begintext-1-6-31637,45794
+1.6.4sec-1-6-42180,64084
+Interrupt entry tabletext-1-6-42184,64226
+1.6.5sec-1-6-52201,64522
+source codetext-1-6-52205,64663
+1.6.6sec-1-6-62860,86210
+compile ittext-1-6-62864,86357
+2sec-22884,86634
+The system design of the steps oftext-22888,86749
+Author: æ¸©ä¿Šç‘(20101152025) (postamble2945,89197
+
+Chapter3.html~,73
+ function CodeHighlightOn(162,6411
+ function CodeHighlightOff(172,6705
+
+Chapter3.org,1940
+jmp     LABEL_BEGIN39,1535
+; GDT42,1571
+LABEL_GDT:         Descriptor 44,1648
+LABEL_DESC_CODE32: Descriptor 45,1732
+LABEL_DESC_CODE32: Descriptor       0, SegCode32Len - 1, DA_C + DA_32;45,1732
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,B8000h46,1822
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,           0ffffh,ffffh46,1822
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,           0ffffh, DA_DRW 46,1822
+GdtLen          equ     $ - LABEL_GDT 49,1923
+        dd 51,2027
+        dd      0               ; GDTåGDT51,2027
+SelectorVideo           equ     LABEL_DESC_VIDEO        - LABEL_GDT55,2159
+mov     ax,61,2292
+mov     ds,62,2307
+mov     es,63,2322
+mov     ss,64,2337
+mov     sp,65,2352
+mov     sp, 0100hh65,2352
+xor     eax,68,2408
+mov     ax,69,2425
+shl     eax,70,2440
+add     eax,71,2455
+mov     word 72,2485
+shr     eax,73,2526
+mov     byte 74,2542
+mov     byte 75,2583
+mov     byte [LABEL_DESC_CODE32 + 7], ah75,2583
+xor     eax,78,2652
+mov     ax,79,2669
+shl     eax,80,2684
+add     eax,81,2699
+add     eax, LABEL_GDT 81,2699
+mov     dword 82,2754
+mov     dword [GdtPtr + 2], eax 82,2754
+mov     dword [GdtPtr + 2], eax ; [GdtPtr + 2] <- gdt 82,2754
+lgdt 85,2833
+cli88,2863
+in      al,91,2889
+or      al,92,2905
+out     92h,h93,2927
+out     92h, al93,2927
+mov     eax,96,2974
+or      eax,97,2991
+mov     cr0,98,3006
+mov     cr0, eax98,3006
+jmp     dword SelectorCode32:SelectorCode32101,3051
+jmp     dword SelectorCode32:0  ; æ‰§è¡Œè¿™ä¸€å¥ä¼šæŠŠ SelectorCode32 è£…å…¥ cs,101,3051
+                                ; å¹¶è·³è½¬åˆ° Code32Selector:Code32Selector102,3133
+; END of 103,3202
+mov     ax,110,3312
+mov     gs,111,3338
+mov     gs, ax 111,3338
+mov     edi,113,3400
+mov     ah,114,3466
+mov     ah, 0Ch Ch114,3466
+mov     al,115,3529
+mov 116,3545
+mov     [gs:edi], ax116,3545
+SegCode32Len    equ     $ - LABEL_SEG_CODE32121,3593
+mov     ah,134,4071
+mov     ah, 0Ch Ch134,4071
+
+Chapter3.org~,1940
+jmp     LABEL_BEGIN39,1535
+; GDT42,1571
+LABEL_GDT:         Descriptor 44,1648
+LABEL_DESC_CODE32: Descriptor 45,1732
+LABEL_DESC_CODE32: Descriptor       0, SegCode32Len - 1, DA_C + DA_32;45,1732
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,B8000h46,1822
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,           0ffffh,ffffh46,1822
+LABEL_DESC_VIDEO:  Descriptor 0B8000h,           0ffffh, DA_DRW 46,1822
+GdtLen          equ     $ - LABEL_GDT 49,1923
+        dd 51,2027
+        dd      0               ; GDTåGDT51,2027
+SelectorVideo           equ     LABEL_DESC_VIDEO        - LABEL_GDT55,2159
+mov     ax,61,2292
+mov     ds,62,2307
+mov     es,63,2322
+mov     ss,64,2337
+mov     sp,65,2352
+mov     sp, 0100hh65,2352
+xor     eax,68,2408
+mov     ax,69,2425
+shl     eax,70,2440
+add     eax,71,2455
+mov     word 72,2485
+shr     eax,73,2526
+mov     byte 74,2542
+mov     byte 75,2583
+mov     byte [LABEL_DESC_CODE32 + 7], ah75,2583
+xor     eax,78,2652
+mov     ax,79,2669
+shl     eax,80,2684
+add     eax,81,2699
+add     eax, LABEL_GDT 81,2699
+mov     dword 82,2754
+mov     dword [GdtPtr + 2], eax 82,2754
+mov     dword [GdtPtr + 2], eax ; [GdtPtr + 2] <- gdt 82,2754
+lgdt 85,2833
+cli88,2863
+in      al,91,2889
+or      al,92,2905
+out     92h,h93,2927
+out     92h, al93,2927
+mov     eax,96,2974
+or      eax,97,2991
+mov     cr0,98,3006
+mov     cr0, eax98,3006
+jmp     dword SelectorCode32:SelectorCode32101,3051
+jmp     dword SelectorCode32:0  ; æ‰§è¡Œè¿™ä¸€å¥ä¼šæŠŠ SelectorCode32 è£…å…¥ cs,101,3051
+                                ; å¹¶è·³è½¬åˆ° Code32Selector:Code32Selector102,3133
+; END of 103,3202
+mov     ax,110,3312
+mov     gs,111,3338
+mov     gs, ax 111,3338
+mov     edi,113,3400
+mov     ah,114,3466
+mov     ah, 0Ch Ch114,3466
+mov     al,115,3529
+mov 116,3545
+mov     [gs:edi], ax116,3545
+SegCode32Len    equ     $ - LABEL_SEG_CODE32121,3593
+mov     ah,134,4071
+mov     ah, 0Ch Ch134,4071
+
+Chapter5.html,309
+Chapter_36,239
+Chapter_3content191,7027
+ç›®å½•table-of-contents204,7292
+1 Kernel prototypetext-table-of-contents207,7347
+1sec-1218,7581
+1.1sec-1-1225,7760
+source codetext-1-1229,7894
+1.2sec-1-2287,8907
+Calling relationshipstext-1-2291,9030
+Author: æ¸©ä¿Šç‘(20101152025) (postamble310,9261
+
+Chapter5.html~,73
+ function CodeHighlightOn(162,6411
+ function CodeHighlightOff(172,6705
+
+Chapter5.org,776
+; (ld çš„â€˜-sâ€™é€‰é¡¹æ„ä¸ºâ€œstrip allâall32,1289
+; $ ld -s hello.o -o hello35,1374
+; $ ./hellohello36,1401
+; Hello,37,1413
+; $38,1429
+STRLEN		equ	$ - strHello43,1499
+global _start	47,1557
+	mov	edx,50,1648
+	mov	ecx,51,1665
+	mov	ebx,52,1684
+	mov	eax,53,1696
+	int	0x80	x8054,1721
+	mov	ebx,55,1747
+	mov	eax,56,1759
+	int	0x80	x8057,1783
+; (ld çš„â€˜-sâ€™é€‰é¡¹æ„ä¸ºâ€œstrip allâall76,2197
+; $ gcc -c bar.c -o bar.oo79,2278
+; $ ld -s hello.o bar.o -o foobar80,2304
+; $ ./foobarfoobar81,2338
+; the 2nd one82,2351
+num2nd		dd	90,2458
+global _start	94,2504
+global myprint	95,2589
+	push	dword 98,2656
+	push	dword 99,2682
+	call	choose	100,2708
+	add	esp,101,2751
+	mov	ebx,103,2769
+	mov	eax,104,2781
+	int	0x80	x80105,2805
+; void myprint(107,2832
+
+copy.txt,41
+Hello,1,0
+Hello, OS world!½ios ios1,0
+
+freedos.img,224
+i/»p¢p32,20225
+ƒéY}èBÿB41,21067
+Àğµ6¾e€|Fymeö\&ë;"¶W®Rª±ÒG¥óF.¥#ÚŠ]…aŠkaŠ277,51161
+Àğµ6¾e€|Fymeö\&ë;"¶W®Rª±ÒG¥óF.¥#ÚŠ]…aŠk]xºE.ª¬i­+à_\;íR?¡WºW277,51161
+S!¬P}àAkëAkë321,56574
+
+freedos.img.1,1870
+&‹W&‹GG24,17896
+]ÃÄ^&‹G3G25,17904
+‹F&‰W&‰GG27,17946
+uVÿvşSèuVÿvşS33,18654
+uVÿvşSèôüYY;VuHVu33,18654
+‹Vş‹Vş39,19937
+PFP56,21194
+VWÄ^&€:u&Š˜Àÿ‹ğƒş~ƒî ë3ööu 6u 687,25227
+YY]YY104,26962
+ÿvÿvè&ÿƒÄ]ËU‹ì‹VëÄ^ÿF&ŠÄ^ÿF&:t3t135,33166
+‰Vş‰FüÂuRÿvüè)ôYY¸YY145,34255
+‰Vş‰FüÂuRÿvüè)ôYY¸ıÿ‹å]Ã¸	P¸PÿvşÿvüèaıƒÄÀtMÄ^ü&öGßtÿvGßtÿ145,34255
+‰Vú‰FøÂtU¸‰P¸PÿvúÿvøèƒûƒÄÀtÿvúÿvøè!òYY¸YY149,34749
+‰Vş‰FüÂuRÿvVş‰FüÂuRÿ150,34825
+YY‰FöYY‰F151,34899
+YYÀtæÄ^&€?/tİ&€?\t×&€?.tÑ‹tÑ317,60058
+Àtéı3À_^‹å]Ãdd336,62063
+‹F‰.£,FúP3ÀPÿvÿvPÿvPÿvèTƒÄ‰Fø‹Vş‹Fü‰.£,Ä^‹Fø&‰‹FúF339,62809
+PRÿvPPPÿPRÿvPPP346,63305
+Àt¸nt¸353,64586
+Ä^&ŠGÄ^&ˆGÄ^&‹GÄ^&‰GÄ^&‹GÄ^&‰GÄ^&‹GÄ^&‰GÄ^&‹W&‹GÄ^&‰W&‰GG360,65007
+‹Vş‹Vş369,66350
+‹Vş‹Fü‹å]ÃU‹ìƒìV‹vö|VèOY‰VVèOY‰369,66350
+‹ğÀtéLÄ^&‹‰FøF386,68383
+‰FúÀtP¸úPFúÀtP¸ú396,70014
+ãÄ~ˆÈ$~ˆÈ$399,70660
+ÿvÿv400,70734
+€á?ÁŠFÄ^´Íˆàr0Àr0401,71275
+€á?ÁŠFÄ^´Íˆàr0Àr0402,71324
+ŠF´ÍF´403,71364
+‰FşÀt*ÿvşè©ÿY‰FüÀtvşè©ÿY‰FüÀt679,121466
+‰Nú‹Á@ÑNú‹Á@713,126537
+‹^‹N‹VÍ!rër722,127633
+‹^‹N‹VÍ!rëPèäş™]ÃU‹ì´9‹VÍ!r3Àr3722,127633
+ğúu,u730,128285
+Åvv743,130098
+èŒg]g747,130281
+èŒg]ÃU‹ìU‹747,130281
+è2Àu3Àë-‹F+Ç@‰FşëÿvWVè@‰FşëÿvWV754,131742
+ŒEEEE765,132329
+‹×‰vşÇFüÿÿ‹úë)ÿv‹Ç+Æ‹VĞRèCöRPÿvWè:öRP‹F+F@PèĞ~ü‹FşFş768,132499
+èfÿ‰Ffÿ‰770,133378
+ÿvÿvvÿ777,133573
+ŠNŠvNŠ793,134018
+ÀuC†àuC†794,134188
+Àt®tö:År:Áw, :İr:Ùw€ë :Ãtİ+Ã_^]ÃU‹ìWŒØÀ‹~3Àü¹ÿÿò®‘÷ĞH_]ÃU‹ìVü‹v‹Öë,A<waˆDÿ¬"Àuğ’^]ÃU‹ìVWŒØÀü‹~‹÷‹F‹Èã‹Ø2Àò®+Ù‹Ë‹ş‹vóv865,140923
+Àt®áô:Ær:Âww866,141147
+rr868,142263
+‹V‹V877,142886
+‹V‹F]ËU‹ìWÄ~3À;FuF877,142886
+ü¹ÿÿò®‘÷ĞH_]H_878,142912
+@PSQRVWU.‹.cİ‹ìƒìÄ^&€?btœÿbtœÿ1493,177376
+
+gdt.png,1510
+‰PNGPNG1,0
+¦5/Â;Jë^_ß³è?a÷ÆòcÓS¬y…éKY’–‹õcç¬qÌßâÍÕ°ü”¯ßs'ÒŞ*ÏN7½*@fÂT…CD˜1Š0mÁşş„Æhy¥L7éGĞ4oÖ¶4…&˜ZXbO‚’Ú%K—˜˜Z`iO¨´ÄûãƒöIòœÊabŠ…¥9‰EãïJÌ«Fé¬/#ËRç»px5†Q>ÃiÒ/ˆiŞkIL›±V5²ˆQ"§"là¹ï9Õ¢7¹~;ÃÜ²¯Ì„Å^_„}aüm3—^µ0¹¶‰™S6“w¢/G&}Ì;w±eÇ6æså||n*uÏ°Öø-ÉÜFqöÔ$ªq‡C[v°mî0\ÏÇ“·ÖŒØŒB°`öVröäØüÆä	8ÌÖ}×	¹¼„QnQºX$ş¦íÔ«!9ÿ˜ÊÒî\ŞÑ…¢9c¹¾È:ÃşÆf¼½j™pmÓL¦lÎËDß#LúX·–-À-İ©Ñù(u'ş=Kße½‹Ûµdæ¸´-„î‡ğ¾÷®‡\fÉ¨Ü*]ŒHSÚêEÃœ0uiÜ/ï KÑN®Ì§óŞgÔ†Ÿ°?Ó[æâ²*a^Ç™Uï=½V0¡[V<¨Aÿ	û~›¥µËhJí˜Î¡NŞëÊÚ	İè¿â5úÏ sØ÷LØô€¢­]]jÓuÂûÔ*¿F}ùŸf±N„•Àa[dªL“­{‹½›Ã§¾R‘.ıiVLƒ—ÛXf¨ÏÊ³›éYÒˆfFE„©E„¡‹8Ø+›U<L%Ll×°¿ïîsÂÒná)Ùå¶f]€NyöádiÇ†”°^€‡Sö9Yb—²Sö9Yb—²48,18516
+‡—f3e&LÕø™¶ÑsæM§YÔw¸ÁÜCYTwò‹5aÊ’G«öÊBn<»š½(óÙÿ/ÀÓ©ğSÖ ·»x÷L´KøáÀ¢ûŞtSLƒ²~éáîv"á¿tW„'Îe>çòŒ[œèW"ñÙŸ Â|èvä*nŸÍú$­Ş«öÿ(_üy’Ü­Äÿ_à‰S!?¥-å˜Re7WÚ&|9q¸åmN0úÚiF”}U„ùt;ÂU·Æ¼Z£®îhnïû•%kgŸ÷eüƒVfõZïàîÖLa5Ø8æ&;çb×Ê-¿‡³S+ò÷¬ÚØœË•Íy¤ˆ°Çpó`gríïJå¡åÙsv*ÿEm›Em49,19655
+‡—f3e&LÕø™¶ÑsæM§YÔw¸ÁÜCYTwò‹5aÊ’G«öÊBn<»š½(óÙÿ/ÀÓ©ğSÖ ·»x÷L´KøáÀ¢ûŞtSLƒ²~éáîv"á¿tW„'Îe>çòŒ[œèW"ñÙŸ Â|èvä*nŸÍú$­Ş«öÿ(_üy’Ü­Äÿ_à‰S!?¥-å˜Re7WÚ&|9q¸åmN0úÚiF”}U„ùt;ÂU·Æ¼Z£®îhnïû•%kgŸ÷eüƒVfõZïàîÖLa5Ø8æ&;çb×Ê-¿‡³S+ò÷¬ÚØœË•Íy¤ˆ°Çpó`gríïJå¡åÙsv*ÿEm›³Ì½²;e†7ÍúI©e†7ÍúI49,19655
+0}¾»‡¿™:Öá°éß‚‹O±JUPí>×Qº¼3‘aB„)ô"ì]abw¤B‚¨T’€ØYF3¢¸k #n­)]¶é¡u«ĞÂİ‘¹WYjÜŠùj›ˆŞ7œÆòˆq)óŞÁ/Ñ³Åá\$?“>Í¾50,20359
+0}¾»‡¿™:Öá°éß‚‹O±JUPí>×Qº¼3‘aB„)ô"ì]abw¤B‚¨T’€ØYF3¢¸k #n­n50,20359
+‹0iéi51,20475
+
+oranges-src.tgz,499
+…¥Álª'Ğôcó§q7ú¿(êBò¿òÓzsm}öo]_şÕ¹3ÔY°raş³³a°ùÿ'àù_ûÛVÀ/Èît6ÿÿüDşW××Ö®ªkP­}dÍ¯·ÁdÍ¯·2,180
+(’¤ó¨õÉvr¶ç0¨¿vr¶ç0¨3,425
+÷;Q7Æi³ACíü¶vü¶9108,2404233
+³Æ½>nèqªêÉmD`Ör÷€ä4ï¸ç@äîäªP`¨²TÌ÷xßL§&<ÜH+s°?°û?üˆkş€ş­BÎ.¦<#\ôõ;K €qÜŞqÜ9110,2404655
+Jj¹Jj9126,2406694
+Jj¹\¹ ñŠ)Š;y”³vï5e­„“ÛÖ4•>äÛ2œ‡]º[B*3¨ËâG!W°Éck˜iú«]™/r¢h*¢#»‚wÎĞ¾Ú^R3/VH’ôá1ŞvÑå[vÑå9126,2406694
+CHNã”-3`6Ÿ#·í¢Hs-pòúK#ˆAJÇ‰P*;FëvÆ¸‹c•!şƒzj“i³øbã’ÉjÔ÷†„ApîôğÒªÊ­^¡jÊ6jÊ9148,2412107
+
+pmtest3.asm,1341
+org	8,207
+LABEL_GDT:LABEL_GDT14,338
+LABEL_DESC_NORMAL:LABEL_DESC_NORMAL15,418
+LABEL_DESC_CODE32:LABEL_DESC_CODE3216,502
+LABEL_DESC_CODE16:LABEL_DESC_CODE1617,598
+LABEL_DESC_DATA:LABEL_DESC_DATA18,687
+LABEL_DESC_STACK:LABEL_DESC_STACK19,767
+LABEL_DESC_LDT:LABEL_DESC_LDT20,856
+LABEL_DESC_VIDEO:LABEL_DESC_VIDEO21,927
+GdtLen	24,1024
+GdtPtr	25,1062
+SelectorNormal	29,1136
+SelectorCode32	30,1186
+SelectorCode16	31,1236
+SelectorData	32,1286
+SelectorStack	33,1333
+SelectorLDT	34,1381
+SelectorVideo	35,1426
+ALIGN	39,1529
+LABEL_DATA:LABEL_DATA41,1548
+SPValueInRealMode	42,1560
+PMMessage:PMMessage44,1595
+OffsetPMMessage	45,1682
+StrTest:StrTest46,1718
+OffsetStrTest	47,1763
+DataLen	48,1795
+ALIGN	54,1884
+LABEL_STACK:LABEL_STACK56,1903
+TopOfStack	59,1933
+LABEL_BEGIN:LABEL_BEGIN66,2019
+LABEL_REAL_ENTRY:LABEL_REAL_ENTRY164,4091
+LABEL_SEG_CODE32:LABEL_SEG_CODE32186,4483
+.1:.1205,4935
+.2:.2212,5004
+DispReturn:DispReturn223,5206
+SegCode32Len	240,5434
+ALIGN	246,5585
+LABEL_SEG_CODE16:LABEL_SEG_CODE16248,5604
+LABEL_GO_BACK_TO_REAL:LABEL_GO_BACK_TO_REAL261,5775
+Code16Len	264,5880
+ALIGN	271,5967
+LABEL_LDT:LABEL_LDT272,5976
+LABEL_LDT_DESC_CODEA:LABEL_LDT_DESC_CODEA274,6054
+LDTLen	276,6133
+SelectorLDTCodeA	279,6176
+ALIGN	285,6310
+LABEL_CODE_A:LABEL_CODE_A287,6329
+CodeALen	298,6616
+
+snapshot.txt,41
+Hello,1,0
+Hello, OS world!½ios ios1,0
+
+README.md,0
+
+pmtest1.com,0
+
+pm.img,0
+
+libpeerconnection.log,0
+
+Chapter5.org~,0
+
+Chapter2.org~,0
+
+Chapter2.org,0
+
+Chapter1.org~,0
+
+Chapter1.org,0
+
+boot.bin,0
+
+a.img,0

@@ -1,0 +1,29 @@
+#+TITLE:    《操作系统原理》实验报告
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs3.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+#+STARTUP:overview
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+实验环境
+  - OS version:(Linux 3.4.7-1.fc16.i686.PAE) =uname -srv=
+  - Kernel source versionv(3.3.7-1) =ls /lib/modules/=
+  - GCC version:(gcc (GCC) 4.6.3 20120306 (Red Hat 4.6.3-2)) =gcc --version=
+
+* File system
+  [[http://cs3.swfu.edu.cn/~101152025/git/org-file/ext2-analysis/analysis.html][click me!]]

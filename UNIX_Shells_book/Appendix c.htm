@@ -1,0 +1,256 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Appendix C</title>
+<link rel="stylesheet" type="text/css" href="docsafari.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="Appendix B.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><img src="Rarrow.gif" width="17" height="19" border="0"></td></tr></table>
+<h2 class="docAppendixTitle">Appendix C. Steps for Using Quoting Correctly</h2>
+<ul><li>&nbsp;<a class="docLink" href="#app16lev1sec1">C.1 Backslash</a></li>
+<li>&nbsp;<a class="docLink" href="#app16lev1sec2">C.2 Single Quotes</a></li>
+<li>&nbsp;<a class="docLink" href="#app16lev1sec3">C.3 Double Quotes</a></li>
+<li>&nbsp;<a class="docLink" href="#app16lev1sec4">C.4 Combining Quotes</a></li>
+<li>&nbsp;<a class="docLink" href="#app16lev1sec5">C.5 Setting the Shell Variable</a></li>
+</ul>
+
+<h3 class="docSection1Title" id="app16lev1sec1">C.1 Backslash</h3>
+<span style="font-weight: bold">
+<ol class="docList" type="1">
+  <li><span style="font-weight: normal">
+  <p class="docList">Precedes a character and escapes that character.</span></li>
+  <li><span style="font-weight: normal">
+  <p class="docList">Same as putting single quotes around one character.</span></li>
+</ol>
+<h3 class="docSection1Title" id="app16lev1sec2">C.2 Single Quotes</h3>
+<span style="FONT-WEIGHT: bold">
+<ol class="docList" type="1">
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Must be matched.</span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Protect all metacharacters from interpretation except the
+  following:<ol class="docList" type="a">
+    <li>
+    <p class="docList">Itself.</li>
+    <li>
+    <p class="docList">Exclamation point (<span class="docEmphasis">csh</span>
+    only).</li>
+    <li>
+    <p class="docList">Backslash.</li>
+  </ol>
+  </span></li>
+</ol>
+</span>
+<h4 class="docSection2Title" id="ch16lev2sec1">Examples</h4>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <td class="docTableCell" vAlign="top"><span class="docEmphBoldItalic">C
+    Shell</span> </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphBoldItalic">Bourne
+    Shell</span> </td>
+    <td class="docTableCell" vAlign="top"><span class="docEmphBoldItalic">Korn
+    Shell</span> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo '$&gt;&lt;%^&amp;*'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo '$*&amp;!&gt;&lt;?'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo '$*&amp;!&gt;&lt;?'</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo 'I need $5.00\!'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo 'I need \$5.00!'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo 'I need \$5.00!'</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>ho 'She cried, &quot;Help&quot;'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo 'She cried, &quot;Help&quot;'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo 'She cried, &quot;Help&quot;</tt>' </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo '\\\\'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo '\\\\'</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>print '\\\\'</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>\\\\</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>\\</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>\\</tt> </td>
+  </tr>
+</table>
+</span>
+<h3 class="docSection1Title" id="app16lev1sec3">C.3 Double Quotes</h3>
+<span style="FONT-WEIGHT: bold">
+<ol class="docList" type="1">
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Must be matched.</span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Protect all metacharacters from interpretation except the
+  following:<ol class="docList" type="a">
+    <li>
+    <p class="docList">Itself.</li>
+    <li>
+    <p class="docList">Exclamation point (<span class="docEmphasis">csh</span>
+    only).</li>
+    <li>
+    <p class="docList">$ used for variable substitution.</li>
+    <li>
+    <p class="docList"><tt>' '</tt> Backquotes for command substitution.</li>
+  </ol>
+  </span></li>
+</ol>
+</span>
+<h4 class="docSection2Title" id="ch16lev2sec2">Examples:</h4>
+<table cellSpacing="0" cellPadding="1" width="100%" border="1">
+  <colgroup span="3" align="left">
+  </colgroup>
+  <tr>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">C
+    Shell</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">
+    Bourne Shell</span> </th>
+    <th class="docTableHeader" vAlign="top"><span class="docEmphBoldItalic">Korn
+    Shell</span> </th>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;Hello $LOGNAME\!&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;Hello $LOGNAME!&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>print &quot;Hello $LOGNAME!&quot;</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;I don't care&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;I don't care&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>print &quot;I don't care&quot;</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;The date is 'date'&quot;</tt>
+    </td>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;The date is 'date'&quot;</tt>
+    </td>
+    <td class="docTableCell" vAlign="top"><tt>print &quot;The date is $(date)&quot;</tt>
+    </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;\\\\&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>echo &quot;\\\\&quot;</tt> </td>
+    <td class="docTableCell" vAlign="top"><tt>print &quot;\\\\&quot;</tt> </td>
+  </tr>
+  <tr>
+    <td class="docTableCell" vAlign="top"><tt>\\\\</tt></td>
+    <td class="docTableCell" vAlign="top"><tt>\</tt></td>
+    <td class="docTableCell" vAlign="top"><tt>\</tt></td>
+  </tr>
+</table>
+<h3 class="docSection1Title" id="app16lev1sec4">C.4 Combining Quotes</h3>
+<p class="docText">The end result is to be able to embed the shell variable in
+the <span class="docEmphasis">awk</span> command line and have the shell expand
+the variable without interfering with <span class="docEmphasis">nawk</span>'s
+field designators, $1 and $2.</p>
+<h3 class="docSection1Title" id="app16lev1sec5">C.5 Setting the Shell Variable</h3>
+<p class="docText"><br>
+name=&quot;Jacob&nbsp;Savage&quot;&nbsp;&nbsp;&nbsp;&nbsp;(Bourne&nbsp;and&nbsp;Korn&nbsp;Shell)<br>
+set&nbsp;name&nbsp;=&nbsp;&quot;Jacob&nbsp;Savage&quot;&nbsp;(&nbsp;C&nbsp;Shell&nbsp;)<br>
+<br>
+(The&nbsp;line&nbsp;from&nbsp;the&nbsp;datafile)<br>
+Jacob&nbsp;Savage:408-298-7732:934&nbsp;La&nbsp;Barbara&nbsp;Dr.&nbsp;,&nbsp;San&nbsp;Jose,&nbsp;CA:02/27/78:500000<br>
+<br>
+(The&nbsp;<span class="docEmphasis">nawk</span>&nbsp;command&nbsp;line)<br>
+<span class="docEmphStrong">nawk -F: '$1 ~ /^' &quot;$name&quot; '/{print $2}' datafile</span><br>
+<br>
+(Output)<br>
+<span class="docEmphasis">408-298-7732</span></p>
+<h4 class="docSection2Title" id="ch16lev2sec3">Step1:</h4>
+<p class="docText">Test your knowledge of the UNIX command at the command line
+before plugging in any shell variables.</p>
+<p class="docText"><br>
+<span class="docEmphStrong">nawk -F: '$1 ~ /^Jacob Savage/{print $2}' filename</span><br>
+<br>
+(Output)<br>
+<span class="docEmphasis">408-298-7732</span></p>
+<h4 class="docSection2Title" id="ch16lev2sec4">Step 2:</h4>
+<p class="docText">Plug in the shell variable without changing anything else.
+Leave all quotes as they were.</p>
+<p class="docText"><br>
+<span class="docEmphStrong">nawk -F: '$1 ~ /^$name/{print $2}' datafile</span></p>
+<p class="docText">Starting at the left-hand side of the
+<span class="docEmphasis">awk</span> command leave the first quote as is; right
+before the shell dollar sign in <span class="docEmphasis">$name,</span> place
+another single quote. Now the first quote is matched and all text within these
+two quotes is protected from shell interference. The variable is exposed. Now
+put another single quote right after the <span class="docEmphasis">e</span> in
+<span class="docEmphasis">$name.</span> This starts another matched set of
+single quotes ending after <span class="docEmphasis">awk</span>'s closing curly
+brace. Everything within this set of quotes is also protected from shell
+interpretation.</p>
+<center>
+<p class="docText">
+<img alt="graphics/apcfig01.gif" src="apcfig01.gif" border="0" width="285" height="43"></p>
+</center>
+<h4 class="docSection2Title" id="ch16lev2sec5">Step 3:</h4>
+<p class="docText">Enclose the shell variable in a set of double quotes. This
+allows the variable to be expanded but the value of the variable will be treated
+as single string if it contains whitespace. The whitespace must be protected so
+that the command line is parsed properly.</p>
+<center>
+<p class="docText">
+<img alt="graphics/apcfig02.gif" src="apcfig02.gif" border="0" width="309" height="47"></p>
+</center>
+<p class="docText">Count the number of quotes. There should be an even number of
+single quotes and an even number of double quotes.</p>
+<h4 class="docSection2Title" id="ch16lev2sec6">Example:</h4>
+<p class="docText"><br>
+<span class="docEmphStrong">oldname=&quot;Ellie Main&quot;</span><br>
+<span class="docEmphStrong">newname=&quot;Eleanor Quigley&quot;</span><br>
+&nbsp;</p>
+<span style="FONT-WEIGHT: bold">
+<ol class="docList" type="1">
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Make sure the command works.</p>
+  <p class="docText"><br>
+  <span class="docEmphStrong">nawk -F: '/^Ellie Main/{$1=&quot;Eleanor Quigley&quot;;
+  print $0}' datafile</span><br>
+&nbsp;</span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Plug in the variables.</p>
+  <p class="docText"><br>
+  <span class="docEmphStrong">nawk -F: '/^$oldname/{$1=&quot;$newname&quot;; print $0}'
+  datafile</span><br>
+&nbsp;</span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Play the quoting game. Starting at the first single quote
+  at the left, move across the line until you come to the variable
+  <span class="docEmphasis">$oldname</span> and place another single quote just
+  before the dollar sign. Put another single quote right after the last letter
+  in the variable name.</p>
+  <p class="docList">Now move to the right and place another single quote right
+  before the dollar sign in <span class="docEmphasis">$newname.</span> Put
+  another single quote after the last character in <span class="docEmphasis">$newname.</span></p>
+  <center>
+  <p class="docText">
+  <img alt="graphics/apcfig03.gif" src="apcfig03.gif" border="0" width="402" height="53"></p>
+  </center>
+  <p></span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Count the number of single quotes. If the number of single
+  quotes is an even number, each quote has a matching quote. If not, you have
+  forgotten a step.</span></li>
+  <li><span style="FONT-WEIGHT: normal">
+  <p class="docList">Enclose each of the shell variables in double quotes. The
+  double quotes are placed snugly around the shell variable.</p>
+  <center>
+  <p class="docText">
+  <img alt="graphics/apcfig04.gif" src="apcfig04.gif" border="0" width="442" height="54"></p>
+  </center>
+  <p>&nbsp;</span></li>
+</ol>
+</span>
+<table width="100%" border="1" bgcolor="#EBEBFF"><tr><td width="5%" align="left" valign="middle"><a href="Appendix B.htm"><img src="Larrow.gif" width="17" height="19" border="0"></a></td><td align="center" valign="middle"><a class="docLink" href="Front matter.htm">CONTENTS</a></td><td width="5%" align="right" valign="middle"><img src="Rarrow.gif" width="17" height="19" border="0"></td></tr></table>
+</body>
+
+</html>

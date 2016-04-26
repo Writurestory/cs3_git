@@ -1,0 +1,126 @@
+#+TITLE:     Chapter_1
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs2.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfu.edu.cn/~101152025/public/org-info/solarized-light.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+#+STARTUP:overview
+#+TAGS: { 工作(x) 娱乐(y) 杂项(z) }
+#+TAGS:{ 编辑器(e) 网络(w) 多媒体(m) 压缩(z) 窗口管理器(c) 系统(s) 终端(t) }
+#+TAGS:{ 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) }
+#+SEQ_TODO:TODO(T) WAIT(W) | DONE(D!) CANCELED(C@)
+#+COLUMNS:%10ITEM %10PRIORITY %15TODO %65TAGS
+
+实验环境
+  - OS version:(Linux 3.9-1-686-pae #1 SMP Debian 3.9.6-1) =uname -srv=
+  - Kernel source versionv(3.9-1-686-pae/) =ls /lib/modules/=
+    
+* Set up your work environment
+    - Steps ::
+      1. Install bochs
+	 : sudo apt-get install vgabios bochs bochs-x bximage
+      2. A better way with bebug enabled
+	 #+BEGIN_EXAMPLE
+	 sudo apt-get install libgtk2.0-dev xorg-dev
+	  ./configure --enable-debugger --enable-disasm
+	 sudo make
+	 sudo make install
+	 #+END_EXAMPLE
+	 
+	 - Possible errors and workaround
+	   - checking for C compiler default output file name… configure: error: C
+             compiler cannot create executables
+	     : apt-get install libc6-dev
+	   - configure: error: C++ preprocessor "/lib/cpp" fails sanity check
+	     : apt-get install build-essential
+* Customize your bochsrc
+  - My [[https://gitcafe.com/krypton/os_analysis/blob/master/bochsrc][bochsrc]]
+    #+BEGIN_EXAMPLE
+###############################################################
+# Configuration file for Bochs
+###############################################################
+
+#display_library: sdl
+
+# how much memory the emulated machine will have
+megs: 32
+
+# filename of ROM images
+romimage: file=/usr/local/share/bochs/BIOS-bochs-latest
+vgaromimage: file = /usr/local/share/bochs/VGABIOS-lgpl-latest
+
+# what disk images will be used
+floppya: 1_44=a.img, status=inserted
+
+# choose the boot disk.
+boot: floppy
+
+# where do we send log messages?
+log: bochsout.txt
+
+# disable the mouse
+mouse: enabled=0
+
+# enable key mapping, using US layout as default.
+#keyboard_mapping: enabled=1, map=/usr/share/bochs/keymaps/x11-pc-us.map
+    #+END_EXAMPLE
+    
+* 10 minutes to build a system
+  1. create a img file
+     : bximage
+  2. create boot.asm
+       #+BEGIN_EXAMPLE
+  	org	07c00h			; 告诉编译器程序加载到7c00处
+	mov	ax, cs
+	mov	ds, ax
+	mov	es, ax
+	call	DispStr			; 调用显示字符串例程
+	jmp	$			; 无限循环
+  DispStr:
+	mov	ax, BootMessage
+	mov	bp, ax			; ES:BP = 串地址
+	mov	cx, 16			; CX = 串长度
+	mov	ax, 01301h		; AH = 13,  AL = 01h
+	mov	bx, 000ch		; 页号为0(BH = 0) 黑底红字(BL = 0Ch,高亮)
+	mov	dl, 0
+	int	10h			; 10h 号中断
+	ret
+  BootMessage:		db	"Hello, OS world!"
+  times 	510-($-$$)	db	0	; 填充剩下的空间，使生成的二进制代码恰好为512字节
+  dw 	0xaa55				; 结束标志
+       #+END_EXAMPLE
+  3. compile the boot.asm
+     : nasm boot.asm -o boot.bin
+  4. burn it to a.img
+     : dd if=boot.bin of=a.img bs=512 count=1 conv=notrunc
+  5. run and see
+     : bochs -f bochsrc
+     [[file:./img/Chapter_1.png][hello]]
+  6. here is a =debug command table=
+     | action                      | command      | sample            |
+     |-----------------------------+--------------+-------------------|
+     | 在某物理地址设置断点        | b addr       | b 0x30400         |
+     | 显示当前所有断点信息        | info break   | info break        |
+     | 继续执行，直到遇上断点      | c            | c                 |
+     | 单步执行                    | s            | s                 |
+     | 单步执行（遇到函数则跳过）  | n            | n                 |
+     |                             | info cpu     | info cpu          |
+     |                             | r            | r                 |
+     | 查看寄存器信息              | fp           | fp                |
+     |                             | sreg         | sreg              |
+     |                             | creg         | creg              |
+     | 查看堆栈                    | print-stack  | print-stack       |
+     | 查看内存物理地址内容        | xp /nuf addr | xp /40bx 0x9013e  |
+     | 查看线性地址内容            | x /nuf addr  | x /40bx 0x13e     |
+     | 反汇编一段内存              | u start end  | u 0x30400 0x3040D |
+     | 反汇编执行的每一条指令      | trace-on     | trace-on          |
+     | 每执行一条指令就打印CPU信息 | trace-reg    | trace-reg on      |

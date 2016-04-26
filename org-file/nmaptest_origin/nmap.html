@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cn" xml:lang="cn">
+<head>
+<title>NMAP实验报告</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="NMAP实验报告"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-04-24 03:21:31 EDT"/>
+<meta name="author" content="温俊瑞(20101152025)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="http://cs2.swfc.edu.cn/org-info-js/stylesheet.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+<style>code {font-weight:bold;} body {font-size:10pt;}</style>
+<script type="text/javascript" src="http://cs3.swfc.edu.cn/org-info-js/org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "content");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">NMAP实验报告</h1>
+
+<p>实验环境
+</p><ul>
+<li>Debian 3.2.41 i686 GNU/Linux
+</li>
+</ul>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Simple Example</a></li>
+<li><a href="#sec-2">2 Scanning more than one machine</a></li>
+<li><a href="#sec-3">3 Scanning specific ports:</a></li>
+<li><a href="#sec-4">4 Various Scanning options:</a>
+<ul>
+<li><a href="#sec-4-1">4.1 -sS: SYN scanning (this is the default option)</a></li>
+<li><a href="#sec-4-2">4.2 -sT: TCP connect scanning</a></li>
+<li><a href="#sec-4-3">4.3 -sF, -sX, -sN: FIN scan, Xmas tree scan, NULL scan.</a></li>
+<li><a href="#sec-4-4">4.4 -sU: UDP scan.</a></li>
+<li><a href="#sec-4-5">4.5 -sO: Protocol scan</a></li>
+<li><a href="#sec-4-6">4.6 -sR: RPC scan.</a></li>
+<li><a href="#sec-4-7">4.7 -sV: Version scan</a></li>
+<li><a href="#sec-4-8">4.8 -sA: ACK scan</a></li>
+<li><a href="#sec-4-9">4.9 -sI: Idle scan</a></li>
+<li><a href="#sec-4-10">4.10 -sP: Ping scan</a></li>
+<li><a href="#sec-4-11">4.11 -sW: Window scan</a></li>
+<li><a href="#sec-4-12">4.12 -sL: List scan</a></li>
+<li><a href="#sec-4-13">4.13 -iL: input a ipfile</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 O/S fingerprinting and version detection</a>
+<ul>
+<li><a href="#sec-5-1">5.1 -O: Operating system fingerprinting</a></li>
+<li><a href="#sec-5-2">5.2 -sV: Version detection</a></li>
+<li><a href="#sec-5-3">5.3 -A: Additional, Advanced, Aggressive option</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Typical scenario</a></li>
+<li><a href="#sec-7">7 Example from nmap.org</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Simple Example</h2>
+<div class="outline-text-2" id="text-1">
+
+<ol>
+<li>let's begin
+<pre class="example">
+nmap 202.203.132.244
+</pre>
+
+<p>     <img src="test1.jpg"  alt="test1.jpg" />
+</p></li>
+<li>no reverse NDS lookup
+<pre class="example">
+nmap -n 202.203.132.244
+</pre>
+
+<p>     <img src="test2.jpg"  alt="test2.jpg" />
+</p></li>
+<li>verbose:
+<pre class="example">
+nmap -n -v 202.203.132.244
+</pre>
+
+<p>     <img src="test3.jpg"  alt="test3.jpg" />
+</p></li>
+<li>even more:
+<pre class="example">
+nmap -n -vv 202.203.132.244
+</pre>
+
+<p>     <img src="test4.jpg"  alt="test4.jpg" />
+</p></li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Scanning more than one machine</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="example">nmap -n -vv 202.203.132.242,244
+nmap -n -vv 202.203.132.241-244
+nmap -n -vv 202.203.132.241-242,244
+nmap -n -vv 202.203.132.*
+nmap -n -vv 202.203.132.192-255
+nmap -n -vv 202.203.132.192/26
+</pre>
+
+<ul>
+<li>nmap -n -vv 202.203.132.242,244 <b>(scan 242 and 244)</b>
+
+<p>    
+    <img src="more1.jpg"  alt="more1.jpg" />
+</p></li>
+<li>nmap -n -vv 202.203.132.241-244 <b>(scan 241 to 244)</b>
+
+<p>    
+    <img src="more2.jpg"  alt="more2.jpg" />
+</p></li>
+<li>nmap -n -vv 202.203.132.241-242,244 <b>(scan 241 to 242, and 244)</b>
+
+<p>    
+    <img src="more3.jpg"  alt="more3.jpg" />
+</p></li>
+<li>nmap -n -vv 202.203.132.* <b>(scan 1 to 254)</b>
+
+<p>    
+    <img src="more4.jpg"  alt="more4.jpg" />
+</p>
+<p>    
+    <img src="more5.jpg"  alt="more5.jpg" />
+</p>
+<p>    
+    <img src="more6.jpg"  alt="more6.jpg" />
+</p>
+<p>    
+    <img src="more7.jpg"  alt="more7.jpg" />
+</p>
+<p>    
+    <img src="more8.jpg"  alt="more8.jpg" />
+</p>
+<p>    
+    <img src="more9.jpg"  alt="more9.jpg" />
+</p></li>
+<li>nmap -n -vv 202.203.132.192-255 <b>(scan 192 to 255)</b>
+
+<p>    
+    <img src="more10.jpg"  alt="more10.jpg" />
+</p></li>
+<li>nmap -n -vv 202.203.132.192/26 <b>(scan 192 to 254 with netmask 26)</b>
+
+<p>    
+    <img src="more11.jpg"  alt="more11.jpg" />
+</p></li>
+</ul>
+
+
+
+
+
+<pre class="example">nmap -vv -n 192.168.0-2.*
+nmap -vv -n 192.168.0,1,2.0-255
+</pre>
+
+<ul>
+<li>nmap -vv -n 192.168.0-2.* <b>(scan 192.168.0.</b> to 192.168.2.*)*
+</li>
+<li>nmap -vv -n 192.168.0,1,2.0-255 <b>(same as above)</b>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Scanning specific ports:</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="example">nmap -vv -n -p 80 202.203.132.244
+nmap -vv -n -p 21,23,25,80-120 202.203.132.244
+nmap -vv -n -p 21,23,25,80-120 202.203.132.241-244
+</pre>
+
+<ul>
+<li>test
+<pre class="example">
+nmap -vv -n -p 21,23,25,80-120 202.203.132.241-244
+</pre>
+
+<p>    <img src="port1.jpg"  alt="port1.jpg" />
+</p></li>
+</ul>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Various Scanning options:</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>  
+  There are many scanning options available with Nmap. All have their advantages and disadvantages. You should use them according to your requirements.
+</p>
+<p>
+  Contents:
+</p>
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> -sS: SYN scanning (this is the default option)</h3>
+<div class="outline-text-3" id="text-4-1">
+
+<pre class="example">
+nmap -vv -n -sS 202.203.132.244
+</pre>
+
+<p>   TCP SYN scan gather information about open ports without completing the TCP handshake
+   process. When an open port is identified, the TCP handshake is reset before it can be
+   completed. This technique is often referred to as “half open” scanning.
+</p>
+
+<p>
+   It's the default scanning technique if you are “root”. It's the most common scan to use
+   because it works on all networks, across all operating systems.
+</p>
+<p>
+   <img src="various1.jpg"  alt="various1.jpg" />
+</p>
+
+<dl>
+<dt>ADV</dt><dd>
+</dd>
+</dl>
+
+<p>   The TCP SYN scan never actually creates a TCP session so isn't logged by the destination host's applications. And hence it's a quiet scan.
+</p><dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   You need privileged access to the system.
+</p></div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> -sT: TCP connect scanning</h3>
+<div class="outline-text-3" id="text-4-2">
+
+<pre class="example">
+nmap -vv -n -sT 202.203.132.244
+</pre>
+
+<p>   It performs the 3-way handshake.
+</p>
+<p>
+   <img src="various2.jpg"  alt="various2.jpg" />
+</p>
+<dl>
+<dt>ADV</dt><dd>
+</dd>
+</dl>
+
+<p>   You don't need to have privileged access.
+</p><dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   Since it completes a TCP connection so apparent when application connection logs are examined.
+   I would suggest you to never ever use this scan.
+</p></div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> -sF, -sX, -sN: FIN scan, Xmas tree scan, NULL scan.</h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+
+
+<pre class="example">nmap –vv –n –sF 218.194.106.91
+nmap –vv –n –sX 192.168.0.1
+nmap –vv –n –sN 192.168.0.1
+</pre>
+
+
+<p>   
+   These are called “stealth” scans. They send a single frame to a TCP port without any
+   TCP handshaking or additional packet transfers. They are more “stealth” than SYN scan
+   and must be used if the remote machine is not a Windows-based machine. I’ll tell you
+   why.
+</p>
+
+<p>
+   These scans operate by manipulating the bits of the TCP header. Nmap creates TCP
+   headers that combine bit options that should never occur in the real world. These
+   purposely mangled TCP header packets are thrown at a remote device, and nmap watches
+   for the responses.
+</p>
+
+<p>
+   Window-based systems will reply with a RST frame for all queries, regardless of the
+   status of the specific port that was queried.
+</p>
+<ul>
+<li>nmap -n -vv -sF 218.194.106.91 <b>(This server is a windows2003 PS2 server, so it can't      scan it)</b>
+
+<p>          
+     <img src="various3.jpg"  alt="various3.jpg" />
+</p></li>
+<li>nmap -n -vv -sF 202.203.132.244 <b>(Linux server)</b>
+
+<p>     
+     <img src="various4.jpg"  alt="various4.jpg" />
+</p></li>
+<li>-sX and -sN are as -sF above
+</li>
+</ul>
+
+
+
+<dl>
+<dt>ADV</dt><dd>
+</dd>
+</dl>
+
+<p>   Since no TCP sessions are established, they are quiet stealthy.
+</p><dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   Can't be used against windows-based machine.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> -sU: UDP scan.</h3>
+<div class="outline-text-3" id="text-4-4">
+
+<pre class="example">
+nmap -vv -n -sU 202.203.132.244
+</pre>
+
+<p>   The only scan in the arsenal of Nmap to identify UDP ports.
+</p>
+<p>   
+   <img src="udp1.jpg"  alt="udp1.jpg" />
+</p>
+<p>
+   <img src="udp2.jpg"  alt="udp2.jpg" />
+</p>
+<dl>
+<dt>Question</dt><dd>
+<p>
+     I had wait it for a long time,why scanning udp take so long <b>(probably 13 minutes)</b>
+</p></dd>
+</dl>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> -sO: Protocol scan</h3>
+<div class="outline-text-3" id="text-4-5">
+
+<pre class="example">
+nmap -vv -n -sO 202.203.132.244
+</pre>
+
+<p>   Sometimes it has to be checked that what protocols the remote machine is running. It
+   locates uncommon IP protocols that may be in use on the remote system. Hence it helps
+   determining the type of remote device, i.e. is that router or printer or workstation
+   etc.
+</p>
+<p>
+   <img src="protocol1.jpg"  alt="protocol1.jpg" />
+</p>
+<p>
+   <img src="protocol2.jpg"  alt="protocol2.jpg" />
+</p>
+<p>
+   <b>Take about 3 minutes, a little slow</b>
+</p>
+<dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   This scan will appear on any network monitoring application that identifies the IP
+   protocol types in use.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> -sR: RPC scan.</h3>
+<div class="outline-text-3" id="text-4-6">
+
+<pre class="example">
+nmap -vv -sR 202.203.132.244
+</pre>
+
+<p>   It's used to locate and identify RPC applications. It runs automatically during a
+   version scan (-sV, explained later)
+</p>
+<ul>
+<li>sV is an alias to -sR
+
+<p>     
+     <img src="rpc1.jpg"  alt="rpc1.jpg" />
+</p>
+<pre class="example">
+These ports are using RPC service as the picture shown
+</pre>
+
+
+</li>
+<li>
+</li>
+</ul>
+
+<p>   RPC scan opens application sessions and hence it will be logged.c
+</p></div>
+
+</div>
+
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> -sV: Version scan</h3>
+<div class="outline-text-3" id="text-4-7">
+
+<pre class="example">
+nmap –vv –sV 202.203.132.244
+</pre>
+
+<p>   The scans which we have seen by now give you the status of the port and the service
+   running on them. For exploiting the service you need the exact eversion number of the
+   service. Version scan givese you this.
+</p>
+<p>
+   <img src="version1.jpg"  alt="version1.jpg" />
+</p>
+<pre class="example">
+It shows the VERSION of each port/service
+</pre>
+
+
+<dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   It opens sessions with the remote applications, which will often display in an
+   application's log file.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> -sA: ACK scan</h3>
+<div class="outline-text-3" id="text-4-8">
+
+<pre class="example">
+nmap –vv –sA 218.194.106.91
+</pre>
+
+<p>   It's quite useful when there is some packet filtering device or firewall. It never
+   locates an open port. It does the job of identifying ports that are filtered through a
+   firewall. It doesn't open any application sessions and hence the conversation between
+   nmap and the remote device is relatively simple.
+</p>
+<p>
+   <img src="ack1.jpg"  alt="ack1.jpg" />
+</p>
+<pre class="example">
+We can conclude that all 1000 ports are unfiltered at cs3
+</pre>
+
+
+<dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   It can only tell whether port is filtered or unfiltered. But can never definitively identify an open port.
+</p></div>
+
+</div>
+
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> -sI: Idle scan</h3>
+<div class="outline-text-3" id="text-4-9">
+
+<pre class="example">
+nmap -vv -sI 202.203.132.244
+</pre>
+
+<p>   It's the stealthy most scan you can have. Tough to launch because you need a zombie for
+   it. It would not be justice with this great scan to be described in just few lines. I
+   would recommend you to read it in detail.
+</p>
+<pre class="example">
+I don't know how to use this scan,please help.
+</pre>
+
+
+<dl>
+<dt>ADV</dt><dd>
+</dd>
+</dl>
+
+<p>   You will never be caught.
+</p><dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   Tough to launch as it's not easy to find some zombie machine.
+</p></div>
+
+</div>
+
+<div id="outline-container-4-10" class="outline-3">
+<h3 id="sec-4-10"><span class="section-number-3">4.10</span> -sP: Ping scan</h3>
+<div class="outline-text-3" id="text-4-10">
+
+<p>   You must have heard of Ping sweep. It's Nmap's ping sweep.
+</p>
+<p>
+   To check whether this machine is up or not, do
+</p><pre class="example">
+nmap –vv –sP 202.203.132.244
+</pre>
+
+<p>   <img src="ping1.jpg"  alt="ping1.jpg" />
+   To check the whole subnet (254) machines and will tell you which are up
+</p><pre class="example">
+nmap –vv –sP 202.203.132.*
+</pre>
+
+<p>   You can see the output like this
+</p>
+<p>
+   <img src="ping2.jpg"  alt="ping2.jpg" />
+</p><dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   Ping scan will not interoperate with any other type of scan.
+</p></div>
+
+</div>
+
+<div id="outline-container-4-11" class="outline-3">
+<h3 id="sec-4-11"><span class="section-number-3">4.11</span> -sW: Window scan</h3>
+<div class="outline-text-3" id="text-4-11">
+
+<p>   Forget it. As the number of operating systems vulnerable to its methodology is
+   dwindling as operating systems are upgraded and patched.
+</p>
+<pre class="example">
+nmap -n -vv -sW 202.203.132.244
+</pre>
+
+
+<p>
+   The output like this
+   <img src="window.jpg"  alt="window.jpg" />
+</p>
+<ul>
+<li>You can use -sP to replace it
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-12" class="outline-3">
+<h3 id="sec-4-12"><span class="section-number-3">4.12</span> -sL: List scan</h3>
+<div class="outline-text-3" id="text-4-12">
+
+<p>   Would like to say only one line about it that you must use it if a separate application
+   provides nmap with a list of IP addresses. Rest read yourself.
+</p>
+<pre class="example">
+i don't know how to play it,help!
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-13" class="outline-3">
+<h3 id="sec-4-13"><span class="section-number-3">4.13</span> -iL: input a ipfile</h3>
+<div class="outline-text-3" id="text-4-13">
+
+<p>   I had an ipfile which contains ip addresses that i want to scan.
+   then let's scan
+</p>
+<pre class="example">
+nmap -n -vv -iL ./ipfile
+</pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> O/S fingerprinting and version detection</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  Ok, now you can use various scanning techniques to look for open/closed or
+  filtered/unfiltered TCP as well as UDP ports. Don't you want to know the remote
+  operating system running?
+</p>
+
+<dl>
+<dt>Contents:</dt><dd>
+</dd>
+</dl>
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> -O: Operating system fingerprinting</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<pre class="example">
+nmap -vv -O 202.203.132.244
+</pre>
+
+<p>   It will tell you or at least tries its best to tell you the remote operating system
+   along with the version it's using. It at least need one open and one close TCP port. In
+   case it doesn't, it won't be able to give the accurate result. In that case you should
+   use some third party tool.
+</p>
+<p>
+   <img src="os1.jpg"  alt="os1.jpg" />
+</p>
+<pre class="example">
+Why i can't see the type of OS at cs3
+</pre>
+
+
+<dl>
+<dt>DISADV</dt><dd>
+</dd>
+</dl>
+
+<p>   A trained eye will quickly identify that someone is watching the network.
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> -sV: Version detection</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<pre class="example">
+nmap -vv -sV 202.203.132.244
+</pre>
+
+<p>   As has been explained it will help you know the version of the service running on the
+   remote machine.
+</p>
+<p>
+   <img src="ver1.jpg"  alt="ver1.jpg" />
+</p></div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> -A: Additional, Advanced, Aggressive option</h3>
+<div class="outline-text-3" id="text-5-3">
+
+<p>   Its comprises of both the operating system fingerprinting process (-O) and the version
+   scanning process (-sV). i.e following two are same:
+</p>
+
+
+<pre class="example">nmap -vv -sV -O 202.203.132.244
+nmap -vv -A 202.203.132.244
+</pre>
+
+
+<pre class="example">
+The output has both OS type and Version
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Typical scenario</h2>
+<div class="outline-text-2" id="text-6">
+
+<ol>
+<li>First, we’ll sweep the network with a simple Ping scan to determine which hosts are
+     online.
+<pre class="example">
+nmap -sP 202.203.132.192/26
+</pre>
+
+<p>     Tell me how many hosts are up?
+</p>
+<p>     
+     <img src="up1.jpg"  alt="up1.jpg" />
+</p>
+<pre class="example">
+at the end of output, we can see 30 hosts up.
+</pre>
+
+</li>
+<li>Now we’re going to take a look at 202.203.132.240-242,244. These IPs belong to School
+     of CIS. We’ll scan 202.203.132.240-242,244 using a SYN scan [-sS] and -A to enable OS
+     fingerprinting and version detection.
+<pre class="example">
+nmap -sS -A -n -vv 202.203.132.240-242,244
+</pre>
+
+<p>     Tell me what OS they are running? What services are they running?
+</p>
+<ol>
+<li>202.203.132.242
+        <img src="end1.jpg"  alt="end1.jpg" />
+<pre class="example">
+We can see the OS is Debian
+</pre>
+
+<p>        <img src="end2.jpg"  alt="end2.jpg" />
+</p><pre class="example">
+There are 13 service on host
+</pre>
+
+<p>        <img src="end3.jpg"  alt="end3.jpg" />
+</p>
+<p>        
+        <img src="end4.jpg"  alt="end4.jpg" />
+</p>
+<p>        
+        <img src="end5.jpg"  alt="end5.jpg" />
+</p>
+<p>        
+        <img src="end6.jpg"  alt="end6.jpg" />
+</p>
+<p>        
+        <img src="end7.jpg"  alt="end7.jpg" />
+</p></li>
+</ol>
+
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Example from nmap.org</h2>
+<div class="outline-text-2" id="text-7">
+
+<pre class="example">
+nmap -A -T4 202.203.132.244
+</pre>
+
+
+<p>
+  <img src="end.jpg"  alt="end.jpg" />
+</p>
+
+
+
+<pre class="example">1. This may provide more usefull infomation, such as ssh-hostkey: 1024
+28:fc:fd:15:c0:ee:52:59:0c:01:c6:4a:df:2e:74:3c (DSA)
+2048 63:88:03:dd:1f:6f:0e:59:81:af:93:36:b9:ba:4c:51 (RSA)
+
+2. Network Distance: 3 hops
+
+3. Service Info: Host: cs3.swfu.edu.cn; OSs: Unix, Linux; CPE: cpe:/o:linux:ke│
+rnel
+
+4. with -T4 can speed up the scan.
+</pre>
+
+
+
+
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="author">Author: 温俊瑞(20101152025) (<a href="mailto:mclyte.rabbit@gmail.com">mclyte.rabbit@gmail.com</a>)</p>
+<p class="date">Date: 2013-04-24 03:21:31 EDT</p>
+
+</div>
+</body>
+</html>

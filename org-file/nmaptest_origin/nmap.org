@@ -1,0 +1,363 @@
+#+TITLE:     NMAP实验报告
+#+AUTHOR:    温俊瑞(20101152025)
+#+EMAIL:     mclyte.rabbit@gmail.com
+#+LANGUAGE:  cn
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:content toc:nil ltoc:nil mouse:underline buttons:0 path:http://cs3.swfc.edu.cn/org-info-js/org-info.js
+#+STYLE:    <link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+#+STYLE:    <style>code {font-weight:bold;} body {font-size:10pt;}</style>
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+# (setq org-export-html-use-infojs t)
+
+实验环境
+  - Debian 3.2.41 i686 GNU/Linux
+    
+* Simple Example
+  1. let's begin
+     : nmap 202.203.132.244
+     [[file:test1.jpg][simple]]
+  2. no reverse NDS lookup
+     : nmap -n 202.203.132.244
+     [[file:test2.jpg][nodns]]
+  3. verbose:
+     : nmap -n -v 202.203.132.244
+     [[file:test3.jpg][verbose]]
+  4. even more:
+     : nmap -n -vv 202.203.132.244
+     [[file:test4.jpg][more]]
+     
+* Scanning more than one machine
+  #+begin_example
+  nmap -n -vv 202.203.132.242,244
+  nmap -n -vv 202.203.132.241-244
+  nmap -n -vv 202.203.132.241-242,244
+  nmap -n -vv 202.203.132.*
+  nmap -n -vv 202.203.132.192-255
+  nmap -n -vv 202.203.132.192/26
+  #+end_example
+  - nmap -n -vv 202.203.132.242,244 *(scan 242 and 244)*
+    
+    [[file:more1.jpg][more1]]
+  - nmap -n -vv 202.203.132.241-244 *(scan 241 to 244)*
+    
+    [[file:more2.jpg][more2]]
+  - nmap -n -vv 202.203.132.241-242,244 *(scan 241 to 242, and 244)*
+    
+    [[file:more3.jpg][more3]]
+  - nmap -n -vv 202.203.132.* *(scan 1 to 254)*
+    
+    [[file:more4.jpg][more4]]
+    
+    [[file:more5.jpg][more5]]
+    
+    [[file:more6.jpg][more6]]
+    
+    [[file:more7.jpg][more7]]
+    
+    [[file:more8.jpg][more8]]
+    
+    [[file:more9.jpg][more9]]
+  - nmap -n -vv 202.203.132.192-255 *(scan 192 to 255)*
+    
+    [[file:more10.jpg][more10]]
+  - nmap -n -vv 202.203.132.192/26 *(scan 192 to 254 with netmask 26)*
+    
+    [[file:more11.jpg][more11]]
+
+  #+begin_example
+  nmap -vv -n 192.168.0-2.*
+  nmap -vv -n 192.168.0,1,2.0-255
+  #+end_examplenn
+  - nmap -vv -n 192.168.0-2.* *(scan 192.168.0.* to 192.168.2.*)*
+  - nmap -vv -n 192.168.0,1,2.0-255 *(same as above)*
+  
+* Scanning specific ports:
+  #+begin_example
+  nmap -vv -n -p 80 202.203.132.244
+  nmap -vv -n -p 21,23,25,80-120 202.203.132.244
+  nmap -vv -n -p 21,23,25,80-120 202.203.132.241-244
+  #+end_example
+  - test
+    : nmap -vv -n -p 21,23,25,80-120 202.203.132.241-244
+    [[file:port1.jpg][port1]]
+    
+    
+
+  
+* Various Scanning options:
+  
+  There are many scanning options available with Nmap. All have their advantages and disadvantages. You should use them according to your requirements.
+
+  Contents:
+** -sS: SYN scanning (this is the default option)
+   : nmap -vv -n -sS 202.203.132.244
+   TCP SYN scan gather information about open ports without completing the TCP handshake
+   process. When an open port is identified, the TCP handshake is reset before it can be
+   completed. This technique is often referred to as “half open” scanning.
+   
+
+   It's the default scanning technique if you are “root”. It's the most common scan to use
+   because it works on all networks, across all operating systems.
+
+   [[file:various1.jpg][various1]]
+   
+
+   - ADV ::
+   The TCP SYN scan never actually creates a TCP session so isn't logged by the destination host's applications. And hence it's a quiet scan.
+   - DISADV ::
+   You need privileged access to the system.
+** -sT: TCP connect scanning
+   : nmap -vv -n -sT 202.203.132.244
+   It performs the 3-way handshake.
+
+   [[file:various2.jpg][various2]]
+
+   - ADV ::
+   You don't need to have privileged access.
+   - DISADV ::
+   Since it completes a TCP connection so apparent when application connection logs are examined.
+   I would suggest you to never ever use this scan.
+** -sF, -sX, -sN: FIN scan, Xmas tree scan, NULL scan.
+   #+begin_example
+   nmap –vv –n –sF 218.194.106.91
+   nmap –vv –n –sX 192.168.0.1
+   nmap –vv –n –sN 192.168.0.1
+   #+end_example
+   
+   These are called “stealth” scans. They send a single frame to a TCP port without any
+   TCP handshaking or additional packet transfers. They are more “stealth” than SYN scan
+   and must be used if the remote machine is not a Windows-based machine. I’ll tell you
+   why.
+   
+
+   These scans operate by manipulating the bits of the TCP header. Nmap creates TCP
+   headers that combine bit options that should never occur in the real world. These
+   purposely mangled TCP header packets are thrown at a remote device, and nmap watches
+   for the responses.
+   
+
+   Window-based systems will reply with a RST frame for all queries, regardless of the
+   status of the specific port that was queried.
+
+   - nmap -n -vv -sF 218.194.106.91 *(This server is a windows2003 PS2 server, so it can't
+     scan it)*
+          
+     [[file:various3.jpg][various3]]
+   - nmap -n -vv -sF 202.203.132.244 *(Linux server)*
+     
+     [[file:various4.jpg][various4]]
+   - -sX and -sN are as -sF above
+     
+
+   - ADV ::
+   Since no TCP sessions are established, they are quiet stealthy.
+   - DISADV ::
+   Can't be used against windows-based machine.
+
+** -sU: UDP scan.
+   : nmap -vv -n -sU 202.203.132.244
+   The only scan in the arsenal of Nmap to identify UDP ports.
+   
+   [[file:udp1.jpg][udp]]
+
+   [[file:udp2.jpg][udp2]]
+
+   - Question ::
+     I had wait it for a long time,why scanning udp take so long *(probably 13 minutes)*
+** -sO: Protocol scan
+   : nmap -vv -n -sO 202.203.132.244
+   Sometimes it has to be checked that what protocols the remote machine is running. It
+   locates uncommon IP protocols that may be in use on the remote system. Hence it helps
+   determining the type of remote device, i.e. is that router or printer or workstation
+   etc.
+
+   [[file:protocol1.jpg][protocol1]]
+
+   [[file:protocol2.jpg][protocol2]]
+
+   *Take about 3 minutes, a little slow*
+
+   - DISADV ::
+   This scan will appear on any network monitoring application that identifies the IP
+   protocol types in use.
+   
+** -sR: RPC scan.
+   : nmap -vv -sR 202.203.132.244
+   It's used to locate and identify RPC applications. It runs automatically during a
+   version scan (-sV, explained later)
+
+   - sV is an alias to -sR
+     
+     [[file:rpc1.jpg][rpc1]]
+     
+     : These ports are using RPC service as the picture shown
+
+   - DISADV ::
+   RPC scan opens application sessions and hence it will be logged.c
+** -sV: Version scan
+   : nmap –vv –sV 202.203.132.244
+   The scans which we have seen by now give you the status of the port and the service
+   running on them. For exploiting the service you need the exact eversion number of the
+   service. Version scan givese you this.
+
+   [[file:version1.jpg][version1]]
+
+   : It shows the VERSION of each port/service
+
+   - DISADV ::
+   It opens sessions with the remote applications, which will often display in an
+   application's log file.
+   
+** -sA: ACK scan
+   : nmap –vv –sA 218.194.106.91
+   It's quite useful when there is some packet filtering device or firewall. It never
+   locates an open port. It does the job of identifying ports that are filtered through a
+   firewall. It doesn't open any application sessions and hence the conversation between
+   nmap and the remote device is relatively simple.
+
+   [[file:ack1.jpg][ack1]]
+
+   : We can conclude that all 1000 ports are unfiltered at cs3
+
+   - DISADV ::
+   It can only tell whether port is filtered or unfiltered. But can never definitively identify an open port.
+** -sI: Idle scan
+   : nmap -vv -sI 202.203.132.244
+   It's the stealthy most scan you can have. Tough to launch because you need a zombie for
+   it. It would not be justice with this great scan to be described in just few lines. I
+   would recommend you to read it in detail.
+
+   : I don't know how to use this scan,please help.
+
+   - ADV ::
+   You will never be caught.
+   - DISADV ::
+   Tough to launch as it's not easy to find some zombie machine.
+** -sP: Ping scan
+   You must have heard of Ping sweep. It's Nmap's ping sweep.
+
+   To check whether this machine is up or not, do
+   : nmap –vv –sP 202.203.132.244
+   [[file:ping1.jpg][ping1]]
+   To check the whole subnet (254) machines and will tell you which are up
+   : nmap –vv –sP 202.203.132.*
+   You can see the output like this
+
+   [[file:ping2.jpg][ping2]]
+   - DISADV ::
+   Ping scan will not interoperate with any other type of scan.
+** -sW: Window scan
+   Forget it. As the number of operating systems vulnerable to its methodology is
+   dwindling as operating systems are upgraded and patched.
+
+   : nmap -n -vv -sW 202.203.132.244
+
+   The output like this
+   [[file:window.jpg][window]]
+
+   - You can use -sP to replace it
+** -sL: List scan
+   Would like to say only one line about it that you must use it if a separate application
+   provides nmap with a list of IP addresses. Rest read yourself.
+
+   : i don't know how to play it,help!
+** -iL: input a ipfile
+   I had an ipfile which contains ip addresses that i want to scan.
+   then let's scan
+
+   : nmap -n -vv -iL ./ipfile
+
+
+* O/S fingerprinting and version detection
+  Ok, now you can use various scanning techniques to look for open/closed or
+  filtered/unfiltered TCP as well as UDP ports. Don't you want to know the remote
+  operating system running?
+  
+
+  - Contents: ::
+    
+** -O: Operating system fingerprinting
+   : nmap -vv -O 202.203.132.244
+   It will tell you or at least tries its best to tell you the remote operating system
+   along with the version it's using. It at least need one open and one close TCP port. In
+   case it doesn't, it won't be able to give the accurate result. In that case you should
+   use some third party tool.
+
+   [[file:os1.jpg][os1]]
+
+   : Why i can't see the type of OS at cs3
+
+   - DISADV ::
+   A trained eye will quickly identify that someone is watching the network.
+** -sV: Version detection
+   : nmap -vv -sV 202.203.132.244
+   As has been explained it will help you know the version of the service running on the
+   remote machine.
+
+   [[file:ver1.jpg][ver1]]
+** -A: Additional, Advanced, Aggressive option
+   Its comprises of both the operating system fingerprinting process (-O) and the version
+   scanning process (-sV). i.e following two are same:
+   #+begin_example
+   nmap -vv -sV -O 202.203.132.244
+   nmap -vv -A 202.203.132.244
+   #+end_example
+
+   : The output has both OS type and Version
+
+* Typical scenario
+  1. First, we’ll sweep the network with a simple Ping scan to determine which hosts are
+     online.
+     : nmap -sP 202.203.132.192/26
+     Tell me how many hosts are up?
+     
+     [[file:up1.jpg][up1]]
+     
+     : at the end of output, we can see 30 hosts up.
+  2. Now we’re going to take a look at 202.203.132.240-242,244. These IPs belong to School
+     of CIS. We’ll scan 202.203.132.240-242,244 using a SYN scan [-sS] and -A to enable OS
+     fingerprinting and version detection.
+     : nmap -sS -A -n -vv 202.203.132.240-242,244
+     Tell me what OS they are running? What services are they running?
+     
+     1. 202.203.132.242
+	[[file:end1.jpg][end1]]
+	: We can see the OS is Debian
+	[[file:end2.jpg][end2]]
+	: There are 13 service on host
+	[[file:end3.jpg][end3]]
+	
+	[[file:end4.jpg][end4]]
+	
+	[[file:end5.jpg][end5]]
+	
+	[[file:end6.jpg][end6]]
+	
+	[[file:end7.jpg][end7]]
+
+* Example from nmap.org
+  : nmap -A -T4 202.203.132.244
+
+  [[file:end.jpg][end]]
+
+  #+begin_example
+  1. This may provide more usefull infomation, such as ssh-hostkey: 1024
+  28:fc:fd:15:c0:ee:52:59:0c:01:c6:4a:df:2e:74:3c (DSA)
+  2048 63:88:03:dd:1f:6f:0e:59:81:af:93:36:b9:ba:4c:51 (RSA)
+  
+  2. Network Distance: 3 hops
+
+  3. Service Info: Host: cs3.swfu.edu.cn; OSs: Unix, Linux; CPE: cpe:/o:linux:ke│
+  rnel
+
+  4. with -T4 can speed up the scan.
+  #+end_example
+  
+  
+  
+   

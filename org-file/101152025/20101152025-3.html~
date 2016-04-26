@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cn" xml:lang="cn">
+<head>
+<title>《操作系统原理》实验报告</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="《操作系统原理》实验报告"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-12 14:40:59 CST"/>
+<meta name="author" content="温俊瑞(20101152025)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="http://cs2.swfc.edu.cn/org-info-js/stylesheet.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+<style>code {font-weight:bold;} body {font-size:10pt;}</style>
+<script type="text/javascript" src="http://cs3.swfc.edu.cn/org-info-js/org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "content");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">《操作系统原理》实验报告</h1>
+
+<p>实验环境
+</p><ul>
+<li>OS version:(Linux 3.4.7-1.fc16.i686.PAE) <code>uname -srv</code>
+</li>
+<li>Kernel source versionv(3.3.7-1) <code>ls /lib/modules/</code>
+</li>
+<li>GCC version:(gcc (GCC) 4.6.3 20120306 (Red Hat 4.6.3-2)) <code>gcc --version</code>
+</li>
+</ul>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Memory management</a>
+<ul>
+<li><a href="#sec-1-1">1.1 experimental content</a></li>
+<li><a href="#sec-1-2">1.2 steps of experiment</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1 Basic commands</a></li>
+<li><a href="#sec-1-2-2">1.2.2 Shared Memory Segments</a></li>
+<li><a href="#sec-1-2-3">1.2.3 Memory Mapped Files</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3 gains</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Memory management</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> experimental content</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<ul>
+<li><a href="http://cs2.swfc.edu.cn/~wx672/lecture_notes/os/lab.html#sec-5">come on! go ahead.</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> steps of experiment</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+</div>
+
+<div id="outline-container-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Basic commands</h4>
+<div class="outline-text-4" id="text-1-2-1">
+
+<ol>
+<li>top
+<pre class="example">
+top
+</pre>
+
+</li>
+<li>size, objdump, nm
+</li>
+</ol>
+
+
+
+
+<pre class="src src-c">     <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> * gcc -o size size.c &amp;&amp; echo; size size; echo; ls -l size; echo</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> *</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> * to see binary info:        [objdump -x size]</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> * to see binary dump:        [hexdump -C size]    </span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> * to see process memory map: [pmap I'd]</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;"> </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+
+<span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">uninitialized global data will be stored in BSS segment </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">x</span>[1024000];    
+
+<span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">initialized global data will be stored in DATA segment </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">char x[1024000]={[1 ... 1023999] = 1}; //GCC-only syntax</span>
+ <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">char x[1024000]={1}; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span> (<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+ <span style="color: #b22222; background-color: #000000; font-style: italic;">// </span><span style="color: #b22222; background-color: #000000; font-style: italic;">while(1) sleep();</span>
+  <span style="color: #b22222; background-color: #000000; font-style: italic;">/*</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">   * local variable will be stored in the stack</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">   </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+  <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">int i=1; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>       
+  <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}  
+</pre>
+
+
+<p>
+    Compile the above c program with
+</p><pre class="example">
+gcc -Wall size.c
+</pre>
+
+
+<p>
+    Then, use size to see its size of text, data, and BB's data
+</p><pre class="example">
+size a.out
+</pre>
+
+
+<p>
+    This is output
+</p>
+<p>    
+    <img src="./size1.jpg"  alt="./size1.jpg" />
+</p>
+<p>
+    If you exam its size with ls -l, you should get
+</p><pre class="example">
+-rwxr-xr-x   1 matriux          matriux        4770 Oct 18 18:05 a.out
+</pre>
+
+
+<p>
+    Tell me something about the outputs
+</p>
+<ol>
+<li>What does the 4770 mean?
+<pre class="example">
+The total size of what gets loaded into memory is only 4770 bytes, in a file that
+is 102,5277 bytes long
+</pre>
+
+
+</li>
+<li>What do the 961, 284, 1024032, and 1025277 mean?
+       see this table
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">program memory</td><td class="left">address space segment</td><td class="left">excutable file section</td></tr>
+<tr><td class="left">Code</td><td class="left">Text</td><td class="left">Text</td></tr>
+<tr><td class="left">Initialized data</td><td class="left">data</td><td class="left">data</td></tr>
+<tr><td class="left">bss</td><td class="left">data</td><td class="left">bss</td></tr>
+<tr><td class="left">heap</td><td class="left">data</td><td class="left"></td></tr>
+<tr><td class="left">stack</td><td class="left">stack</td><td class="left"></td></tr>
+</tbody>
+</table>
+
+
+
+
+
+<pre class="example">961 in program memory is Code
+284 in program memory is Initialized data
+1024032 in program memory is bss
+1025277 is the total size of Code + Initialized data + bss(961+284+1024032)
+</pre>
+
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Shared Memory Segments</h4>
+<div class="outline-text-4" id="text-1-2-2">
+
+<dl>
+<dt>Your tasks</dt><dd>
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 9 step by step to learn how to use
+         shared memory segments.
+</li>
+<li>Use ipcrm to remove the segment you just created while running the example code.
+<ol>
+<li>before the ipcrm
+
+<p>     
+            <img src="./shmdemo3.jpg"  alt="./shmdemo3.jpg" />
+</p>
+</li>
+<li>after the ipcrm
+
+<p>     
+            <img src="./shmdemo2.jpg"  alt="./shmdemo2.jpg" />
+</p>
+</li>
+</ol>
+
+</li>
+<li>Add semaphore mechanism into the sample program (shmdemo.c) to enforce mutual-exclusive access to the shared data area.
+</li>
+</ol>
+
+</dd>
+</dl>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Memory Mapped Files</h4>
+<div class="outline-text-4" id="text-1-2-3">
+
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 10 step by step to learn how to use memory
+       mapped files.
+       <img src="./mmapdemo1.png"  alt="./mmapdemo1.png" />
+</li>
+<li>Write a small program to find out the page size of your Linux PC.
+<pre class="example">
+i dont't know how to write a program
+i use this way
+</pre>
+
+
+<p>       
+       <img src="./mmapdemo2.png"  alt="./mmapdemo2.png" />
+</p></li>
+<li>Add semaphore mechanism into the sample program (mmapdemo.c) to enforce
+       mutual-exclusive access to the shared data area.
+</li>
+</ol>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> gains</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<pre class="example">
+This part is the end of the IPC, and also a comprehensive exercise,
+i had made a systematic study on IPC, and i find it's fun to exploit
+and use in different situation; ultimatelly i had finished it, i deem the
+most significant thing i had learned is how to solve the problem by myself
+and how to do some google, which is the best teacher bymyside, with full of
+interests and the best teacher nobody can stop my steps!
+</pre>
+
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="author">Author: 温俊瑞(20101152025) (<a href="mailto:mclyte.rabbit@gmail.com">mclyte.rabbit@gmail.com</a>)</p>
+<p class="date">Date: 2012-12-12 14:40:59 CST</p>
+
+</div>
+</body>
+</html>

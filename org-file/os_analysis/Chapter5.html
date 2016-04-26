@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cn" xml:lang="cn">
+<head>
+<title>Chapter_5</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Chapter_5"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-07-04T22:11-0400"/>
+<meta name="author" content="温俊瑞(20101152025)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://cs3.swfu.edu.cn/~101152025/public/org-info/solarized-light.css" />
+<style>code {font-weight:bold;} body {font-size:10pt;}</style>
+<script type="text/javascript" src="http://cs2.swfc.edu.cn/org-info-js/org-info.js">
+/**
+ *
+ * @source: http://cs2.swfc.edu.cn/org-info-js/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in http://cs2.swfc.edu.cn/org-info-js/org-info.js.
+ *
+ * Copyright (C) 2012-2013  Sebastian Rose
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in http://cs2.swfc.edu.cn/org-info-js/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "content");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Chapter_5</h1>
+
+<p>实验环境
+</p><ul>
+<li>OS version:(Linux 3.9-1-686-pae #1 SMP Debian 3.9.6-1) <code>uname -srv</code>
+</li>
+<li>Kernel source versionv(3.9-1-686-pae/) <code>ls /lib/modules/</code>
+</li>
+</ul>
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Kernel prototype</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Hello World in linux</a></li>
+<li><a href="#sec-1-2">1.2 ASM and C</a></li>
+<li><a href="#sec-1-3">1.3 ELF(Executable and Linkable Format)</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1 loader ELF with <b>Loader</b></a></li>
+<li><a href="#sec-1-3-2">1.3.2 Jmp to Procte Mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Kernel prototype</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Hello World in linux</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<ol>
+<li>source code
+
+
+
+<pre class="example">; 编译链接方法
+; (ld 的‘-s’选项意为“strip all”)
+;
+; $ nasm -f elf hello.asm -o hello.o
+; $ ld -s hello.o -o hello
+; $ ./hello
+; Hello, world!
+; $
+
+[section .data] ; 数据在此
+
+strHello        db      "Hello, world!", 0Ah
+STRLEN          equ     $ - strHello
+
+[section .text] ; 代码在此
+
+global _start   ; 我们必须导出 _start 这个入口，以便让链接器识别
+
+_start:
+        mov     edx, STRLEN
+        mov     ecx, strHello
+        mov     ebx, 1
+        mov     eax, 4          ; sys_write
+        int     0x80            ; 系统调用
+        mov     ebx, 0
+        mov     eax, 1          ; sys_exit
+        int     0x80            ; 系统调用
+
+</pre>
+
+</li>
+<li>compile and link
+
+
+
+<pre class="example">nasm -f elf hello.asm -o hello.o
+ld -s hello.o -o hello
+</pre>
+
+</li>
+<li>run and success
+<pre class="example">
+./hello
+Hello, world!
+</pre>
+
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> ASM and C</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<dl>
+<dt>Calling relationships</dt><dd>
+<ol>
+<li>relationships between foo.asm and bar.c
+
+<p>        
+        <a href="img/asm.png">asmandc</a>
+</p>
+</li>
+<li>foo.asm
+
+
+
+<pre class="example">; 编译链接方法
+; (ld 的‘-s’选项意为“strip all”)
+;
+; $ nasm -f elf foo.asm -o foo.o
+; $ gcc -c bar.c -o bar.o
+; $ ld -s hello.o bar.o -o foobar
+; $ ./foobar
+; the 2nd one
+; $
+
+extern choose   ; int choose(int a, int b);
+
+[section .data] ; 数据在此
+
+num1st          dd      3
+num2nd          dd      4
+
+[section .text] ; 代码在此
+
+global _start   ; 我们必须导出 _start 这个入口，以便让链接器识别。
+global myprint  ; 导出这个函数为了让 bar.c 使用
+
+_start:
+        push    dword [num2nd]  ; `.
+        push    dword [num1st]  ;  |
+        call    choose          ;  | choose(num1st, num2nd);
+        add     esp, 8          ; /
+
+        mov     ebx, 0
+        mov     eax, 1          ; sys_exit
+        int     0x80            ; 系统调用
+
+; void myprint(char* msg, int len)
+myprint:
+        mov     edx, [esp + 8]  ; len
+        mov     ecx, [esp + 4]  ; msg
+        mov     ebx, 1
+        mov     eax, 4          ; sys_write
+        int     0x80            ; 系统调用
+        ret
+        
+
+</pre>
+
+</li>
+<li>bar.c
+
+
+
+<pre class="src src-c"><span style="color: #8888ff; font-weight: bold;">void</span> <span style="color: #E8BF6A; font-weight: bold;">myprint</span>(<span style="color: #8888ff; font-weight: bold;">char</span>* <span style="color: #d9d9d9;">msg</span>, <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">len</span>);
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">choose</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">a</span>, <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">b</span>)
+{
+        <span style="color: #CC7832; font-weight: bold;">if</span>(a &gt;= b){
+                myprint(<span style="color: #A5F26E;">"the 1st one\n"</span>, 13);
+        }
+        <span style="color: #CC7832; font-weight: bold;">else</span>{
+                myprint(<span style="color: #A5F26E;">"the 2nd one\n"</span>, 13);
+        }
+
+        <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+
+</pre>
+
+</li>
+</ol>
+
+</dd>
+</dl>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> ELF(Executable and Linkable Format)</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<ol>
+<li>Structure
+
+<p>      
+      <a href="img/cs3.swfu.edu.cn-~101152025-git-books-ORANGE’S：一个操作系统的实现.pdf(2).png">ELF</a>
+</p>
+</li>
+<li>This is data Structure
+
+
+
+<pre class="src src-c">      <span style="color: #CC7832; font-weight: bold;">typedef</span> <span style="color: #CC7832; font-weight: bold;">struct</span>
+{
+<span style="color: #8888ff; font-weight: bold;">unsigned</span> <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">e_ident</span>[EI_NIDENT];     <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#39764;&#25968;&#21644;&#30456;&#20851;&#20449;&#24687; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_type</span>;                 <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#30446;&#26631;&#25991;&#20214;&#31867;&#22411; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_machine</span>;              <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#30828;&#20214;&#20307;&#31995; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Word</span>    <span style="color: #d9d9d9;">e_version</span>;              <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#30446;&#26631;&#25991;&#20214;&#29256;&#26412; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Addr</span>    <span style="color: #d9d9d9;">e_entry</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#31243;&#24207;&#36827;&#20837;&#28857; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Off</span>     <span style="color: #d9d9d9;">e_phoff</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#31243;&#24207;&#22836;&#37096;&#20559;&#31227;&#37327; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Off</span>     <span style="color: #d9d9d9;">e_shoff</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#33410;&#22836;&#37096;&#20559;&#31227;&#37327; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Word</span>    <span style="color: #d9d9d9;">e_flags</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#22788;&#29702;&#22120;&#29305;&#23450;&#26631;&#24535; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_ehsize</span>;               <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">ELF&#22836;&#37096;&#38271;&#24230; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_phentsize</span>;            <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#31243;&#24207;&#22836;&#37096;&#20013;&#19968;&#20010;&#26465;&#30446;&#30340;&#38271;&#24230; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_phnum</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#31243;&#24207;&#22836;&#37096;&#26465;&#30446;&#20010;&#25968;  </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_shentsize</span>;            <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#33410;&#22836;&#37096;&#20013;&#19968;&#20010;&#26465;&#30446;&#30340;&#38271;&#24230; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_shnum</span>;                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#33410;&#22836;&#37096;&#26465;&#30446;&#20010;&#25968; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #8888ff; font-weight: bold;">Elf32_Half</span>    <span style="color: #d9d9d9;">e_shstrndx</span>;             <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#33410;&#22836;&#37096;&#23383;&#31526;&#34920;&#32034;&#24341; </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+} <span style="color: #8888ff; font-weight: bold;">Elf32_Ehdr</span>;
+</pre>
+
+
+</li>
+<li>ELF File include ELF Header Table, Program Header Table, Section, Section Header Table.
+</li>
+</ol>
+
+
+
+</div>
+
+<div id="outline-container-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> loader ELF with <b>Loader</b></h4>
+<div class="outline-text-4" id="text-1-3-1">
+
+<ul>
+<li>加载内核到内存这一步与引导扇区的工作非常相似，只是处理内核时我们需要根据Program header table中的值
+      把内核中的相应的段放到正确的位置。这里我们可以先把Loader内核放入内存，然后在保护模式下挪动它即可。
+
+<p>      
+      header define file
+</p>
+
+
+<pre class="src src-c">; <span style="color: #8888ff; font-weight: bold;">FAT12</span> <span style="color: #d9d9d9;">&#30913;&#30424;&#30340;&#22836;</span>
+; ----------------------------------------------------------------------
+BS_OEMName      DB <span style="color: #A5F26E;">'ForrestY'</span>   ; <span style="color: #8888ff; font-weight: bold;">OEM</span> <span style="color: #d9d9d9;">String</span>, <span style="color: #d9d9d9;">&#24517;&#39035;</span> 8 &#20010;&#23383;&#33410;
+
+BPB_BytsPerSec  DW 512          ; &#27599;&#25159;&#21306;&#23383;&#33410;&#25968;
+<span style="color: #8888ff; font-weight: bold;">BPB_SecPerClus</span>  <span style="color: #d9d9d9;">DB</span> 1            ; &#27599;&#31751;&#22810;&#23569;&#25159;&#21306;
+<span style="color: #8888ff; font-weight: bold;">BPB_RsvdSecCnt</span>  <span style="color: #d9d9d9;">DW</span> 1            ; Boot &#35760;&#24405;&#21344;&#29992;&#22810;&#23569;&#25159;&#21306;
+<span style="color: #8888ff; font-weight: bold;">BPB_NumFATs</span>     <span style="color: #d9d9d9;">DB</span> 2            ; &#20849;&#26377;&#22810;&#23569; FAT &#34920;
+<span style="color: #8888ff; font-weight: bold;">BPB_RootEntCnt</span>  <span style="color: #d9d9d9;">DW</span> 224          ; &#26681;&#30446;&#24405;&#25991;&#20214;&#25968;&#26368;&#22823;&#20540;
+<span style="color: #8888ff; font-weight: bold;">BPB_TotSec16</span>    <span style="color: #d9d9d9;">DW</span> 2880         ; &#36923;&#36753;&#25159;&#21306;&#24635;&#25968;
+<span style="color: #8888ff; font-weight: bold;">BPB_Media</span>       <span style="color: #d9d9d9;">DB</span> 0xF0         ; &#23186;&#20307;&#25551;&#36848;&#31526;
+<span style="color: #8888ff; font-weight: bold;">BPB_FATSz16</span>     <span style="color: #d9d9d9;">DW</span> 9            ; &#27599;FAT&#25159;&#21306;&#25968;
+<span style="color: #8888ff; font-weight: bold;">BPB_SecPerTrk</span>   <span style="color: #d9d9d9;">DW</span> 18           ; &#27599;&#30913;&#36947;&#25159;&#21306;&#25968;
+<span style="color: #8888ff; font-weight: bold;">BPB_NumHeads</span>    <span style="color: #d9d9d9;">DW</span> 2            ; &#30913;&#22836;&#25968;(&#38754;&#25968;)
+<span style="color: #8888ff; font-weight: bold;">BPB_HiddSec</span>     <span style="color: #d9d9d9;">DD</span> 0            ; &#38544;&#34255;&#25159;&#21306;&#25968;
+<span style="color: #8888ff; font-weight: bold;">BPB_TotSec32</span>    <span style="color: #d9d9d9;">DD</span> 0            ; &#22914;&#26524; <span style="color: #8888ff; font-weight: bold;">wTotalSectorCount</span> <span style="color: #d9d9d9;">&#26159;</span> 0 &#30001;&#36825;&#20010;&#20540;&#35760;&#24405;&#25159;&#21306;&#25968;
+
+BS_DrvNum       DB 0            ; &#20013;&#26029; 13 &#30340;&#39537;&#21160;&#22120;&#21495;
+BS_Reserved1    DB 0            ; &#26410;&#20351;&#29992;
+<span style="color: #8888ff; font-weight: bold;">BS_BootSig</span>      <span style="color: #d9d9d9;">DB</span> 29h          ; &#25193;&#23637;&#24341;&#23548;&#26631;&#35760; (29h)
+<span style="color: #8888ff; font-weight: bold;">BS_VolID</span>        <span style="color: #d9d9d9;">DD</span> 0            ; &#21367;&#24207;&#21015;&#21495;
+<span style="color: #8888ff; font-weight: bold;">BS_VolLab</span>       <span style="color: #d9d9d9;">DB</span> <span style="color: #A5F26E;">'OrangeS0.02'</span>; &#21367;&#26631;, &#24517;&#39035; 11 &#20010;&#23383;&#33410;
+BS_FileSysType  DB <span style="color: #A5F26E;">'FAT12   '</span>   ; &#25991;&#20214;&#31995;&#32479;&#31867;&#22411;, &#24517;&#39035; 8&#20010;&#23383;&#33410;  
+;------------------------------------------------------------------------
+
+
+; -------------------------------------------------------------------------
+; &#22522;&#20110; <span style="color: #8888ff; font-weight: bold;">FAT12</span> <span style="color: #d9d9d9;">&#22836;&#30340;&#19968;&#20123;&#24120;&#37327;&#23450;&#20041;</span>&#65292;&#22914;&#26524;&#22836;&#20449;&#24687;&#25913;&#21464;&#65292;&#19979;&#38754;&#30340;&#24120;&#37327;&#21487;&#33021;&#20063;&#35201;&#20570;&#30456;&#24212;&#25913;&#21464;
+; -------------------------------------------------------------------------
+; <span style="color: #8888ff; font-weight: bold;">BPB_FATSz16</span>
+<span style="color: #8888ff; font-weight: bold;">FATSz</span>                   <span style="color: #d9d9d9;">equ</span>     9
+
+; &#26681;&#30446;&#24405;&#21344;&#29992;&#31354;&#38388;:
+; RootDirSectors = ((BPB_RootEntCnt*32)+(BPB_BytsPerSec&#8211;1))/BPB_BytsPerSec
+; &#20294;&#22914;&#26524;&#25353;&#29031;&#27492;&#20844;&#24335;&#20195;&#30721;&#36807;&#38271;&#65292;&#25925;&#23450;&#20041;&#27492;&#23439;
+RootDirSectors          equ     14
+
+; Root <span style="color: #8888ff; font-weight: bold;">Directory</span> <span style="color: #d9d9d9;">&#30340;&#31532;&#19968;&#20010;&#25159;&#21306;&#21495;</span> = BPB_RsvdSecCnt + (<span style="color: #8888ff; font-weight: bold;">BPB_NumFATs</span> * FATSz)
+<span style="color: #8888ff; font-weight: bold;">SectorNoOfRootDirectory</span> <span style="color: #d9d9d9;">equ</span>     19
+
+; <span style="color: #8888ff; font-weight: bold;">FAT1</span> <span style="color: #d9d9d9;">&#30340;&#31532;&#19968;&#20010;&#25159;&#21306;&#21495;</span>   = BPB_RsvdSecCnt
+SectorNoOfFAT1          equ     1
+
+; DeltaSectorNo = BPB_RsvdSecCnt + (<span style="color: #8888ff; font-weight: bold;">BPB_NumFATs</span> * FATSz) - 2
+; &#25991;&#20214;&#30340;&#24320;&#22987;Sector&#21495; = DirEntry&#20013;&#30340;&#24320;&#22987;Sector&#21495; + &#26681;&#30446;&#24405;&#21344;&#29992;Sector&#25968;&#30446;
+;                      + DeltaSectorNo
+DeltaSectorNo           equ     17
+
+</pre>
+
+
+</li>
+<li>们需要修改loader.asm来让它把内核放进内存。
+
+
+
+<pre class="src src-c">org  0100h
+
+BaseOfStack             equ     0100h
+
+BaseOfKernelFile        equ      08000h ; KERNEL.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ----  &#27573;&#22320;&#22336;
+OffsetOfKernelFile      equ          0h ; KERNEL.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ---- &#20559;&#31227;&#22320;&#22336;
+
+
+        jmp     LABEL_START             ; Start
+
+; &#19979;&#38754;&#26159; <span style="color: #8888ff; font-weight: bold;">FAT12</span> <span style="color: #d9d9d9;">&#30913;&#30424;&#30340;&#22836;</span>, <span style="color: #d9d9d9;">&#20043;&#25152;&#20197;&#21253;&#21547;&#23427;&#26159;&#22240;&#20026;&#19979;&#38754;&#29992;&#21040;&#20102;&#30913;&#30424;&#30340;&#19968;&#20123;&#20449;&#24687;</span>
+%include        <span style="color: #A5F26E;">"fat12hdr.inc"</span>
+
+
+LABEL_START:                    ; &lt;--- &#20174;&#36825;&#37324;&#24320;&#22987; *************
+        mov     ax, cs
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ds</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">es</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ss</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">sp</span>, BaseOfStack
+
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dh</span>, 0                   ; <span style="color: #A5F26E;">"Loading  "</span>
+        call    DispStr                 ; &#26174;&#31034;&#23383;&#31526;&#20018;
+
+        ; &#19979;&#38754;&#22312; A <span style="color: #8888ff; font-weight: bold;">&#30424;&#30340;&#26681;&#30446;&#24405;&#23547;&#25214;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN
+        mov     word [wSectorNo], <span style="color: #d9d9d9;">SectorNoOfRootDirectory</span>       
+        xor     ah, <span style="color: #d9d9d9;">ah</span>  ; `.
+        xor     dl, dl  ;  | &#36719;&#39537;&#22797;&#20301;
+        <span style="color: #8888ff; font-weight: bold;">int</span>     13h     ; /
+LABEL_SEARCH_IN_ROOT_DIR_BEGIN:
+        cmp     word [wRootDirSizeForLoop], 0   ; `.
+        jz      LABEL_NO_KERNELBIN              ;  | &#21028;&#26029;&#26681;&#30446;&#24405;&#21306;&#26159;&#19981;&#26159;&#24050;&#32463;&#35835;&#23436;,
+        <span style="color: #8888ff; font-weight: bold;">dec</span>     <span style="color: #d9d9d9;">word</span> [wRootDirSizeForLoop]      ; /  &#35835;&#23436;&#34920;&#31034;&#27809;&#26377;&#25214;&#21040; KERNEL.BIN
+        mov     ax, BaseOfKernelFile
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">es</span>, ax                  ; es &lt;- BaseOfKernelFile
+        mov     bx, OffsetOfKernelFile  ; bx &lt;- OffsetOfKernelFile
+        mov     ax, [wSectorNo]         ; ax &lt;- Root Directory &#20013;&#30340;&#26576; Sector &#21495;
+        mov     cl, 1
+        call    ReadSector
+
+        mov     si, KernelFileName      ; <span style="color: #6BCFF7;">ds</span>:si -&gt; <span style="color: #A5F26E;">"KERNEL  BIN"</span>
+        mov     di, OffsetOfKernelFile
+        cld
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dx</span>, 10h
+LABEL_SEARCH_FOR_KERNELBIN:
+        cmp     dx, 0                             ; `.
+        jz      LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR;  | &#24490;&#29615;&#27425;&#25968;&#25511;&#21046;, &#22914;&#26524;&#24050;&#32463;&#35835;&#23436;
+        <span style="color: #8888ff; font-weight: bold;">dec</span>     <span style="color: #d9d9d9;">dx</span>                                ; /  &#20102;&#19968;&#20010; Sector, &#23601;&#36339;&#21040;&#19979;&#19968;&#20010;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">cx</span>, 11
+LABEL_CMP_FILENAME:
+        cmp     cx, 0                   ; `.
+        jz      LABEL_FILENAME_FOUND    ;  | &#24490;&#29615;&#27425;&#25968;&#25511;&#21046;, &#22914;&#26524;&#27604;&#36739;&#20102; 11 &#20010;&#23383;&#31526;&#37117;
+        dec     cx                      ; /  &#30456;&#31561;, <span style="color: #8888ff; font-weight: bold;">&#34920;&#31034;&#25214;&#21040;</span>
+        <span style="color: #d9d9d9;">lodsb</span>                           ; <span style="color: #6BCFF7;">ds</span>:si -&gt; al
+        cmp     al, byte [es:di]        ; <span style="color: #CC7832; font-weight: bold;">if</span> al == es:di
+        jz      LABEL_GO_ON
+        jmp     LABEL_DIFFERENT
+LABEL_GO_ON:
+        inc     di
+        jmp     LABEL_CMP_FILENAME      ;       <span style="color: #8888ff; font-weight: bold;">&#32487;&#32493;&#24490;&#29615;</span>
+
+<span style="color: #d9d9d9;">LABEL_DIFFERENT</span>:
+        and     di, 0FFE0h              ; <span style="color: #CC7832; font-weight: bold;">else</span>`. &#35753; di &#26159; 20h &#30340;&#20493;&#25968;
+        add     di, 20h                 ;      |
+        mov     si, KernelFileName      ;      | di += 20h  &#19979;&#19968;&#20010;&#30446;&#24405;&#26465;&#30446;
+        jmp     LABEL_SEARCH_FOR_KERNELBIN;   /
+
+LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR:
+        add     word [wSectorNo], 1
+        jmp     LABEL_SEARCH_IN_ROOT_DIR_BEGIN
+
+LABEL_NO_KERNELBIN:
+        mov     dh, 2                   ; <span style="color: #A5F26E;">"No KERNEL."</span>
+        call    DispStr                 ; &#26174;&#31034;&#23383;&#31526;&#20018;
+%ifdef  _LOADER_DEBUG_
+        mov     ax, 4c00h               ; `.
+        <span style="color: #8888ff; font-weight: bold;">int</span>     21h                     ; / &#27809;&#26377;&#25214;&#21040; KERNEL.BIN, <span style="color: #8888ff; font-weight: bold;">&#22238;&#21040;</span> <span style="color: #d9d9d9;">DOS</span>
+%<span style="color: #CC7832; font-weight: bold;">else</span>
+        jmp     $                       ; <span style="color: #8888ff; font-weight: bold;">&#27809;&#26377;&#25214;&#21040;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN, <span style="color: #d9d9d9;">&#27515;&#24490;&#29615;&#22312;&#36825;&#37324;</span>
+%endif
+
+LABEL_FILENAME_FOUND:                   ; <span style="color: #8888ff; font-weight: bold;">&#25214;&#21040;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN &#21518;&#20415;&#26469;&#21040;&#36825;&#37324;&#32487;&#32493;
+        mov     ax, <span style="color: #d9d9d9;">RootDirSectors</span>
+        and     di, 0FFF0h              ; di -&gt; &#24403;&#21069;&#26465;&#30446;&#30340;&#24320;&#22987;
+
+        push    eax
+        mov     eax, [es : di + 01Ch]           ; `.
+        mov     dword [dwKernelSize], eax       ; / &#20445;&#23384; KERNEL.BIN &#25991;&#20214;&#22823;&#23567;
+        pop     eax
+
+        add     di, 01Ah                ; di -&gt; &#39318; Sector
+        mov     cx, word [es:di]
+        push    cx                      ; &#20445;&#23384;&#27492; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">cx</span>, <span style="color: #d9d9d9;">ax</span>
+        add     cx, <span style="color: #d9d9d9;">DeltaSectorNo</span>       ; cl &lt;- LOADER.BIN &#30340;&#36215;&#22987;&#25159;&#21306;&#21495;(0-based)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ax</span>, <span style="color: #d9d9d9;">BaseOfKernelFile</span>
+        mov     es, <span style="color: #d9d9d9;">ax</span>                  ; es &lt;- BaseOfKernelFile
+        mov     bx, OffsetOfKernelFile  ; bx &lt;- OffsetOfKernelFile
+        mov     ax, cx                  ; ax &lt;- Sector &#21495;
+
+LABEL_GOON_LOADING_FILE:
+        push    ax                      ; `.
+        push    bx                      ;  |
+        mov     ah, 0Eh                 ;  | &#27599;&#35835;&#19968;&#20010;&#25159;&#21306;&#23601;&#22312; <span style="color: #A5F26E;">"Loading  "</span> &#21518;&#38754;
+        mov     al, <span style="color: #A5F26E;">'.'</span>                 ;  | &#25171;&#19968;&#20010;&#28857;, &#24418;&#25104;&#36825;&#26679;&#30340;&#25928;&#26524;:
+        mov     bl, 0Fh                 ;  | Loading ......
+        <span style="color: #8888ff; font-weight: bold;">int</span>     10h                     ;  |
+        pop     bx                      ;  |
+        pop     ax                      ; /
+
+        mov     cl, 1
+        call    ReadSector
+        pop     ax                      ; &#21462;&#20986;&#27492; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        call    GetFATEntry
+        <span style="color: #8888ff; font-weight: bold;">cmp</span>     <span style="color: #d9d9d9;">ax</span>, 0FFFh
+        jz      LABEL_FILE_LOADED
+        push    ax                      ; &#20445;&#23384; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dx</span>, <span style="color: #d9d9d9;">RootDirSectors</span>
+        add     ax, <span style="color: #d9d9d9;">dx</span>
+        add     ax, <span style="color: #d9d9d9;">DeltaSectorNo</span>
+        add     bx, [BPB_BytsPerSec]
+        jmp     LABEL_GOON_LOADING_FILE
+LABEL_FILE_LOADED:
+
+        call    KillMotor               ; &#20851;&#38381;&#36719;&#39537;&#39532;&#36798;
+
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dh</span>, 1                   ; <span style="color: #A5F26E;">"Ready."</span>
+        call    DispStr                 ; <span style="color: #8888ff; font-weight: bold;">&#26174;&#31034;&#23383;&#31526;&#20018;</span>
+
+        <span style="color: #d9d9d9;">jmp</span>     $
+
+
+;============================================================================
+;&#21464;&#37327;
+;----------------------------------------------------------------------------
+wRootDirSizeForLoop     dw      RootDirSectors  ; Root Directory &#21344;&#29992;&#30340;&#25159;&#21306;&#25968;
+<span style="color: #8888ff; font-weight: bold;">wSectorNo</span>               <span style="color: #d9d9d9;">dw</span>      0               ; &#35201;&#35835;&#21462;&#30340;&#25159;&#21306;&#21495;
+<span style="color: #8888ff; font-weight: bold;">bOdd</span>                    <span style="color: #d9d9d9;">db</span>      0               ; &#22855;&#25968;&#36824;&#26159;&#20598;&#25968;
+<span style="color: #8888ff; font-weight: bold;">dwKernelSize</span>            <span style="color: #d9d9d9;">dd</span>      0               ; KERNEL.BIN &#25991;&#20214;&#22823;&#23567;
+
+;============================================================================
+;&#23383;&#31526;&#20018;
+;----------------------------------------------------------------------------
+KernelFileName          db      <span style="color: #A5F26E;">"KERNEL  BIN"</span>, 0        ; KERNEL.BIN &#20043;&#25991;&#20214;&#21517;
+; &#20026;&#31616;&#21270;&#20195;&#30721;, &#19979;&#38754;&#27599;&#20010;&#23383;&#31526;&#20018;&#30340;&#38271;&#24230;&#22343;&#20026; MessageLength
+<span style="color: #8888ff; font-weight: bold;">MessageLength</span>           <span style="color: #d9d9d9;">equ</span>     9
+LoadMessage:            db      <span style="color: #A5F26E;">"Loading  "</span>
+Message1                db      <span style="color: #A5F26E;">"Ready.   "</span>
+Message2                db      <span style="color: #A5F26E;">"No KERNEL"</span>
+;============================================================================
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: DispStr
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#26174;&#31034;&#19968;&#20010;&#23383;&#31526;&#20018;, &#20989;&#25968;&#24320;&#22987;&#26102; <span style="color: #8888ff; font-weight: bold;">dh</span> <span style="color: #E8BF6A; font-weight: bold;">&#20013;&#24212;&#35813;&#26159;&#23383;&#31526;&#20018;&#24207;&#21495;</span>(0-based)
+DispStr:
+        mov     ax, <span style="color: #8888ff; font-weight: bold;">MessageLength</span>
+        mul     <span style="color: #8888ff; font-weight: bold;">dh</span>
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">ax</span>, LoadMessage
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bp</span>, ax                  ; &#9491;
+        mov     ax, ds                  ; &#9507; ES:BP = &#20018;&#22320;&#22336;
+        mov     es, ax                  ; &#9499;
+        mov     cx, MessageLength       ; CX = &#20018;&#38271;&#24230;
+        mov     ax, 01301h              ; AH = 13,  AL = 01h
+        mov     bx, 0007h               ; &#39029;&#21495;&#20026;0(BH = 0) &#40657;&#24213;&#30333;&#23383;(BL = 07h)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dl</span>, 0
+        add     dh, 3                   ; &#20174;&#31532; 3 &#34892;&#24448;&#19979;&#26174;&#31034;
+        <span style="color: #8888ff; font-weight: bold;">int</span>     10h                     ; <span style="color: #8888ff; font-weight: bold;">int</span> 10h
+        ret
+;----------------------------------------------------------------------------
+; &#20989;&#25968;&#21517;: ReadSector
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#20174;&#24207;&#21495;(Directory Entry &#20013;&#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> <span style="color: #d9d9d9;">&#21495;</span>)&#20026; ax &#30340;&#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> <span style="color: #d9d9d9;">&#24320;&#22987;</span>, <span style="color: #d9d9d9;">&#23558;</span> cl &#20010; Sector &#35835;&#20837; es:bx &#20013;
+ReadSector:
+        ; -----------------------------------------------------------------------
+        ; &#24590;&#26679;&#30001;&#25159;&#21306;&#21495;&#27714;&#25159;&#21306;&#22312;&#30913;&#30424;&#20013;&#30340;&#20301;&#32622; (&#25159;&#21306;&#21495; -&gt; &#26609;&#38754;&#21495;, &#36215;&#22987;&#25159;&#21306;, &#30913;&#22836;&#21495;)
+        ; -----------------------------------------------------------------------
+        ; <span style="color: #8888ff; font-weight: bold;">&#35774;&#25159;&#21306;&#21495;&#20026;</span> <span style="color: #d9d9d9;">x</span>
+        ;                           &#9484; &#26609;&#38754;&#21495; = y &gt;&gt; 1
+        ;       x           &#9484; &#21830; y &#9508;
+        ; -------------- =&gt; &#9508;      &#9492; &#30913;&#22836;&#21495; = y &amp; 1
+        ;  &#27599;&#30913;&#36947;&#25159;&#21306;&#25968;     &#9474;
+        ;                   &#9492; &#20313; z =&gt; &#36215;&#22987;&#25159;&#21306;&#21495; = z + 1
+        push    bp
+        mov     bp, sp
+        <span style="color: #8888ff; font-weight: bold;">sub</span>     <span style="color: #d9d9d9;">esp</span>, 2                  ; <span style="color: #6BCFF7;">&#36767;&#20986;&#20004;&#20010;&#23383;&#33410;&#30340;&#22534;&#26632;&#21306;&#22495;&#20445;&#23384;&#35201;&#35835;&#30340;&#25159;&#21306;&#25968;</span>: byte [bp-2]
+
+        mov     byte [bp-2], cl
+        <span style="color: #8888ff; font-weight: bold;">push</span>    <span style="color: #d9d9d9;">bx</span>                      ; &#20445;&#23384; bx
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bl</span>, [BPB_SecPerTrk]     ; <span style="color: #6BCFF7;">bl</span>: &#38500;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">div</span>     <span style="color: #d9d9d9;">bl</span>                      ; y &#22312; <span style="color: #8888ff; font-weight: bold;">al</span> <span style="color: #d9d9d9;">&#20013;</span>, <span style="color: #d9d9d9;">z</span> &#22312; ah &#20013;
+        inc     ah                      ; z ++
+        mov     cl, ah                  ; cl &lt;- &#36215;&#22987;&#25159;&#21306;&#21495;
+        mov     dh, al                  ; dh &lt;- y
+        shr     al, 1                   ; y &gt;&gt; 1 (<span style="color: #8888ff; font-weight: bold;">&#20854;&#23454;&#26159;</span> <span style="color: #d9d9d9;">y</span>/BPB_NumHeads, &#36825;&#37324;BPB_NumHeads=2)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ch</span>, <span style="color: #d9d9d9;">al</span>                  ; ch &lt;- &#26609;&#38754;&#21495;
+        and     dh, 1                   ; dh &amp; 1 = &#30913;&#22836;&#21495;
+        pop     bx                      ; <span style="color: #8888ff; font-weight: bold;">&#24674;&#22797;</span> <span style="color: #d9d9d9;">bx</span>
+        ; &#33267;&#27492;, <span style="color: #A5F26E;">"&#26609;&#38754;&#21495;, &#36215;&#22987;&#25159;&#21306;, &#30913;&#22836;&#21495;"</span> &#20840;&#37096;&#24471;&#21040; ^^^^^^^^^^^^^^^^^^^^^^^^
+        mov     dl, [BS_DrvNum]         ; &#39537;&#21160;&#22120;&#21495; (0 &#34920;&#31034; A &#30424;)
+.GoOnReading:
+        mov     ah, 2                   ; &#35835;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">al</span>, <span style="color: #d9d9d9;">byte</span> [bp-2]         ; &#35835; <span style="color: #8888ff; font-weight: bold;">al</span> <span style="color: #8888ff; font-weight: bold;">&#20010;&#25159;&#21306;</span>
+        <span style="color: #8888ff; font-weight: bold;">int</span>     13h
+        jc      .GoOnReading            ; &#22914;&#26524;&#35835;&#21462;&#38169;&#35823; <span style="color: #8888ff; font-weight: bold;">CF</span> <span style="color: #d9d9d9;">&#20250;&#34987;&#32622;&#20026;</span> 1, <span style="color: #d9d9d9;">&#36825;&#26102;&#23601;&#19981;&#20572;&#22320;&#35835;</span>, <span style="color: #d9d9d9;">&#30452;&#21040;&#27491;&#30830;&#20026;&#27490;</span>
+
+        add     esp, 2
+        pop     bp
+
+        ret
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: GetFATEntry
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#25214;&#21040;&#24207;&#21495;&#20026; ax &#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> &#22312; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #d9d9d9;">&#20013;&#30340;&#26465;&#30446;</span>, <span style="color: #d9d9d9;">&#32467;&#26524;&#25918;&#22312;</span> ax &#20013;
+;       &#38656;&#35201;&#27880;&#24847;&#30340;&#26159;, &#20013;&#38388;&#38656;&#35201;&#35835; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #8888ff; font-weight: bold;">&#30340;&#25159;&#21306;&#21040;</span> <span style="color: #d9d9d9;">es</span>:bx &#22788;, &#25152;&#20197;&#20989;&#25968;&#19968;&#24320;&#22987;&#20445;&#23384;&#20102; es &#21644; <span style="color: #8888ff; font-weight: bold;">bx</span>
+<span style="color: #d9d9d9;">GetFATEntry</span>:
+        push    es
+        push    bx
+        push    ax
+        mov     ax, BaseOfKernelFile    ; &#9491;
+        sub     ax, 0100h               ; &#9507; &#22312; BaseOfKernelFile &#21518;&#38754;&#30041;&#20986; 4K &#31354;&#38388;&#29992;&#20110;&#23384;&#25918; FAT
+        mov     es, ax                  ; &#9499;
+        pop     ax
+        mov     byte [bOdd], 0
+        mov     bx, 3
+        mul     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax = ax * 3
+        mov     bx, 2
+        div     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax / 2  ==&gt;  ax &lt;- &#21830;, dx &lt;- &#20313;&#25968;
+        cmp     dx, 0
+        jz      LABEL_EVEN
+        mov     byte [bOdd], 1
+LABEL_EVEN:;&#20598;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">xor</span>     <span style="color: #d9d9d9;">dx</span>, <span style="color: #d9d9d9;">dx</span>                  ; &#29616;&#22312; ax &#20013;&#26159; FATEntry &#22312; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #E8BF6A; font-weight: bold;">&#20013;&#30340;&#20559;&#31227;&#37327;</span>. &#19979;&#38754;&#26469;&#35745;&#31639; FATEntry &#22312;&#21738;&#20010;&#25159;&#21306;&#20013;(FAT&#21344;&#29992;&#19981;&#27490;&#19968;&#20010;&#25159;&#21306;)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bx</span>, [BPB_BytsPerSec]
+        div     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax / BPB_BytsPerSec  ==&gt;   ax &lt;- &#21830;   (FATEntry &#25152;&#22312;&#30340;&#25159;&#21306;&#30456;&#23545;&#20110; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #d9d9d9;">&#26469;&#35828;&#30340;&#25159;&#21306;&#21495;</span>)
+                                        ;                               dx &lt;- &#20313;&#25968; (<span style="color: #8888ff; font-weight: bold;">FATEntry</span> <span style="color: #d9d9d9;">&#22312;&#25159;&#21306;&#20869;&#30340;&#20559;&#31227;</span>)&#12290;
+        push    dx
+        mov     bx, 0                   ; bx &lt;- 0       &#20110;&#26159;, es:bx = (BaseOfKernelFile - 100):00 = (BaseOfKernelFile - 100) * 10h
+        add     ax, SectorNoOfFAT1      ; &#27492;&#21477;&#25191;&#34892;&#20043;&#21518;&#30340; ax &#23601;&#26159; <span style="color: #8888ff; font-weight: bold;">FATEntry</span> &#25152;&#22312;&#30340;&#25159;&#21306;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">cl</span>, 2
+        call    ReadSector              ; &#35835;&#21462; <span style="color: #8888ff; font-weight: bold;">FATEntry</span> <span style="color: #d9d9d9;">&#25152;&#22312;&#30340;&#25159;&#21306;</span>, <span style="color: #d9d9d9;">&#19968;&#27425;&#35835;&#20004;&#20010;</span>, <span style="color: #d9d9d9;">&#36991;&#20813;&#22312;&#36793;&#30028;&#21457;&#29983;&#38169;&#35823;</span>, <span style="color: #d9d9d9;">&#22240;&#20026;&#19968;&#20010;</span> FATEntry &#21487;&#33021;&#36328;&#36234;&#20004;&#20010;&#25159;&#21306;
+        pop     dx
+        add     bx, <span style="color: #d9d9d9;">dx</span>
+        mov     ax, [es:bx]
+        cmp     byte [bOdd], 1
+        jnz     LABEL_EVEN_2
+        shr     ax, 4
+LABEL_EVEN_2:
+        and     ax, 0FFFh
+
+LABEL_GET_FAT_ENRY_OK:
+
+        pop     bx
+        pop     es
+        ret
+;----------------------------------------------------------------------------
+
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: KillMotor
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       <span style="color: #8888ff; font-weight: bold;">&#20851;&#38381;&#36719;&#39537;&#39532;&#36798;</span>
+<span style="color: #d9d9d9;">KillMotor</span>:
+        push    dx
+        mov     dx, 03F2h
+        mov     al, 0
+        out     dx, <span style="color: #8888ff; font-weight: bold;">al</span>
+        pop     <span style="color: #8888ff; font-weight: bold;">dx</span>
+        <span style="color: #d9d9d9;">ret</span>
+;----------------------------------------------------------------------------
+
+
+</pre>
+
+
+</li>
+<li>现在内核也已经有了，我们来编译它并将其写入软盘映像
+
+
+
+<pre class="example">nasm -f elf -o kernel.o kernel.asm
+ld -s -o kernel.bin kernel.o
+sudo mount -o loop a.img /mnt/floppy
+sudo cp kernel.bin /mnt/floppy -v
+sudo umount /mnt/floppy
+</pre>
+
+</li>
+</ul>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Jmp to Procte Mode</h4>
+<div class="outline-text-4" id="text-1-3-2">
+
+<ol>
+<li>现在，内核已经被加载进内存了，此刻该跳入保护模式了。首先是GDT以及对应的选择子，这里只定义三个描述符， 分别是一个0～4GB的可执行段，一个0～4GB的可读写段和一个指向显存开始地址的段
+
+
+
+<pre class="src src-c">org  0100h
+
+        jmp     LABEL_START             ; Start
+
+; &#19979;&#38754;&#26159; <span style="color: #8888ff; font-weight: bold;">FAT12</span> <span style="color: #d9d9d9;">&#30913;&#30424;&#30340;&#22836;</span>, <span style="color: #d9d9d9;">&#20043;&#25152;&#20197;&#21253;&#21547;&#23427;&#26159;&#22240;&#20026;&#19979;&#38754;&#29992;&#21040;&#20102;&#30913;&#30424;&#30340;&#19968;&#20123;&#20449;&#24687;</span>
+%include        <span style="color: #A5F26E;">"fat12hdr.inc"</span>
+%include        <span style="color: #A5F26E;">"load.inc"</span>
+%include        <span style="color: #A5F26E;">"pm.inc"</span>
+
+; GDT
+;                            <span style="color: #8888ff; font-weight: bold;">&#27573;&#22522;&#22336;</span>     <span style="color: #d9d9d9;">&#27573;&#30028;&#38480;</span>, <span style="color: #d9d9d9;">&#23646;&#24615;</span>
+LABEL_GDT:          Descriptor 0,            0, 0              ; <span style="color: #8888ff; font-weight: bold;">&#31354;&#25551;&#36848;&#31526;</span>
+<span style="color: #d9d9d9;">LABEL_DESC_FLAT_C</span>:  Descriptor 0,      0fffffh, DA_CR|DA_32|DA_LIMIT_4K ;0-4G
+LABEL_DESC_FLAT_RW: Descriptor 0,      0fffffh, DA_DRW|DA_32|DA_LIMIT_4K;0-4G
+LABEL_DESC_VIDEO:   Descriptor 0B8000h, 0ffffh, DA_DRW|DA_DPL3 ; &#26174;&#23384;&#39318;&#22320;&#22336;
+
+<span style="color: #8888ff; font-weight: bold;">GdtLen</span>          <span style="color: #d9d9d9;">equ</span>     $ - LABEL_GDT
+GdtPtr          dw      GdtLen - 1                              ; &#27573;&#30028;&#38480;
+                <span style="color: #8888ff; font-weight: bold;">dd</span>      <span style="color: #d9d9d9;">BaseOfLoaderPhyAddr</span> + LABEL_GDT         ; &#22522;&#22320;&#22336;
+
+; GDT &#36873;&#25321;&#23376;
+SelectorFlatC           <span style="color: #8888ff; font-weight: bold;">equ</span>     <span style="color: #d9d9d9;">LABEL_DESC_FLAT_C</span>       - LABEL_GDT
+SelectorFlatRW          equ     LABEL_DESC_FLAT_RW      - LABEL_GDT
+SelectorVideo           equ     LABEL_DESC_VIDEO        - LABEL_GDT + SA_RPL3
+
+
+
+BaseOfStack     equ     0100h
+PageDirBase     equ     100000h ; <span style="color: #6BCFF7;">&#39029;&#30446;&#24405;&#24320;&#22987;&#22320;&#22336;</span>: 1M
+PageTblBase     equ     101000h ; <span style="color: #6BCFF7;">&#39029;&#34920;&#24320;&#22987;&#22320;&#22336;</span>:   1M + 4K
+
+
+LABEL_START:                    ; &lt;--- &#20174;&#36825;&#37324;&#24320;&#22987; *************
+        mov     ax, cs
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ds</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">es</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ss</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">sp</span>, BaseOfStack
+
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dh</span>, 0                   ; <span style="color: #A5F26E;">"Loading  "</span>
+        call    DispStrRealMode         ; &#26174;&#31034;&#23383;&#31526;&#20018;
+
+        ; &#24471;&#21040;&#20869;&#23384;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ebx</span>, 0                  ; ebx = &#21518;&#32493;&#20540;, &#24320;&#22987;&#26102;&#38656;&#20026; 0
+        mov     di, _MemChkBuf          ; <span style="color: #6BCFF7;">es</span>:<span style="color: #8888ff; font-weight: bold;">di</span> <span style="color: #E8BF6A; font-weight: bold;">&#25351;&#21521;&#19968;&#20010;&#22320;&#22336;&#33539;&#22260;&#25551;&#36848;&#31526;&#32467;&#26500;</span>(ARDS)
+.MemChkLoop:
+        mov     <span style="color: #d9d9d9;">eax</span>, 0E820h             ; eax = 0000E820h
+        mov     ecx, 20                 ; ecx = &#22320;&#22336;&#33539;&#22260;&#25551;&#36848;&#31526;&#32467;&#26500;&#30340;&#22823;&#23567;
+        mov     edx, 0534D4150h         ; edx = <span style="color: #A5F26E;">'SMAP'</span>
+        <span style="color: #8888ff; font-weight: bold;">int</span>     15h                     ; <span style="color: #8888ff; font-weight: bold;">int</span> 15h
+        jc      .MemChkFail
+        add     di, 20
+        inc     dword [_dwMCRNumber]    ; dwMCRNumber = ARDS &#30340;&#20010;&#25968;
+        cmp     ebx, 0
+        jne     .MemChkLoop
+        jmp     .MemChkOK
+.MemChkFail:
+        mov     dword [_dwMCRNumber], 0
+.MemChkOK:
+
+        ; &#19979;&#38754;&#22312; A <span style="color: #8888ff; font-weight: bold;">&#30424;&#30340;&#26681;&#30446;&#24405;&#23547;&#25214;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN
+        mov     word [wSectorNo], <span style="color: #d9d9d9;">SectorNoOfRootDirectory</span>       
+        xor     ah, <span style="color: #d9d9d9;">ah</span>  ; &#9491;
+        xor     dl, dl  ; &#9507; &#36719;&#39537;&#22797;&#20301;
+        <span style="color: #8888ff; font-weight: bold;">int</span>     13h     ; &#9499;
+LABEL_SEARCH_IN_ROOT_DIR_BEGIN:
+        cmp     word [wRootDirSizeForLoop], 0   ; &#9491;
+        jz      LABEL_NO_KERNELBIN              ; &#9507; &#21028;&#26029;&#26681;&#30446;&#24405;&#21306;&#26159;&#19981;&#26159;&#24050;&#32463;&#35835;&#23436;, <span style="color: #8888ff; font-weight: bold;">&#22914;&#26524;&#35835;&#23436;&#34920;&#31034;&#27809;&#26377;&#25214;&#21040;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN
+        dec     word [wRootDirSizeForLoop]      ; &#9499;
+        mov     ax, BaseOfKernelFile
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">es</span>, ax                  ; es &lt;- BaseOfKernelFile
+        mov     bx, OffsetOfKernelFile  ; bx &lt;- OffsetOfKernelFile      &#20110;&#26159;, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
+        mov     ax, [wSectorNo]         ; ax &lt;- Root Directory &#20013;&#30340;&#26576; Sector &#21495;
+        mov     cl, 1
+        call    ReadSector
+
+        mov     si, KernelFileName      ; <span style="color: #6BCFF7;">ds</span>:si -&gt; <span style="color: #A5F26E;">"KERNEL  BIN"</span>
+        mov     di, OffsetOfKernelFile  ; <span style="color: #6BCFF7;">es</span>:di -&gt; BaseOfKernelFile:???? = BaseOfKernelFile*10h+????
+        cld
+        mov     dx, 10h
+LABEL_SEARCH_FOR_KERNELBIN:
+        cmp     dx, 0                                   ; &#9491;
+        jz      LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR      ; &#9507; &#24490;&#29615;&#27425;&#25968;&#25511;&#21046;, <span style="color: #8888ff; font-weight: bold;">&#22914;&#26524;&#24050;&#32463;&#35835;&#23436;&#20102;&#19968;&#20010;</span> <span style="color: #d9d9d9;">Sector</span>, &#23601;&#36339;&#21040;&#19979;&#19968;&#20010; Sector
+        <span style="color: #8888ff; font-weight: bold;">dec</span>     <span style="color: #d9d9d9;">dx</span>                                      ; &#9499;
+        mov     cx, 11
+LABEL_CMP_FILENAME:
+        cmp     cx, 0                   ; &#9491;
+        jz      LABEL_FILENAME_FOUND    ; &#9507; &#24490;&#29615;&#27425;&#25968;&#25511;&#21046;, &#22914;&#26524;&#27604;&#36739;&#20102; 11 &#20010;&#23383;&#31526;&#37117;&#30456;&#31561;, &#34920;&#31034;&#25214;&#21040;
+        <span style="color: #8888ff; font-weight: bold;">dec</span>     <span style="color: #d9d9d9;">cx</span>                      ; &#9499;
+        lodsb                           ; <span style="color: #6BCFF7;">ds</span>:si -&gt; al
+        cmp     al, byte [es:di]        ; <span style="color: #CC7832; font-weight: bold;">if</span> al == es:di
+        jz      LABEL_GO_ON
+        jmp     LABEL_DIFFERENT
+LABEL_GO_ON:
+        inc     di
+        jmp     LABEL_CMP_FILENAME      ;       <span style="color: #8888ff; font-weight: bold;">&#32487;&#32493;&#24490;&#29615;</span>
+
+<span style="color: #d9d9d9;">LABEL_DIFFERENT</span>:
+        and     di, 0FFE0h              ; <span style="color: #CC7832; font-weight: bold;">else</span>&#9491; &#36825;&#26102;di&#30340;&#20540;&#19981;&#30693;&#36947;&#26159;&#20160;&#20040;, di &amp;= e0 &#20026;&#20102;&#35753;&#23427;&#26159; 20h &#30340;&#20493;&#25968;
+        add     di, 20h                 ;     &#9475;
+        mov     si, KernelFileName      ;     &#9507; di += 20h  &#19979;&#19968;&#20010;&#30446;&#24405;&#26465;&#30446;
+        jmp     LABEL_SEARCH_FOR_KERNELBIN;   &#9499;
+
+LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR:
+        add     word [wSectorNo], 1
+        jmp     LABEL_SEARCH_IN_ROOT_DIR_BEGIN
+
+LABEL_NO_KERNELBIN:
+        mov     dh, 2                   ; <span style="color: #A5F26E;">"No KERNEL."</span>
+        call    DispStrRealMode         ; &#26174;&#31034;&#23383;&#31526;&#20018;
+%ifdef  _LOADER_DEBUG_
+        mov     ax, 4c00h               ; &#9491;
+        <span style="color: #8888ff; font-weight: bold;">int</span>     21h                     ; &#9499;&#27809;&#26377;&#25214;&#21040; KERNEL.BIN, <span style="color: #8888ff; font-weight: bold;">&#22238;&#21040;</span> <span style="color: #d9d9d9;">DOS</span>
+%<span style="color: #CC7832; font-weight: bold;">else</span>
+        jmp     $                       ; <span style="color: #8888ff; font-weight: bold;">&#27809;&#26377;&#25214;&#21040;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN, <span style="color: #d9d9d9;">&#27515;&#24490;&#29615;&#22312;&#36825;&#37324;</span>
+%endif
+
+LABEL_FILENAME_FOUND:                   ; <span style="color: #8888ff; font-weight: bold;">&#25214;&#21040;</span> <span style="color: #d9d9d9;">KERNEL</span>.BIN &#21518;&#20415;&#26469;&#21040;&#36825;&#37324;&#32487;&#32493;
+        mov     ax, <span style="color: #d9d9d9;">RootDirSectors</span>
+        and     di, 0FFF0h              ; di -&gt; &#24403;&#21069;&#26465;&#30446;&#30340;&#24320;&#22987;
+
+        push    eax
+        mov     eax, [es : di + 01Ch]           ; &#9491;
+        mov     dword [dwKernelSize], eax       ; &#9499;&#20445;&#23384; KERNEL.BIN &#25991;&#20214;&#22823;&#23567;
+        pop     eax
+
+        add     di, 01Ah                ; di -&gt; &#39318; Sector
+        mov     cx, word [es:di]
+        push    cx                      ; &#20445;&#23384;&#27492; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">cx</span>, <span style="color: #d9d9d9;">ax</span>
+        add     cx, <span style="color: #d9d9d9;">DeltaSectorNo</span>       ; &#36825;&#26102; cl <span style="color: #8888ff; font-weight: bold;">&#37324;&#38754;&#26159;</span> <span style="color: #E8BF6A; font-weight: bold;">LOADER</span>.BIN &#30340;&#36215;&#22987;&#25159;&#21306;&#21495; (&#20174; 0 &#24320;&#22987;&#25968;&#30340;&#24207;&#21495;)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ax</span>, <span style="color: #d9d9d9;">BaseOfKernelFile</span>
+        mov     es, <span style="color: #d9d9d9;">ax</span>                  ; es &lt;- BaseOfKernelFile
+        mov     bx, OffsetOfKernelFile  ; bx &lt;- OffsetOfKernelFile      &#20110;&#26159;, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
+        mov     ax, cx                  ; ax &lt;- Sector &#21495;
+
+LABEL_GOON_LOADING_FILE:
+        push    ax                      ; &#9491;
+        push    bx                      ; &#9475;
+        mov     ah, 0Eh                 ; &#9475; &#27599;&#35835;&#19968;&#20010;&#25159;&#21306;&#23601;&#22312; <span style="color: #A5F26E;">"Loading  "</span> &#21518;&#38754;&#25171;&#19968;&#20010;&#28857;, &#24418;&#25104;&#36825;&#26679;&#30340;&#25928;&#26524;:
+        mov     al, <span style="color: #A5F26E;">'.'</span>                 ; &#9475;
+        mov     bl, 0Fh                 ; &#9475; Loading ......
+        <span style="color: #8888ff; font-weight: bold;">int</span>     10h                     ; &#9475;
+        pop     bx                      ; &#9475;
+        pop     ax                      ; &#9499;
+
+        mov     cl, 1
+        call    ReadSector
+        pop     ax                      ; &#21462;&#20986;&#27492; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        call    GetFATEntry
+        <span style="color: #8888ff; font-weight: bold;">cmp</span>     <span style="color: #d9d9d9;">ax</span>, 0FFFh
+        jz      LABEL_FILE_LOADED
+        push    ax                      ; &#20445;&#23384; Sector &#22312; FAT &#20013;&#30340;&#24207;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dx</span>, <span style="color: #d9d9d9;">RootDirSectors</span>
+        add     ax, <span style="color: #d9d9d9;">dx</span>
+        add     ax, <span style="color: #d9d9d9;">DeltaSectorNo</span>
+        add     bx, [BPB_BytsPerSec]
+        jmp     LABEL_GOON_LOADING_FILE
+LABEL_FILE_LOADED:
+
+        call    KillMotor               ; &#20851;&#38381;&#36719;&#39537;&#39532;&#36798;
+
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dh</span>, 1                   ; <span style="color: #A5F26E;">"Ready."</span>
+        call    DispStrRealMode         ; &#26174;&#31034;&#23383;&#31526;&#20018;
+
+        ; &#19979;&#38754;&#20934;&#22791;&#36339;&#20837;&#20445;&#25252;&#27169;&#24335;
+
+        ; &#21152;&#36733; <span style="color: #8888ff; font-weight: bold;">GDTR</span>
+        <span style="color: #d9d9d9;">lgdt</span>    [GdtPtr]
+
+        ; <span style="color: #8888ff; font-weight: bold;">&#20851;&#20013;&#26029;</span>
+        <span style="color: #d9d9d9;">cli</span>
+
+        ; &#25171;&#24320;&#22320;&#22336;&#32447;A20
+        <span style="color: #8888ff; font-weight: bold;">in</span>      <span style="color: #d9d9d9;">al</span>, 92h
+        or      al, 00000010b
+        out     92h, al
+
+        ; &#20934;&#22791;&#20999;&#25442;&#21040;&#20445;&#25252;&#27169;&#24335;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">eax</span>, <span style="color: #d9d9d9;">cr0</span>
+        or      eax, 1
+        mov     cr0, eax
+
+        ; &#30495;&#27491;&#36827;&#20837;&#20445;&#25252;&#27169;&#24335;
+        jmp     <span style="color: #8888ff; font-weight: bold;">dword</span> <span style="color: #E8BF6A; font-weight: bold;">SelectorFlatC</span>:(BaseOfLoaderPhyAddr+LABEL_PM_START)
+
+        jmp     $
+
+
+;============================================================================
+;&#21464;&#37327;
+;----------------------------------------------------------------------------
+wRootDirSizeForLoop     dw      RootDirSectors  ; Root Directory &#21344;&#29992;&#30340;&#25159;&#21306;&#25968;
+<span style="color: #8888ff; font-weight: bold;">wSectorNo</span>               <span style="color: #d9d9d9;">dw</span>      0               ; &#35201;&#35835;&#21462;&#30340;&#25159;&#21306;&#21495;
+<span style="color: #8888ff; font-weight: bold;">bOdd</span>                    <span style="color: #d9d9d9;">db</span>      0               ; &#22855;&#25968;&#36824;&#26159;&#20598;&#25968;
+<span style="color: #8888ff; font-weight: bold;">dwKernelSize</span>            <span style="color: #d9d9d9;">dd</span>      0               ; KERNEL.BIN &#25991;&#20214;&#22823;&#23567;
+
+;============================================================================
+;&#23383;&#31526;&#20018;
+;----------------------------------------------------------------------------
+KernelFileName          db      <span style="color: #A5F26E;">"KERNEL  BIN"</span>, 0        ; KERNEL.BIN &#20043;&#25991;&#20214;&#21517;
+; &#20026;&#31616;&#21270;&#20195;&#30721;, &#19979;&#38754;&#27599;&#20010;&#23383;&#31526;&#20018;&#30340;&#38271;&#24230;&#22343;&#20026; MessageLength
+<span style="color: #8888ff; font-weight: bold;">MessageLength</span>           <span style="color: #d9d9d9;">equ</span>     9
+LoadMessage:            db      <span style="color: #A5F26E;">"Loading  "</span>
+Message1                db      <span style="color: #A5F26E;">"Ready.   "</span>
+Message2                db      <span style="color: #A5F26E;">"No KERNEL"</span>
+;============================================================================
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: DispStrRealMode
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#36816;&#34892;&#29615;&#22659;</span>:
+;       &#23454;&#27169;&#24335;&#65288;&#20445;&#25252;&#27169;&#24335;&#19979;&#26174;&#31034;&#23383;&#31526;&#20018;&#30001;&#20989;&#25968; DispStr &#23436;&#25104;&#65289;
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#26174;&#31034;&#19968;&#20010;&#23383;&#31526;&#20018;, &#20989;&#25968;&#24320;&#22987;&#26102; <span style="color: #8888ff; font-weight: bold;">dh</span> <span style="color: #E8BF6A; font-weight: bold;">&#20013;&#24212;&#35813;&#26159;&#23383;&#31526;&#20018;&#24207;&#21495;</span>(0-based)
+DispStrRealMode:
+        mov     ax, <span style="color: #8888ff; font-weight: bold;">MessageLength</span>
+        mul     <span style="color: #8888ff; font-weight: bold;">dh</span>
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">ax</span>, LoadMessage
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bp</span>, ax                  ; &#9491;
+        mov     ax, ds                  ; &#9507; ES:BP = &#20018;&#22320;&#22336;
+        mov     es, ax                  ; &#9499;
+        mov     cx, MessageLength       ; CX = &#20018;&#38271;&#24230;
+        mov     ax, 01301h              ; AH = 13,  AL = 01h
+        mov     bx, 0007h               ; &#39029;&#21495;&#20026;0(BH = 0) &#40657;&#24213;&#30333;&#23383;(BL = 07h)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">dl</span>, 0
+        add     dh, 3                   ; &#20174;&#31532; 3 &#34892;&#24448;&#19979;&#26174;&#31034;
+        <span style="color: #8888ff; font-weight: bold;">int</span>     10h                     ; <span style="color: #8888ff; font-weight: bold;">int</span> 10h
+        ret
+;----------------------------------------------------------------------------
+; &#20989;&#25968;&#21517;: ReadSector
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#20174;&#24207;&#21495;(Directory Entry &#20013;&#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> <span style="color: #d9d9d9;">&#21495;</span>)&#20026; ax &#30340;&#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> <span style="color: #d9d9d9;">&#24320;&#22987;</span>, <span style="color: #d9d9d9;">&#23558;</span> cl &#20010; Sector &#35835;&#20837; es:bx &#20013;
+ReadSector:
+        ; -----------------------------------------------------------------------
+        ; &#24590;&#26679;&#30001;&#25159;&#21306;&#21495;&#27714;&#25159;&#21306;&#22312;&#30913;&#30424;&#20013;&#30340;&#20301;&#32622; (&#25159;&#21306;&#21495; -&gt; &#26609;&#38754;&#21495;, &#36215;&#22987;&#25159;&#21306;, &#30913;&#22836;&#21495;)
+        ; -----------------------------------------------------------------------
+        ; <span style="color: #8888ff; font-weight: bold;">&#35774;&#25159;&#21306;&#21495;&#20026;</span> <span style="color: #d9d9d9;">x</span>
+        ;                           &#9484; &#26609;&#38754;&#21495; = y &gt;&gt; 1
+        ;       x           &#9484; &#21830; y &#9508;
+        ; -------------- =&gt; &#9508;      &#9492; &#30913;&#22836;&#21495; = y &amp; 1
+        ;  &#27599;&#30913;&#36947;&#25159;&#21306;&#25968;     &#9474;
+        ;                   &#9492; &#20313; z =&gt; &#36215;&#22987;&#25159;&#21306;&#21495; = z + 1
+        push    bp
+        mov     bp, sp
+        <span style="color: #8888ff; font-weight: bold;">sub</span>     <span style="color: #d9d9d9;">esp</span>, 2                  ; <span style="color: #6BCFF7;">&#36767;&#20986;&#20004;&#20010;&#23383;&#33410;&#30340;&#22534;&#26632;&#21306;&#22495;&#20445;&#23384;&#35201;&#35835;&#30340;&#25159;&#21306;&#25968;</span>: byte [bp-2]
+
+        mov     byte [bp-2], cl
+        <span style="color: #8888ff; font-weight: bold;">push</span>    <span style="color: #d9d9d9;">bx</span>                      ; &#20445;&#23384; bx
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bl</span>, [BPB_SecPerTrk]     ; <span style="color: #6BCFF7;">bl</span>: &#38500;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">div</span>     <span style="color: #d9d9d9;">bl</span>                      ; y &#22312; <span style="color: #8888ff; font-weight: bold;">al</span> <span style="color: #d9d9d9;">&#20013;</span>, <span style="color: #d9d9d9;">z</span> &#22312; ah &#20013;
+        inc     ah                      ; z ++
+        mov     cl, ah                  ; cl &lt;- &#36215;&#22987;&#25159;&#21306;&#21495;
+        mov     dh, al                  ; dh &lt;- y
+        shr     al, 1                   ; y &gt;&gt; 1 (<span style="color: #8888ff; font-weight: bold;">&#20854;&#23454;&#26159;</span> <span style="color: #d9d9d9;">y</span>/BPB_NumHeads, &#36825;&#37324;BPB_NumHeads=2)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ch</span>, <span style="color: #d9d9d9;">al</span>                  ; ch &lt;- &#26609;&#38754;&#21495;
+        and     dh, 1                   ; dh &amp; 1 = &#30913;&#22836;&#21495;
+        pop     bx                      ; <span style="color: #8888ff; font-weight: bold;">&#24674;&#22797;</span> <span style="color: #d9d9d9;">bx</span>
+        ; &#33267;&#27492;, <span style="color: #A5F26E;">"&#26609;&#38754;&#21495;, &#36215;&#22987;&#25159;&#21306;, &#30913;&#22836;&#21495;"</span> &#20840;&#37096;&#24471;&#21040; ^^^^^^^^^^^^^^^^^^^^^^^^
+        mov     dl, [BS_DrvNum]         ; &#39537;&#21160;&#22120;&#21495; (0 &#34920;&#31034; A &#30424;)
+.GoOnReading:
+        mov     ah, 2                   ; &#35835;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">al</span>, <span style="color: #d9d9d9;">byte</span> [bp-2]         ; &#35835; <span style="color: #8888ff; font-weight: bold;">al</span> <span style="color: #8888ff; font-weight: bold;">&#20010;&#25159;&#21306;</span>
+        <span style="color: #8888ff; font-weight: bold;">int</span>     13h
+        jc      .GoOnReading            ; &#22914;&#26524;&#35835;&#21462;&#38169;&#35823; <span style="color: #8888ff; font-weight: bold;">CF</span> <span style="color: #d9d9d9;">&#20250;&#34987;&#32622;&#20026;</span> 1, <span style="color: #d9d9d9;">&#36825;&#26102;&#23601;&#19981;&#20572;&#22320;&#35835;</span>, <span style="color: #d9d9d9;">&#30452;&#21040;&#27491;&#30830;&#20026;&#27490;</span>
+
+        add     esp, 2
+        pop     bp
+
+        ret
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: GetFATEntry
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       &#25214;&#21040;&#24207;&#21495;&#20026; ax &#30340; <span style="color: #8888ff; font-weight: bold;">Sector</span> &#22312; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #d9d9d9;">&#20013;&#30340;&#26465;&#30446;</span>, <span style="color: #d9d9d9;">&#32467;&#26524;&#25918;&#22312;</span> ax &#20013;
+;       &#38656;&#35201;&#27880;&#24847;&#30340;&#26159;, &#20013;&#38388;&#38656;&#35201;&#35835; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #8888ff; font-weight: bold;">&#30340;&#25159;&#21306;&#21040;</span> <span style="color: #d9d9d9;">es</span>:bx &#22788;, &#25152;&#20197;&#20989;&#25968;&#19968;&#24320;&#22987;&#20445;&#23384;&#20102; es &#21644; <span style="color: #8888ff; font-weight: bold;">bx</span>
+<span style="color: #d9d9d9;">GetFATEntry</span>:
+        push    es
+        push    bx
+        push    ax
+        mov     ax, BaseOfKernelFile    ; &#9491;
+        sub     ax, 0100h               ; &#9507; &#22312; BaseOfKernelFile &#21518;&#38754;&#30041;&#20986; 4K &#31354;&#38388;&#29992;&#20110;&#23384;&#25918; FAT
+        mov     es, ax                  ; &#9499;
+        pop     ax
+        mov     byte [bOdd], 0
+        mov     bx, 3
+        mul     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax = ax * 3
+        mov     bx, 2
+        div     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax / 2  ==&gt;  ax &lt;- &#21830;, dx &lt;- &#20313;&#25968;
+        cmp     dx, 0
+        jz      LABEL_EVEN
+        mov     byte [bOdd], 1
+LABEL_EVEN:;&#20598;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">xor</span>     <span style="color: #d9d9d9;">dx</span>, <span style="color: #d9d9d9;">dx</span>                  ; &#29616;&#22312; ax &#20013;&#26159; FATEntry &#22312; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #E8BF6A; font-weight: bold;">&#20013;&#30340;&#20559;&#31227;&#37327;</span>. &#19979;&#38754;&#26469;&#35745;&#31639; FATEntry &#22312;&#21738;&#20010;&#25159;&#21306;&#20013;(FAT&#21344;&#29992;&#19981;&#27490;&#19968;&#20010;&#25159;&#21306;)
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">bx</span>, [BPB_BytsPerSec]
+        div     bx                      ; <span style="color: #6BCFF7;">dx</span>:ax / BPB_BytsPerSec  ==&gt;   ax &lt;- &#21830;   (FATEntry &#25152;&#22312;&#30340;&#25159;&#21306;&#30456;&#23545;&#20110; <span style="color: #8888ff; font-weight: bold;">FAT</span> <span style="color: #d9d9d9;">&#26469;&#35828;&#30340;&#25159;&#21306;&#21495;</span>)
+                                        ;                               dx &lt;- &#20313;&#25968; (<span style="color: #8888ff; font-weight: bold;">FATEntry</span> <span style="color: #d9d9d9;">&#22312;&#25159;&#21306;&#20869;&#30340;&#20559;&#31227;</span>)&#12290;
+        push    dx
+        mov     bx, 0                   ; bx &lt;- 0       &#20110;&#26159;, es:bx = (BaseOfKernelFile - 100):00 = (BaseOfKernelFile - 100) * 10h
+        add     ax, SectorNoOfFAT1      ; &#27492;&#21477;&#25191;&#34892;&#20043;&#21518;&#30340; ax &#23601;&#26159; <span style="color: #8888ff; font-weight: bold;">FATEntry</span> &#25152;&#22312;&#30340;&#25159;&#21306;&#21495;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">cl</span>, 2
+        call    ReadSector              ; &#35835;&#21462; <span style="color: #8888ff; font-weight: bold;">FATEntry</span> <span style="color: #d9d9d9;">&#25152;&#22312;&#30340;&#25159;&#21306;</span>, <span style="color: #d9d9d9;">&#19968;&#27425;&#35835;&#20004;&#20010;</span>, <span style="color: #d9d9d9;">&#36991;&#20813;&#22312;&#36793;&#30028;&#21457;&#29983;&#38169;&#35823;</span>, <span style="color: #d9d9d9;">&#22240;&#20026;&#19968;&#20010;</span> FATEntry &#21487;&#33021;&#36328;&#36234;&#20004;&#20010;&#25159;&#21306;
+        pop     dx
+        add     bx, <span style="color: #d9d9d9;">dx</span>
+        mov     ax, [es:bx]
+        cmp     byte [bOdd], 1
+        jnz     LABEL_EVEN_2
+        shr     ax, 4
+LABEL_EVEN_2:
+        and     ax, 0FFFh
+
+LABEL_GET_FAT_ENRY_OK:
+
+        pop     bx
+        pop     es
+        ret
+;----------------------------------------------------------------------------
+
+
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20989;&#25968;&#21517;</span>: KillMotor
+;----------------------------------------------------------------------------
+; <span style="color: #6BCFF7;">&#20316;&#29992;</span>:
+;       <span style="color: #8888ff; font-weight: bold;">&#20851;&#38381;&#36719;&#39537;&#39532;&#36798;</span>
+<span style="color: #d9d9d9;">KillMotor</span>:
+        push    dx
+        mov     dx, 03F2h
+        mov     al, 0
+        out     dx, <span style="color: #8888ff; font-weight: bold;">al</span>
+        pop     <span style="color: #8888ff; font-weight: bold;">dx</span>
+        <span style="color: #d9d9d9;">ret</span>
+;----------------------------------------------------------------------------
+
+
+; &#20174;&#27492;&#20197;&#21518;&#30340;&#20195;&#30721;&#22312;&#20445;&#25252;&#27169;&#24335;&#19979;&#25191;&#34892; ----------------------------------------------------
+; 32 &#20301;&#20195;&#30721;&#27573;. &#30001;&#23454;&#27169;&#24335;&#36339;&#20837; ---------------------------------------------------------
+[SECTION .s32]
+
+ALIGN   32
+
+[BITS   32]
+
+LABEL_PM_START:
+        mov     ax, SelectorVideo
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">gs</span>, ax
+
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ax</span>, SelectorFlatRW
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ds</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">es</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">fs</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ss</span>, ax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">esp</span>, TopOfStack
+
+        <span style="color: #8888ff; font-weight: bold;">push</span>    szMemChkTitle
+        call    DispStr
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">esp</span>, 4
+
+        call    DispMemInfo
+        call    SetupPaging
+
+        mov     ah, 0Fh                         ; 0000: &#40657;&#24213;    1111: &#30333;&#23383;
+        mov     al, <span style="color: #A5F26E;">'P'</span>
+        mov     [gs:((80 * 0 + 39) * 2)], ax    ; &#23631;&#24149;&#31532; 0 &#34892;, &#31532; 39 &#21015;&#12290;
+        jmp     $
+
+
+%include        <span style="color: #A5F26E;">"lib.inc"</span>
+
+
+; &#26174;&#31034;&#20869;&#23384;&#20449;&#24687; --------------------------------------------------------------
+DispMemInfo:
+        push    esi
+        push    edi
+        push    ecx
+
+        mov     esi, MemChkBuf
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ecx</span>, [dwMCRNumber];<span style="color: #CC7832; font-weight: bold;">for</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">i</span>=0;i&lt;[MCRNumber];i++)<span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#27599;&#27425;&#24471;&#21040;&#19968;&#20010;ARDS</span>
+.loop:                            ;{
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">edx</span>, 5            ;  <span style="color: #CC7832; font-weight: bold;">for</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">j</span>=0;j&lt;5;j++)<span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#27599;&#27425;&#24471;&#21040;&#19968;&#20010;ARDS&#20013;&#30340;&#25104;&#21592;</span>
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">edi</span>, <span style="color: #d9d9d9;">ARDStruct</span>    ;  {<span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#20381;&#27425;&#26174;&#31034;:BaseAddrLow,BaseAddrHigh,LengthLow</span>
+.1:                               ;               LengthHigh,Type
+        <span style="color: #8888ff; font-weight: bold;">push</span>    <span style="color: #d9d9d9;">dword</span> [esi]       ;
+        <span style="color: #8888ff; font-weight: bold;">call</span>    <span style="color: #d9d9d9;">DispInt</span>           ;    DispInt(MemChkBuf[j*4]); <span style="color: #b22222; background-color: #000000; font-style: italic;">// </span><span style="color: #b22222; background-color: #000000; font-style: italic;">&#26174;&#31034;&#19968;&#20010;&#25104;&#21592;</span>
+        <span style="color: #8888ff; font-weight: bold;">pop</span>     <span style="color: #d9d9d9;">eax</span>               ;
+        stosd                     ;    ARDStruct[j*4] = MemChkBuf[j*4];
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">esi</span>, 4            ;
+        <span style="color: #8888ff; font-weight: bold;">dec</span>     <span style="color: #d9d9d9;">edx</span>               ;
+        <span style="color: #8888ff; font-weight: bold;">cmp</span>     <span style="color: #d9d9d9;">edx</span>, 0            ;
+        jnz     .1                ;  }
+        <span style="color: #8888ff; font-weight: bold;">call</span>    <span style="color: #d9d9d9;">DispReturn</span>        ;  printf(<span style="color: #A5F26E;">"\n"</span>);
+        <span style="color: #8888ff; font-weight: bold;">cmp</span>     <span style="color: #d9d9d9;">dword</span> [dwType], 1 ;  <span style="color: #CC7832; font-weight: bold;">if</span>(Type == AddressRangeMemory)
+        jne     .2                ;  {
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">eax</span>, [dwBaseAddrLow];
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">eax</span>, [dwLengthLow];
+        <span style="color: #8888ff; font-weight: bold;">cmp</span>     <span style="color: #d9d9d9;">eax</span>, [dwMemSize]  ;    <span style="color: #CC7832; font-weight: bold;">if</span>(BaseAddrLow + LengthLow &gt; MemSize)
+        jb      .2                ;
+        mov     [dwMemSize], eax  ;    MemSize = BaseAddrLow + LengthLow;
+.2:                               ;  }
+        loop    .loop             ;}
+                                  ;
+        <span style="color: #8888ff; font-weight: bold;">call</span>    <span style="color: #d9d9d9;">DispReturn</span>        ;printf(<span style="color: #A5F26E;">"\n"</span>);
+        <span style="color: #8888ff; font-weight: bold;">push</span>    <span style="color: #d9d9d9;">szRAMSize</span>         ;
+        <span style="color: #8888ff; font-weight: bold;">call</span>    <span style="color: #d9d9d9;">DispStr</span>           ;printf(<span style="color: #A5F26E;">"RAM size:"</span>);
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">esp</span>, 4            ;
+                                  ;
+        <span style="color: #8888ff; font-weight: bold;">push</span>    <span style="color: #d9d9d9;">dword</span> [dwMemSize] ;
+        <span style="color: #8888ff; font-weight: bold;">call</span>    <span style="color: #d9d9d9;">DispInt</span>           ;DispInt(MemSize);
+        <span style="color: #8888ff; font-weight: bold;">add</span>     <span style="color: #d9d9d9;">esp</span>, 4            ;
+
+        <span style="color: #8888ff; font-weight: bold;">pop</span>     <span style="color: #d9d9d9;">ecx</span>
+        <span style="color: #8888ff; font-weight: bold;">pop</span>     edi
+        <span style="color: #8888ff; font-weight: bold;">pop</span>     <span style="color: #8888ff; font-weight: bold;">esi</span>
+        <span style="color: #d9d9d9;">ret</span>
+; ---------------------------------------------------------------------------
+
+; &#21551;&#21160;&#20998;&#39029;&#26426;&#21046; --------------------------------------------------------------
+SetupPaging:
+        ; &#26681;&#25454;&#20869;&#23384;&#22823;&#23567;&#35745;&#31639;&#24212;&#21021;&#22987;&#21270;&#22810;&#23569;PDE&#20197;&#21450;&#22810;&#23569;&#39029;&#34920;
+        <span style="color: #8888ff; font-weight: bold;">xor</span>     <span style="color: #d9d9d9;">edx</span>, <span style="color: #d9d9d9;">edx</span>
+        mov     eax, [dwMemSize]
+        mov     ebx, 400000h    ; 400000h = 4M = 4096 * 1024, &#19968;&#20010;&#39029;&#34920;&#23545;&#24212;&#30340;&#20869;&#23384;&#22823;&#23567;
+        <span style="color: #8888ff; font-weight: bold;">div</span>     ebx
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ecx</span>, eax        ; &#27492;&#26102; <span style="color: #8888ff; font-weight: bold;">ecx</span> <span style="color: #d9d9d9;">&#20026;&#39029;&#34920;&#30340;&#20010;&#25968;</span>&#65292;&#20063;&#21363; PDE &#24212;&#35813;&#30340;&#20010;&#25968;
+        test    edx, <span style="color: #d9d9d9;">edx</span>
+        jz      .no_remainder
+        inc     ecx             ; &#22914;&#26524;&#20313;&#25968;&#19981;&#20026; 0 &#23601;&#38656;&#22686;&#21152;&#19968;&#20010;&#39029;&#34920;
+.no_remainder:
+        push    <span style="color: #d9d9d9;">ecx</span>             ; &#26242;&#23384;&#39029;&#34920;&#20010;&#25968;
+
+        ; &#20026;&#31616;&#21270;&#22788;&#29702;, &#25152;&#26377;&#32447;&#24615;&#22320;&#22336;&#23545;&#24212;&#30456;&#31561;&#30340;&#29289;&#29702;&#22320;&#22336;. &#24182;&#19988;&#19981;&#32771;&#34385;&#20869;&#23384;&#31354;&#27934;.
+
+        ; &#39318;&#20808;&#21021;&#22987;&#21270;&#39029;&#30446;&#24405;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ax</span>, <span style="color: #d9d9d9;">SelectorFlatRW</span>
+        mov     es, <span style="color: #d9d9d9;">ax</span>
+        mov     edi, <span style="color: #d9d9d9;">PageDirBase</span>        ; &#27492;&#27573;&#39318;&#22320;&#22336;&#20026; PageDirBase
+        <span style="color: #8888ff; font-weight: bold;">xor</span>     <span style="color: #d9d9d9;">eax</span>, <span style="color: #d9d9d9;">eax</span>
+        mov     eax, <span style="color: #d9d9d9;">PageTblBase</span> | PG_P  | PG_USU | PG_RWW
+.1:
+        stosd
+        add     eax, 4096               ; &#20026;&#20102;&#31616;&#21270;, &#25152;&#26377;&#39029;&#34920;&#22312;&#20869;&#23384;&#20013;&#26159;&#36830;&#32493;&#30340;.
+        loop    .1
+
+        ; &#20877;&#21021;&#22987;&#21270;&#25152;&#26377;&#39029;&#34920;
+        <span style="color: #8888ff; font-weight: bold;">pop</span>     <span style="color: #d9d9d9;">eax</span>                     ; &#39029;&#34920;&#20010;&#25968;
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">ebx</span>, 1024               ; &#27599;&#20010;&#39029;&#34920; 1024 &#20010; PTE
+        mul     ebx
+        mov     ecx, eax                ; PTE&#20010;&#25968; = &#39029;&#34920;&#20010;&#25968; * 1024
+        mov     edi, PageTblBase        ; &#27492;&#27573;&#39318;&#22320;&#22336;&#20026; PageTblBase
+        <span style="color: #8888ff; font-weight: bold;">xor</span>     <span style="color: #d9d9d9;">eax</span>, <span style="color: #d9d9d9;">eax</span>
+        mov     eax, <span style="color: #d9d9d9;">PG_P</span>  | PG_USU | PG_RWW
+.2:
+        stosd
+        add     eax, 4096               ; &#27599;&#19968;&#39029;&#25351;&#21521; 4K &#30340;&#31354;&#38388;
+        loop    .2
+
+        mov     eax, PageDirBase
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">cr3</span>, eax
+        <span style="color: #8888ff; font-weight: bold;">mov</span>     <span style="color: #d9d9d9;">eax</span>, cr0
+        <span style="color: #8888ff; font-weight: bold;">or</span>      <span style="color: #d9d9d9;">eax</span>, 80000000h
+        mov     cr0, eax
+        <span style="color: #8888ff; font-weight: bold;">jmp</span>     <span style="color: #8888ff; font-weight: bold;">short</span> .3
+.3:
+        nop
+
+        ret
+; &#20998;&#39029;&#26426;&#21046;&#21551;&#21160;&#23436;&#27605; ----------------------------------------------------------
+
+
+; SECTION .data1 &#20043;&#24320;&#22987; ---------------------------------------------------------------------------------------------
+[SECTION .data1]
+
+ALIGN   32
+
+LABEL_DATA:
+; &#23454;&#27169;&#24335;&#19979;&#20351;&#29992;&#36825;&#20123;&#31526;&#21495;
+; <span style="color: #8888ff; font-weight: bold;">&#23383;&#31526;&#20018;</span>
+<span style="color: #d9d9d9;">_szMemChkTitle</span>: db <span style="color: #A5F26E;">"BaseAddrL BaseAddrH LengthLow LengthHigh   Type"</span>, 0Ah, 0
+_szRAMSize:     db <span style="color: #A5F26E;">"RAM size:"</span>, 0
+_szReturn:      db 0Ah, 0
+;; <span style="color: #8888ff; font-weight: bold;">&#21464;&#37327;</span>
+<span style="color: #d9d9d9;">_dwMCRNumber</span>:   dd 0    ; Memory Check <span style="color: #8888ff; font-weight: bold;">Result</span>
+<span style="color: #E8BF6A; font-weight: bold;">_dwDispPos</span>:     dd (80 * 6 + 0) * 2     ; &#23631;&#24149;&#31532; 6 &#34892;, &#31532; 0 &#21015;&#12290;
+_dwMemSize:     dd 0
+_ARDStruct:     ; Address Range Descriptor <span style="color: #8888ff; font-weight: bold;">Structure</span>
+  <span style="color: #d9d9d9;">_dwBaseAddrLow</span>:               dd      0
+  _dwBaseAddrHigh:              dd      0
+  _dwLengthLow:                 dd      0
+  _dwLengthHigh:                dd      0
+  _dwType:                      dd      0
+_MemChkBuf:     times   256     db      0
+;
+;; &#20445;&#25252;&#27169;&#24335;&#19979;&#20351;&#29992;&#36825;&#20123;&#31526;&#21495;
+szMemChkTitle           <span style="color: #8888ff; font-weight: bold;">equ</span>     <span style="color: #d9d9d9;">BaseOfLoaderPhyAddr</span> + _szMemChkTitle
+szRAMSize               equ     BaseOfLoaderPhyAddr + _szRAMSize
+szReturn                equ     BaseOfLoaderPhyAddr + _szReturn
+dwDispPos               equ     BaseOfLoaderPhyAddr + _dwDispPos
+dwMemSize               equ     BaseOfLoaderPhyAddr + _dwMemSize
+dwMCRNumber             equ     BaseOfLoaderPhyAddr + _dwMCRNumber
+ARDStruct               equ     BaseOfLoaderPhyAddr + _ARDStruct
+        dwBaseAddrLow   equ     BaseOfLoaderPhyAddr + _dwBaseAddrLow
+        dwBaseAddrHigh  equ     BaseOfLoaderPhyAddr + _dwBaseAddrHigh
+        dwLengthLow     equ     BaseOfLoaderPhyAddr + _dwLengthLow
+        dwLengthHigh    equ     BaseOfLoaderPhyAddr + _dwLengthHigh
+        dwType          equ     BaseOfLoaderPhyAddr + _dwType
+MemChkBuf               equ     BaseOfLoaderPhyAddr + _MemChkBuf
+
+
+; <span style="color: #8888ff; font-weight: bold;">&#22534;&#26632;&#23601;&#22312;&#25968;&#25454;&#27573;&#30340;&#26411;&#23614;</span>
+<span style="color: #d9d9d9;">StackSpace</span>:     times   1024    db      0
+TopOfStack      equ     BaseOfLoaderPhyAddr + $ ; &#26632;&#39030;
+; SECTION .data1 &#20043;&#32467;&#26463; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+</pre>
+
+
+</li>
+<li>在第3章我们学习保护模式时，大部分描述符的段基址都是运行时计算后填入相应位置的，而这里Loader是我们自己加载的， 因此在Loader中出现的标号（变量）的物理地址可以用下面的公式表示：
+<pre class="example">
+标号（变量）的物理地址=BaseOfLoaderX10h+标号（变量）的偏移
+</pre>
+
+
+</li>
+<li>Some Macro
+
+
+
+<pre class="src src-c">       <span style="color: #8888ff; font-weight: bold;">BaseOfLoader</span>         <span style="color: #d9d9d9;">equ</span>  09000h ; LOADER.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ----  &#27573;&#22320;&#22336;
+OffsetOfLoader      equ   0100h ; LOADER.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ---- &#20559;&#31227;&#22320;&#22336;
+
+BaseOfLoaderPhyAddr equ BaseOfLoader*10h ; LOADER.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ---- &#29289;&#29702;&#22320;&#22336;
+
+BaseOfKernelFile    equ  08000h ; KERNEL.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ----  &#27573;&#22320;&#22336;
+OffsetOfKernelFile  equ      0h ; KERNEL.BIN &#34987;&#21152;&#36733;&#21040;&#30340;&#20301;&#32622; ---- &#20559;&#31227;&#22320;&#22336;
+
+</pre>
+
+
+</li>
+<li>接着我们将进入保护模式，进入之后只是打印一个字符
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2013-07-04T22:11-0400</p>
+<p class="author">Author: 温俊瑞(20101152025)</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

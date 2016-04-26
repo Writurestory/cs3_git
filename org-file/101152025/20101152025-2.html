@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cn" xml:lang="cn">
+<head>
+<title>《操作系统原理》实验报告</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="《操作系统原理》实验报告"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-14 22:07:37 CST"/>
+<meta name="author" content="温俊瑞(20101152025)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="http://cs2.swfc.edu.cn/org-info-js/stylesheet.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="http://cs3.swfc.edu.cn/org-info-js/stylesheet.css" />
+<style>code {font-weight:bold;} body {font-size:10pt;}</style>
+<script type="text/javascript" src="http://cs3.swfc.edu.cn/org-info-js/org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "content");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">《操作系统原理》实验报告</h1>
+
+<p>实验环境
+</p><ul>
+<li>OS version:(Linux 3.4.7-1.fc16.i686.PAE) <code>uname -srv</code>
+</li>
+<li>Kernel source versionv(3.3.7-1) <code>ls /lib/modules/</code>
+</li>
+<li>GCC version:(gcc (GCC) 4.6.3 20120306 (Red Hat 4.6.3-2)) <code>gcc --version</code>
+</li>
+</ul>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Process management</a>
+<ul>
+<li><a href="#sec-1-1">1.1 experimental content</a></li>
+<li><a href="#sec-1-2">1.2 steps of experiment</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1 Process creation</a></li>
+<li><a href="#sec-1-2-2">1.2.2 Thread</a></li>
+<li><a href="#sec-1-2-3">1.2.3 IPC</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3 gains</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Process management</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> experimental content</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<ul>
+<li><a href="http://cs2.swfc.edu.cn/~wx672/lecture_notes/os/lab.html#sec-4">click to continue</a>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> steps of experiment</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+</div>
+
+<div id="outline-container-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Process creation</h4>
+<div class="outline-text-4" id="text-1-2-1">
+
+<ul>
+<li id="sec-1-2-1-1">Task<br/>
+<ol>
+<li><b>Both exit() and _exit() are used in the program. What's the difference?</b>
+
+<ol>
+<li>exit is defined in stdlib.h,_exit is defined in unistd.h.
+
+</li>
+<li>they both can terminate a process,and stop the operation,clear the PCB;but
+           exit had done more things than _exit,exit also do the Memory dump(clear the buffered I/O),so that
+           exit can ensure the integrity of the data,and _exit can't ensure that.
+
+</li>
+</ol>
+
+</li>
+<li><b>Tell me about the following line of code</b>
+<pre class="example">
+w = waitpid(cpid, &amp;status, WUNTRACED | WCONTINUED);
+</pre>
+
+<p>        <b>answer:</b> The  waitpid()  system  call  suspends execution of the calling process
+        until a child(cpid) specified by pid argument has changed state.
+</p>
+</li>
+<li>.
+          Compile and run the following 4 programs. Tell me what they do? And their differences.
+<dl>
+<dt>test1</dt><dd>
+</dd>
+</dl>
+
+</li>
+</ol>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+    printf(<span style="color: #A5F26E;">"Running ps with system\n"</span>);
+    system(<span style="color: #A5F26E;">"ps -ax &amp;"</span>);                 
+    printf(<span style="color: #A5F26E;">"Done.\n"</span>);
+    exit(0);
+}
++end_src
+          *test1 after running*
+#+begin_example
+[matrix@localhost drafts]$ ./test1 
+Running ps with system
+Done.
+[matrix@localhost drafts]$ Warning: bad syntax, perhaps <span style="color: #8888ff; font-weight: bold;">a</span> <span style="color: #d9d9d9;">bogus</span> <span style="color: #A5F26E;">'-'</span>? See /usr/share/doc/procps-3.2.8/FAQ
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:03 /sbin/init
+    2 ?        S      0:00 [kthreadd]
+    3 ?        S      0:00 [ksoftirqd/0]
+    6 ?        S      0:00 [migration/0]
+    7 ?        S      0:00 [watchdog/0]
+
+#+end_example
+          - test2 ::    
+ORG-LIST-END-MARKER
+          #+begin_src c
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> main()
+{
+    printf(<span style="color: #A5F26E;">"Running ps with execlp\n"</span>);
+    execlp(<span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"-ax"</span>, 0);       
+    printf(<span style="color: #A5F26E;">"Done.\n"</span>);
+    exit(0);
+}
+</pre>
+
+<p>
+          <b>test2 after running</b>
+</p>
+
+
+<pre class="src src-c">[matrix@localhost drafts]$ ./test2 
+Running ps with execlp
+Warning: bad syntax, perhaps <span style="color: #8888ff; font-weight: bold;">a</span> <span style="color: #d9d9d9;">bogus</span> <span style="color: #A5F26E;">'-'</span>? See /usr/share/doc/procps-3.2.8/FAQ
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:03 /sbin/init
+    2 ?        S      0:00 [kthreadd]
+    3 ?        S      0:00 [ksoftirqd/0]
+
+</pre>
+
+<dl>
+<dt>test3</dt><dd>
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(){
+
+   <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">child_p</span>;
+   printf(<span style="color: #A5F26E;">"Running ps with fork\n"</span>);
+
+   child_p = fork();
+
+   execlp(<span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"-ax"</span>, 0);
+   <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+<p>
+          <b>test3 after running</b>
+</p>
+
+
+<pre class="src src-c">[matrix@localhost drafts]$ ./test3 
+Running ps with fork
+Warning: bad syntax, perhaps <span style="color: #8888ff; font-weight: bold;">a</span> <span style="color: #d9d9d9;">bogus</span> <span style="color: #A5F26E;">'-'</span>? See /usr/share/doc/procps-3.2.8/FAQ
+Warning: bad syntax, perhaps <span style="color: #8888ff; font-weight: bold;">a</span> <span style="color: #d9d9d9;">bogus</span> <span style="color: #A5F26E;">'-'</span>? See /usr/share/doc/procps-3.2.8/FAQ
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:03 /sbin/init
+    2 ?        S      0:00 [kthreadd]
+    3 ?        S      0:00 [ksoftirqd/0]
+    6 ?        S      0:00 [migration/0]
+
+</pre>
+
+<dl>
+<dt>test4</dt><dd>
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+    printf(<span style="color: #A5F26E;">"Running ps again with fork\n"</span>);
+    pid = fork();
+    <span style="color: #CC7832; font-weight: bold;">if</span> ( pid == 0 ) { <span style="color: #b22222; background-color: #000000; font-style: italic;">// </span><span style="color: #b22222; background-color: #000000; font-style: italic;">in the child, do exec</span>
+        execlp(<span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"ps"</span>, <span style="color: #A5F26E;">"-ax"</span>, 0);
+    }
+    <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span> (pid &lt; 0) <span style="color: #b22222; background-color: #000000; font-style: italic;">// </span><span style="color: #b22222; background-color: #000000; font-style: italic;">failed to fork</span>
+    {
+        printf(<span style="color: #A5F26E;">"fork failed.\n"</span>);
+        exit(1);
+    }
+    <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #b22222; background-color: #000000; font-style: italic;">// </span><span style="color: #b22222; background-color: #000000; font-style: italic;">parent</span>
+    {
+        wait(<span style="color: #6BCFF7;">NULL</span>);
+    }
+    exit(0);
+}
+</pre>
+
+<p>
+          <b>test4 after running</b>
+</p>
+
+
+<pre class="example">[matrix@localhost drafts]$ ./test4 
+Running ps again with fork
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:03 /sbin/init
+    2 ?        S      0:00 [kthreadd]
+    3 ?        S      0:00 [ksoftirqd/0]
+    6 ?        S      0:00 [migration/0]
+    7 ?        S      0:00 [watchdog/0]
+
+</pre>
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-1-2">summary<br/>
+     test1 print "Running ps with system" and print "Done",then execute <b>ps -ax</b>
+     didn't return to the father shell.
+
+<p>     
+     test2 print "Running ps with system" then execute <b>ps -ax</b> and return to the
+     father shell.
+</p>
+<p>     
+     test3 print "Running ps with system"  then execute <b>ps -ax</b> didn't return to
+     the father shell.
+</p>
+<p>
+     test4 print "Running ps with system" then execute <b>ps -ax</b> and return to the
+     father shell.
+</p>
+
+<dl>
+<dt>more on fork() and wait()</dt><dd>
+<p>
+     Compile and run the following program.
+     Tell me why the output is weird (mixed with the $ prompt)? And
+     fix it with the wait() system call.
+</p>
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+    <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">message</span>;
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">n</span>;
+    printf(<span style="color: #A5F26E;">"fork program starting\n"</span>);
+    pid = fork();
+    <span style="color: #CC7832; font-weight: bold;">switch</span>(pid)
+    {
+    <span style="color: #CC7832; font-weight: bold;">case</span> -1:
+        perror(<span style="color: #A5F26E;">"fork failed"</span>);
+        exit(1);
+    <span style="color: #CC7832; font-weight: bold;">case</span> 0:
+        message = <span style="color: #A5F26E;">"This is the child"</span>;
+        n = 7;
+        <span style="color: #CC7832; font-weight: bold;">break</span>;
+    <span style="color: #CC7832; font-weight: bold;">default</span>:
+        message = <span style="color: #A5F26E;">"This is the parent"</span>;
+        n = 3;
+        <span style="color: #CC7832; font-weight: bold;">break</span>;
+    }
+    <span style="color: #CC7832; font-weight: bold;">for</span>(; n &gt; 0; n--) {
+        puts(message);
+        sleep(1);
+    }
+    exit(0);
+}
+</pre>
+
+<p>
+     <b>this is the output</b>
+</p>
+
+
+<pre class="example">[matrix@localhost drafts]$ ./orphan
+fork program starting
+This is the parent
+This is the child
+This is the child
+This is the parent
+This is the child
+This is the parent
+This is the child
+[matrix@localhost drafts]$ This is the child
+This is the child
+This is the child
+</pre>
+
+
+<pre class="example">because the fork(),it returns two value,one is 0,and another is a
+childID(default),so the "*This is the parent*" had print 3 times,and
+"*This is the child*" had print 7 times;the parent had ended loop
+first,so it back to the bash,at the same time the child
+needs three times loop,so it will continue
+to print "*This is the child*" until the end!
+so the child becomes a Orphan,who had no parent!
+Actually,this Orphan will be adopted by init!
+</pre>
+
+<p>
+     <b>but it's so easy to fix it,just need parent wait for the child</b>
+</p></dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">a fixed file!</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+    <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">message</span>;
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">n</span>;
+    printf(<span style="color: #A5F26E;">"fork program starting\n"</span>);
+    pid = fork();
+    <span style="color: #CC7832; font-weight: bold;">switch</span>(pid)
+    {
+    <span style="color: #CC7832; font-weight: bold;">case</span> -1:
+        perror(<span style="color: #A5F26E;">"fork failed"</span>);
+        exit(1);
+    <span style="color: #CC7832; font-weight: bold;">case</span> 0:
+        message = <span style="color: #A5F26E;">"This is the child"</span>;
+        n = 7;
+        <span style="color: #CC7832; font-weight: bold;">break</span>;
+    <span style="color: #CC7832; font-weight: bold;">default</span>:
+        message = <span style="color: #A5F26E;">"This is the parent"</span>;
+        n = 3;
+        wait(<span style="color: #6BCFF7;">NULL</span>);<span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">add a wait in there! so simple isn't it?</span>
+        <span style="color: #CC7832; font-weight: bold;">break</span>;
+    }
+    <span style="color: #CC7832; font-weight: bold;">for</span>(; n &gt; 0; n--) {
+        puts(message);
+        sleep(1);
+    }
+    exit(0);
+}
+</pre>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-1-3">Task<br/>
+<ol>
+<li>Read the NOTES section of wait manual page (man 2 wait) to get a clear idea about zombie processes.
+        And tell me why zombie is not welcomed.
+
+<p>        
+        <b>answer:</b> there are two way to create zombies:
+</p><ol>
+<li>when the child process want to terminated,he will send
+           a signal to father,but father ignored it;
+</li>
+<li>the father still there,but didn't wait or waitpid the
+           child process.
+</li>
+<li>the orphan is adopted by init,but a zombie can't be adopted
+           and it consumes the system source,if there are to many zombies,
+           it will exhaust the system source.
+</li>
+</ol>
+
+</li>
+<li>At the end of wait manual page (man 2 wait), there is an src program.
+        Play with it, and tell me about WUNTRACED, WCONTINUED, WIFEXITED
+        , WEXITSTATUS, WIFSIGNALED, WTERMSIG, WIFSTOPPED, WSTOPSIG,
+        WIFCONTINUED, pause().
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">in file wait.c</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/wait.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span>
+<span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">argc</span>, <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">argv</span>[])
+{
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">cpid</span>, <span style="color: #d9d9d9;">w</span>;
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">status</span>;
+
+    cpid = fork();
+    <span style="color: #CC7832; font-weight: bold;">if</span> (cpid == -1) {
+        perror(<span style="color: #A5F26E;">"fork"</span>);
+        exit(EXIT_FAILURE);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (cpid == 0) {            <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Code executed by child </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        printf(<span style="color: #A5F26E;">"Child PID is %ld\n"</span>, (<span style="color: #8888ff; font-weight: bold;">long</span>) getpid());
+        <span style="color: #CC7832; font-weight: bold;">if</span> (argc == 1)
+            pause();                    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Wait for signals </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        _exit(atoi(argv[1]));
+
+    } <span style="color: #CC7832; font-weight: bold;">else</span> {                    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Code executed by parent </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        <span style="color: #CC7832; font-weight: bold;">do</span> {
+            w = waitpid(cpid, &amp;status, WUNTRACED | WCONTINUED);
+            <span style="color: #CC7832; font-weight: bold;">if</span> (w == -1) {
+                perror(<span style="color: #A5F26E;">"waitpid"</span>);
+                exit(EXIT_FAILURE);
+            }
+
+            <span style="color: #CC7832; font-weight: bold;">if</span> (WIFEXITED(status)) {
+                printf(<span style="color: #A5F26E;">"exited, status=%d\n"</span>, WEXITSTATUS(status));
+            } <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span> (WIFSIGNALED(status)) {
+                printf(<span style="color: #A5F26E;">"killed by signal %d\n"</span>, WTERMSIG(status));
+            } <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span> (WIFSTOPPED(status)) {
+                printf(<span style="color: #A5F26E;">"stopped by signal %d\n"</span>, WSTOPSIG(status));
+            } <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span> (WIFCONTINUED(status)) {
+                printf(<span style="color: #A5F26E;">"continued\n"</span>);
+            }
+        } <span style="color: #CC7832; font-weight: bold;">while</span> (!WIFEXITED(status) &amp;&amp; !WIFSIGNALED(status));
+        exit(EXIT_SUCCESS);
+    }
+}
+
+</pre>
+
+<p>
+        <b>the out put is a zombie</b> :
+</p>
+
+
+<pre class="example">[matrix@localhost 101152025]$ ./wait
+
+Child PID is 5693
+</pre>
+
+
+</li>
+<li>Compile and run the following small program
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">zombie test. </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+  <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+  <span style="color: #CC7832; font-weight: bold;">switch</span>(pid = fork())
+    {
+    <span style="color: #CC7832; font-weight: bold;">case</span> -1:
+      perror(<span style="color: #A5F26E;">"fork failed"</span>);
+      exit(1);
+    <span style="color: #CC7832; font-weight: bold;">case</span> 0:
+      printf(<span style="color: #A5F26E;">" CHILD: My PID is %d, My parent's PID is %d\n"</span>, getpid(), getppid());
+      exit(0);
+    <span style="color: #CC7832; font-weight: bold;">default</span>:
+      printf(<span style="color: #A5F26E;">"PARENT: My PID is %d, My child's PID is %d\n"</span>, getpid(), pid);
+      printf(<span style="color: #A5F26E;">"PARENT: I'm now looping...\n"</span>);
+      <span style="color: #CC7832; font-weight: bold;">while</span>(1);
+    }
+  exit(0);
+}
+</pre>
+
+
+<pre class="example">        /*the out put*/
+[matrix@localhost 101152025]$ ./zombie_test 
+PARENT: My PID is 6103, My child's PID is 6104
+PARENT: I'm now looping...
+CHILD: My PID is 6104, My parent's PID is 6103
+</pre>
+
+
+<p>
+        you can check it with <b>top</b>.
+</p></li>
+</ol>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-1-4"><b>after that,these are what i had finished!</b><br/>
+<ol>
+<li>Write a similar program that leaves 5 zombies.
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">this is what i write at 5zombies</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+    pid = fork();
+    <span style="color: #CC7832; font-weight: bold;">if</span>(pid &lt; 0)
+        printf(<span style="color: #A5F26E;">"error occurred!\n"</span>);
+    <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span>(pid == 0) {
+        printf(<span style="color: #A5F26E;">"Hi father! I'm a ZOMBIE1\n"</span>);
+        exit(0);      <span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">(1)</span>
+    }
+    <span style="color: #CC7832; font-weight: bold;">else</span> {
+            pid = fork();
+            <span style="color: #CC7832; font-weight: bold;">if</span>(pid &lt; 0)
+                    printf(<span style="color: #A5F26E;">"error occurred!\n"</span>);
+            <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span>(pid == 0){
+                    printf(<span style="color: #A5F26E;">"Hi father! I'm a ZOMBIE2\n"</span>);
+                    exit(<span style="color: #6BCFF7;">NULL</span>);
+            }
+            <span style="color: #CC7832; font-weight: bold;">else</span>{
+                    pid = fork();
+                    <span style="color: #CC7832; font-weight: bold;">if</span>(pid &lt; 0)
+                            printf(<span style="color: #A5F26E;">"error occurred!\n"</span>);
+                    <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span>(pid == 0){
+                            printf(<span style="color: #A5F26E;">"Hi father! I'm a ZOMBIE3\n"</span>);
+                            exit(<span style="color: #6BCFF7;">NULL</span>);
+                    }<span style="color: #CC7832; font-weight: bold;">else</span>{
+                            pid = fork();
+                            <span style="color: #CC7832; font-weight: bold;">if</span>(pid &lt; 0)
+                                    printf(<span style="color: #A5F26E;">"error occurred!\n"</span>);
+                            <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span>(pid == 0){
+                                    printf(<span style="color: #A5F26E;">"Hi father! I'm a ZOMBIE4\n"</span>);
+                                    exit(<span style="color: #6BCFF7;">NULL</span>);
+                            }<span style="color: #CC7832; font-weight: bold;">else</span>{
+                                    pid = fork();
+                                    <span style="color: #CC7832; font-weight: bold;">if</span>(pid &lt; 0)
+                                            printf(<span style="color: #A5F26E;">"error occurred!\n"</span>);
+                                    <span style="color: #CC7832; font-weight: bold;">else</span> <span style="color: #CC7832; font-weight: bold;">if</span>(pid == 0){
+                                            printf(<span style="color: #A5F26E;">"Hi father! I'm a ZOMBIE5\n"</span>);
+                                            exit(<span style="color: #6BCFF7;">NULL</span>);
+                                    }<span style="color: #CC7832; font-weight: bold;">else</span>{
+                                        <span style="color: #CC7832; font-weight: bold;">while</span>(1);
+                                    }
+                            }
+                    }
+            }
+    }
+}
+
+</pre>
+
+<p>
+        <img src="./5zombies.png"  alt="./5zombies.png" />
+</p></li>
+<li>Tell me what's the difference between a zombie
+        process and a orphan process?
+
+<p>
+        <b>answer:</b> the orphan is adopted by init,but a zombie can't be adopted
+        and it consumes the system source,if there are to many zombies,
+        it will exhaust the system source.
+</p></li>
+<li>Read Beginning Linux Programming, Chapter 11, page 503
+        to learn how to avoid zombies with waitpid() system call. And
+        correct the above program.
+
+<p>        
+        <b>answer:</b>
+</p>
+<p>
+        we can take a trick,just fork it twice,then the second child will be
+        adopted by init,and parent need not to wait for second child.
+        you can compile the file <b>avoid_zombie.c</b>
+</p>
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">zombie avoid. </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>()
+{
+  <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">pid</span>;
+  <span style="color: #CC7832; font-weight: bold;">switch</span>(pid = fork())
+    {
+    <span style="color: #CC7832; font-weight: bold;">case</span> -1:
+      perror(<span style="color: #A5F26E;">"fork failed"</span>);
+      exit(1);
+    <span style="color: #CC7832; font-weight: bold;">case</span> 0:
+      printf(<span style="color: #A5F26E;">" CHILD: My PID is %d, My parent's PID is %d\n"</span>, getpid(), getppid());
+          <span style="color: #CC7832; font-weight: bold;">switch</span>(pid = fork())
+            {
+            <span style="color: #CC7832; font-weight: bold;">case</span> -1:
+              perror(<span style="color: #A5F26E;">"fork failed"</span>);
+              exit(1);
+            <span style="color: #CC7832; font-weight: bold;">case</span> 0:
+              printf(<span style="color: #A5F26E;">" CHILD: My PID is %d, My parent's PID is %d\n"</span>, getpid(), getppid());
+              sleep(2);   <span style="color: #b22222; background-color: #000000; font-style: italic;">//</span><span style="color: #b22222; background-color: #000000; font-style: italic;">to ensure the first child exit before the second child</span>
+              exit(0);
+            <span style="color: #CC7832; font-weight: bold;">default</span>:
+              printf(<span style="color: #A5F26E;">"PARENT: My PID is %d, My child's PID is %d\n"</span>, getpid(), pid);
+              printf(<span style="color: #A5F26E;">"PARENT: I'm now free\n"</span>);
+              wait(<span style="color: #6BCFF7;">NULL</span>);
+            }
+              exit(0);
+    <span style="color: #CC7832; font-weight: bold;">default</span>:
+      printf(<span style="color: #A5F26E;">"PARENT: My PID is %d, My child's PID is %d\n"</span>, getpid(), pid);
+      printf(<span style="color: #A5F26E;">"PARENT: I'm waiting first child\n"</span>);
+      wait(<span style="color: #6BCFF7;">NULL</span>);
+    }
+  exit(0);
+}
+
+</pre>
+
+<p>
+        <b>this is out put</b>
+</p>
+<p>        
+        <img src="./avoid_zombie.png"  alt="./avoid_zombie.png" />
+</p>
+</li>
+<li>Tell me the difference between exit() and return.
+
+<p>
+        <b>answer:</b>
+</p>
+<p>        
+        exit() causes the program to exit with the argument as return value.
+        The return statement only returns from a function to its caller.  In
+        main(), this amounts to exiting the program. 
+</p></li>
+</ol>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Thread</h4>
+<div class="outline-text-4" id="text-1-2-2">
+
+
+<ul>
+<li id="sec-1-2-2-1">Tasks<br/>
+<ol>
+<li>At the end of <b>pthread_create</b> manual
+        page (<b>man 3 pthread_create</b>), there is an
+        example program. Play with it, and then tell me:
+<ol>
+<li>What's the <b>tinfo[]</b>?
+
+<p>           
+           <b>answer:</b> it's a data structure that contains
+           some info about thread.
+</p></li>
+<li>What's the <b>res</b>?
+
+<p>           
+           <b>answer:</b> it's a resource that thread oppcupied.
+</p></li>
+</ol>
+
+</li>
+<li>At the end of <b>pthread_attr_init</b> manual page
+        (<b>man 3 pthread_attr_init</b>), there is an example
+        program. Compile and run it.
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#define</span> <span style="color: #d9d9d9;">_GNU_SOURCE</span>     <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">To get pthread_getattr_np() declaration </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;pthread.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;errno.h&gt;</span>
+
+<span style="color: #59ACC2; background-color: #202020;">#define</span> <span style="color: #E8BF6A; font-weight: bold;">handle_error_en</span>(<span style="color: #d9d9d9;">en</span>, <span style="color: #d9d9d9;">msg</span>) \
+        <span style="color: #CC7832; font-weight: bold;">do</span> { errno = en; perror(msg); exit(EXIT_FAILURE); } <span style="color: #CC7832; font-weight: bold;">while</span> (0)
+
+<span style="color: #CC7832; font-weight: bold;">static</span> <span style="color: #8888ff; font-weight: bold;">void</span>
+<span style="color: #E8BF6A; font-weight: bold;">display_pthread_attr</span>(<span style="color: #8888ff; font-weight: bold;">pthread_attr_t</span> *<span style="color: #d9d9d9;">attr</span>, <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">prefix</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">s</span>, <span style="color: #d9d9d9;">i</span>;
+    <span style="color: #8888ff; font-weight: bold;">size_t</span> <span style="color: #d9d9d9;">v</span>;
+    <span style="color: #8888ff; font-weight: bold;">void</span> *<span style="color: #d9d9d9;">stkaddr</span>;
+    <span style="color: #CC7832; font-weight: bold;">struct</span> <span style="color: #8888ff; font-weight: bold;">sched_param</span> <span style="color: #d9d9d9;">sp</span>;
+
+    s = pthread_attr_getdetachstate(attr, &amp;i);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getdetachstate"</span>);
+    printf(<span style="color: #A5F26E;">"%sDetach state        = %s\n"</span>, prefix,
+            (i == PTHREAD_CREATE_DETACHED) ? <span style="color: #A5F26E;">"PTHREAD_CREATE_DETACHED"</span> :
+            (i == PTHREAD_CREATE_JOINABLE) ? <span style="color: #A5F26E;">"PTHREAD_CREATE_JOINABLE"</span> :
+            <span style="color: #A5F26E;">"???"</span>);
+
+    s = pthread_attr_getscope(attr, &amp;i);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getscope"</span>);
+    printf(<span style="color: #A5F26E;">"%sScope               = %s\n"</span>, prefix,
+            (i == PTHREAD_SCOPE_SYSTEM)  ? <span style="color: #A5F26E;">"PTHREAD_SCOPE_SYSTEM"</span> :
+            (i == PTHREAD_SCOPE_PROCESS) ? <span style="color: #A5F26E;">"PTHREAD_SCOPE_PROCESS"</span> :
+            <span style="color: #A5F26E;">"???"</span>);
+
+    s = pthread_attr_getinheritsched(attr, &amp;i);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getinheritsched"</span>);
+    printf(<span style="color: #A5F26E;">"%sInherit scheduler   = %s\n"</span>, prefix,
+            (i == PTHREAD_INHERIT_SCHED)  ? <span style="color: #A5F26E;">"PTHREAD_INHERIT_SCHED"</span> :
+            (i == PTHREAD_EXPLICIT_SCHED) ? <span style="color: #A5F26E;">"PTHREAD_EXPLICIT_SCHED"</span> :
+            <span style="color: #A5F26E;">"???"</span>);
+
+    s = pthread_attr_getschedpolicy(attr, &amp;i);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getschedpolicy"</span>);
+    printf(<span style="color: #A5F26E;">"%sScheduling policy   = %s\n"</span>, prefix,
+            (i == SCHED_OTHER) ? <span style="color: #A5F26E;">"SCHED_OTHER"</span> :
+            (i == SCHED_FIFO)  ? <span style="color: #A5F26E;">"SCHED_FIFO"</span> :
+            (i == SCHED_RR)    ? <span style="color: #A5F26E;">"SCHED_RR"</span> :
+            <span style="color: #A5F26E;">"???"</span>);
+
+    s = pthread_attr_getschedparam(attr, &amp;sp);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getschedparam"</span>);
+    printf(<span style="color: #A5F26E;">"%sScheduling priority = %d\n"</span>, prefix, sp.sched_priority);
+
+    s = pthread_attr_getguardsize(attr, &amp;v);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getguardsize"</span>);
+    printf(<span style="color: #A5F26E;">"%sGuard size          = %d bytes\n"</span>, prefix, v);
+
+    s = pthread_attr_getstack(attr, &amp;stkaddr, &amp;v);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_getstack"</span>);
+    printf(<span style="color: #A5F26E;">"%sStack address       = %p\n"</span>, prefix, stkaddr);
+    printf(<span style="color: #A5F26E;">"%sStack size          = 0x%x bytes\n"</span>, prefix, v);
+}
+
+<span style="color: #CC7832; font-weight: bold;">static</span> <span style="color: #8888ff; font-weight: bold;">void</span> *
+<span style="color: #E8BF6A; font-weight: bold;">thread_start</span>(<span style="color: #8888ff; font-weight: bold;">void</span> *<span style="color: #d9d9d9;">arg</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">s</span>;
+    <span style="color: #8888ff; font-weight: bold;">pthread_attr_t</span> <span style="color: #d9d9d9;">gattr</span>;
+
+    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">pthread_getattr_np() is a non-standard GNU extension that</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       retrieves the attributes of the thread specified in its</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       first argument </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+
+    s = pthread_getattr_np(pthread_self(), &amp;gattr);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_getattr_np"</span>);
+
+    printf(<span style="color: #A5F26E;">"Thread attributes:\n"</span>);
+    display_pthread_attr(&amp;gattr, <span style="color: #A5F26E;">"\t"</span>);
+
+    exit(EXIT_SUCCESS);         <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Terminate all threads </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+}
+
+<span style="color: #8888ff; font-weight: bold;">int</span>
+<span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">argc</span>, <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">argv</span>[])
+{
+    <span style="color: #8888ff; font-weight: bold;">pthread_t</span> <span style="color: #d9d9d9;">thr</span>;
+    <span style="color: #8888ff; font-weight: bold;">pthread_attr_t</span> <span style="color: #d9d9d9;">attr</span>;
+    <span style="color: #8888ff; font-weight: bold;">pthread_attr_t</span> *<span style="color: #d9d9d9;">attrp</span>;      <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">NULL or &amp;attr </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">s</span>;
+
+    attrp = <span style="color: #6BCFF7;">NULL</span>;
+
+    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">If a command-line argument was supplied, use it to set the</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       stack-size attribute and set a few other thread attributes,</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       and set attrp pointing to thread attributes object </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (argc &gt; 1) {
+        <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">stack_size</span>;
+        <span style="color: #8888ff; font-weight: bold;">void</span> *<span style="color: #d9d9d9;">sp</span>;
+
+        attrp = &amp;attr;
+
+        s = pthread_attr_init(&amp;attr);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_init"</span>);
+
+        s = pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_setdetachstate"</span>);
+
+        s = pthread_attr_setinheritsched(&amp;attr, PTHREAD_EXPLICIT_SCHED);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_setinheritsched"</span>);
+
+        stack_size = strtoul(argv[1], <span style="color: #6BCFF7;">NULL</span>, 0);
+
+        s = posix_memalign(&amp;sp, sysconf(_SC_PAGESIZE), stack_size);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"posix_memalign"</span>);
+
+        printf(<span style="color: #A5F26E;">"posix_memalign() allocated at %p\n"</span>, sp);
+
+        s = pthread_attr_setstack(&amp;attr, sp, stack_size);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_setstack"</span>);
+    }
+
+    s = pthread_create(&amp;thr, attrp, &amp;thread_start, <span style="color: #6BCFF7;">NULL</span>);
+    <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+        handle_error_en(s, <span style="color: #A5F26E;">"pthread_create"</span>);
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (attrp != <span style="color: #6BCFF7;">NULL</span>) {
+        s = pthread_attr_destroy(attrp);
+        <span style="color: #CC7832; font-weight: bold;">if</span> (s != 0)
+            handle_error_en(s, <span style="color: #A5F26E;">"pthread_attr_destroy"</span>);
+    }
+
+    pause();    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Terminates when other thread calls exit() </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+}
+
+</pre>
+
+
+<p>
+        <b>can't compile it with gcc,i don't know why?</b>
+        after doing some google,i find i need add an option gcc -lpthread
+        to support some function,then i solved this problem.
+</p>
+<p>
+        here is the output of file pthread_attr_init.c
+</p>
+<p>        
+        <img src="./pthread_attr_init.png"  alt="./pthread_attr_init.png" />
+</p></li>
+<li>Compile and run the following program
+
+
+
+
+<pre class="src src-c"> 1:  #include &lt;pthread.h&gt;
+ 2:  #include &lt;stdio.h&gt;
+ 3:  #include &lt;stdlib.h&gt;
+ 4:  
+ 5:  #define NUMBER_OF_THREADS 10
+ 6:  
+ 7:  <span style="color: #8888ff; font-weight: bold;">void</span> *print_hello_world(<span style="color: #8888ff; font-weight: bold;">void</span> *<span style="color: #d9d9d9;">tid</span>)
+ 8:  {
+ 9:    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">prints the thread's identifier, then exits.</span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+10:    printf (<span style="color: #A5F26E;">"Thread %ld: Hello World!\n"</span>, (<span style="color: #8888ff; font-weight: bold;">long</span>)tid);
+11:    pthread_exit(<span style="color: #6BCFF7;">NULL</span>);
+12:  }
+13:  
+14:  <span style="color: #8888ff; font-weight: bold;">int</span> main(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">argc</span>, <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">argv</span>[])
+15:  {
+16:    pthread_t threads[NUMBER_OF_THREADS];
+17:    <span style="color: #8888ff; font-weight: bold;">int</span> status;
+18:    <span style="color: #8888ff; font-weight: bold;">long</span> i;
+19:    <span style="color: #CC7832; font-weight: bold;">for</span> (i=0; i&lt;NUMBER_OF_THREADS; i++)
+20:      {
+21:        status = pthread_create(&amp;threads[i], <span style="color: #6BCFF7;">NULL</span>, print_hello_world, (<span style="color: #8888ff; font-weight: bold;">void</span> *)i);
+22:        printf (<span style="color: #A5F26E;">"Main: creating thread %ld\n"</span>,i);
+23:        <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">printf("thread id: %d\n",threads[i]); </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+24:  
+25:        <span style="color: #CC7832; font-weight: bold;">if</span>(status != 0){
+26:          printf (<span style="color: #A5F26E;">"Oops. pthread_create returned error code %d\n"</span>,status);
+27:          exit(-1);
+28:        }
+29:        <span style="color: #CC7832; font-weight: bold;">if</span>(pthread_join(threads[i], <span style="color: #6BCFF7;">NULL</span>)){
+30:          printf(<span style="color: #A5F26E;">"error joining thread."</span>);
+31:          abort() ;
+32:        }
+33:   }
+34:    exit(0);
+35:  }
+</pre>
+
+
+<p>
+        here is the output of pthread_lab.c
+</p>
+<p>
+        <img src="./pthread.png"  alt="./pthread.png" />
+</p>
+<p>
+        Now, remove the pthread_join call, i.e. comment
+        out line 27-30. Compile and run it again for multiple
+        times. Tell me the difference, and why?
+</p>
+<p>
+        <b>after modified</b>
+</p>
+<p>
+        <img src="./pthread_lab_new.png"  alt="./pthread_lab_new.png" />
+</p>
+<dl>
+<dt>pthread(parallel-thread)</dt><dd>
+</dd>
+</dl>
+
+<p>        <b>there are some different without pthread_join</b>
+</p>
+<ol>
+<li>pthread_join just like waitpid;because Main thread need to wait
+           the pthread until it returned.so with the pthread_join
+           function,the out put is neat crossed,like first picture above.
+
+</li>
+<li>after comment out the function pthread_join,the out put of
+           course is Irregular crossed,like second picture.
+
+</li>
+<li>without pthread_join,it also will be this:
+           because the <b>Main</b> don't need to wait <b>pthread</b>,
+           it <b>exit</b> before create a pthread.
+
+<p>
+           <img src="./pthread3.png"  alt="./pthread3.png" />
+</p></li>
+</ol>
+
+</li>
+</ol>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> IPC</h4>
+<div class="outline-text-4" id="text-1-2-3">
+
+<ul>
+<li id="sec-1-2-3-1">Signals<br/>
+<dl>
+<dt>Task1 - understanding signal()</dt><dd>
+
+
+
+<pre class="src src-c"><span style="color: #8888ff; font-weight: bold;">void</span> (*<span style="color: #E8BF6A; font-weight: bold;">signal</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">sig</span>, <span style="color: #8888ff; font-weight: bold;">void</span> (*<span style="color: #d9d9d9;">func</span>)(<span style="color: #8888ff; font-weight: bold;">int</span>)))(<span style="color: #8888ff; font-weight: bold;">int</span>);
+             `-------------------v-------------<span style="color: #ffc0cb; font-weight: bold; text-decoration: underline;">'</span>
+<span style="color: #A5F26E;">                                  `----&gt; *signal() is a function returning a '</span>function pointer<span style="color: #ffc0cb; font-weight: bold; text-decoration: underline;">'</span>
+<span style="color: #A5F26E;">                                   `               pointing to a function of type void(*)(int)</span>
+<span style="color: #A5F26E;">                                    `--&gt; *signal() takes 2 arguments:</span>
+<span style="color: #A5F26E;">                                           .  sig - an int</span>
+<span style="color: #A5F26E;">                                           . func - a '</span>function pointer<span style="color: #ffc0cb; font-weight: bold; text-decoration: underline;">'</span><span style="color: #A5F26E;"> void(*)(int)</span>
+
+<span style="color: #A5F26E;"> void (*signal(int sig, void (*func)(int)))(int);</span>
+<span style="color: #A5F26E;"> void (                 *                 )(int);</span>
+<span style="color: #A5F26E;"> `--------------------v------------------------'</span>
+                      `---&gt; <span style="color: #8888ff; font-weight: bold;">void</span>(*)(<span style="color: #8888ff; font-weight: bold;">int</span>) is a function pointer
+                             which is returned <span style="color: #8888ff; font-weight: bold;">by</span> function <span style="color: #A5F26E;">'*signal()'</span>
+                             it<span style="color: #ffc0cb; font-weight: bold; text-decoration: underline;">'</span><span style="color: #A5F26E;">s pointing to a function taking an int, returning void</span>
+</pre>
+
+</dd>
+</dl>
+
+
+<ul>
+<li id="sec-1-2-3-1-1"><b>after reading signal():</b><br/>
+
+<ul>
+<li id="sec-1-2-3-1-1-1">inside of void():<br/>
+
+<p>       
+       just as the comment,* signal is a function returning a 'function pointer'
+       pointing to a function of type void(* )(int),and * signal takes 2 arguments: sig - an int, func - a 'function pointer' void(* )(int)
+</p>
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-1-1-2">outside of void():<br/>
+
+<p>       
+       void(* )(int) is a function pointer which is returned by function '* signal' it's pointing to a function taking an int, returning void.
+</p>
+<dl>
+<dt>Task2 - sigaction()</dt><dd>
+<p>
+       Following Beej's Guide to Unix IPC, section 3 to play with signals. And then tell me details about the following code
+</p>
+<pre class="example">
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+</pre>
+
+
+<p>
+       <b>answer:</b> The first parameter, sig is which signal to catch. This can be (probably "should" be) a symbolic name from signal.h along the lines of SIGINT. That's the easy bit.
+</p>
+<p>
+       The next field, act is a pointer to a struct sigaction which has a bunch of fields that you can fill in to control the behavior of the signal handler. (A pointer to the signal handler function itself included in the struct.)
+</p>
+<p>
+       Lastly oact can be NULL, but if not, it returns the old signal handler information that was in place before. This is useful if you want to restore the previous signal handler at a later time.
+</p></dd>
+</dl>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-2">Pipe<br/>
+
+<ul>
+<li id="sec-1-2-3-2-1">"These pipes are clean!"<br/>
+
+<pre class="example">
+matriux@localhost:~$ cat pipe.c 
+</pre>
+
+
+
+
+<pre class="src src-c"><span style="color: #b22222; background-color: #000000; font-style: italic;">/*</span><span style="color: #b22222; background-color: #000000; font-style: italic;">program 1 is a simplist pipe </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+include &lt;stdio.h&gt;
+include &lt;stdlib.h&gt;
+include &lt;errno.h&gt;
+include &lt;unistd.h&gt;
+
+<span style="color: #8888ff; font-weight: bold;">int</span> main(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+        <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">pfds</span>[2];
+            <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">buf</span>[30];
+
+                <span style="color: #CC7832; font-weight: bold;">if</span> (pipe(pfds) == -1) {
+                            perror(<span style="color: #A5F26E;">"pipe"</span>);
+                                    exit(1);
+                                        }
+
+                    printf(<span style="color: #A5F26E;">"writing to file descriptor #%d\n"</span>, pfds[1]);
+                        write(pfds[1], <span style="color: #A5F26E;">"test"</span>, 5);
+                            printf(<span style="color: #A5F26E;">"reading from file descriptor #%d\n"</span>, pfds[0]);
+                                read(pfds[0], buf, 5);
+                                    printf(<span style="color: #A5F26E;">"read \"%s\"\n"</span>, buf);
+
+                                        <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+
+<pre class="example">matriux@localhost:~$ ./a.out 
+writing to file descriptor #4
+reading from file descriptor #3
+read "test"
+</pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-2-2">fork() and pipe()—you have the power!<br/>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;errno.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">pfds</span>[2];
+    <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">buf</span>[30];
+
+    pipe(pfds);
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (!fork()) {
+        printf(<span style="color: #A5F26E;">" CHILD: writing to the pipe\n"</span>);
+        write(pfds[1], <span style="color: #A5F26E;">"test"</span>, 5);
+        printf(<span style="color: #A5F26E;">" CHILD: exiting\n"</span>);
+        exit(0);
+    } <span style="color: #CC7832; font-weight: bold;">else</span> {
+        printf(<span style="color: #A5F26E;">"PARENT: reading from pipe\n"</span>);
+        read(pfds[0], buf, 5);
+        printf(<span style="color: #A5F26E;">"PARENT: read \"%s\"\n"</span>, buf);
+        wait(<span style="color: #6BCFF7;">NULL</span>);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+
+matriux@localhost:~/org-mode/101152025$ ./a.out 
+PARENT: reading from pipe
+ CHILD: writing to the pipe
+ CHILD: exiting
+PARENT: read <span style="color: #A5F26E;">"test"</span>
+
+
+</pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-2-3">The search for Pipe as we know it<br/>
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">pfds</span>[2];
+
+    pipe(pfds);
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (!fork()) {
+        close(1);       <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">close normal stdout </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        dup(pfds[1]);   <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">make stdout same as pfds[1] </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pfds[0]); <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">we don't need this </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        execlp(<span style="color: #A5F26E;">"ls"</span>, <span style="color: #A5F26E;">"ls"</span>, <span style="color: #6BCFF7;">NULL</span>);
+    } <span style="color: #CC7832; font-weight: bold;">else</span> {
+        close(0);       <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">close normal stdin </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        dup(pfds[0]);   <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">make stdin same as pfds[0] </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pfds[1]); <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">we don't need this </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        execlp(<span style="color: #A5F26E;">"wc"</span>, <span style="color: #A5F26E;">"wc"</span>, <span style="color: #A5F26E;">"-l"</span>, <span style="color: #6BCFF7;">NULL</span>);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+
+
+<pre class="example">matriux@localhost:~/org-mode/101152025$ ./a.out 
+64
+</pre>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-2-4">a modified file of pipe3<br/>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">pfds</span>[2];
+
+    pipe(pfds);
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (!fork()) {
+        close(1);       <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">close normal stdout </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        dup(pfds[1]);   <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">make stdout same as pfds[1] </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pfds[0]); <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">we don't need this </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        execlp(<span style="color: #A5F26E;">"wc"</span>, <span style="color: #A5F26E;">"wc"</span>, <span style="color: #A5F26E;">"-l"</span>, <span style="color: #6BCFF7;">NULL</span>);
+    } <span style="color: #CC7832; font-weight: bold;">else</span> {
+        close(0);       <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">close normal stdin </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        dup(pfds[0]);   <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">make stdin same as pfds[0] </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pfds[1]); <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">we don't need this </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        execlp(<span style="color: #A5F26E;">"ls"</span>, <span style="color: #A5F26E;">"ls"</span>, <span style="color: #6BCFF7;">NULL</span>);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+
+
+<pre class="example">matriux@localhost:~/org-mode/101152025$ ./a.out 
+#20101152025-2.org#        20101152025-3.org  5zombies.png      orphan2       pthread_attr_init      pthread_lab_new.c~   test3.c        zombie1.c~
+20101152025-1.html         20101152025-4.org  Makefile.png      orphan2.c     pthread_attr_init.c    pthread_lab_new.png  test4          zombie_test
+20101152025-1.org          20101152025.html   a.out             orphan2.c~    pthread_attr_init.c~   system_call.html     test4.c        zombie_test.c
+20101152025-1.org~         20101152025.html~  avoid_zombie      pipe.c        pthread_attr_init.png  system_call.org      unistd_32.png
+20101152025-2.html         20101152025.org    avoid_zombie.c    pipe2.c       pthread_lab            test1                wait
+20101152025-2.html~        20101152025.org~   avoid_zombie.c~   pipe3.c       pthread_lab.c          test1.c              wait.c
+20101152025-2.org          5zombies           avoid_zombie.png  pipe3mod.c    pthread_lab.c~         test2                wait.c~
+20101152025-2.org_archive  5zombies.c         orphan            pthread.png   pthread_lab_new        test2.c              zombie1
+20101152025-2.org~         5zombies.c~        orphan.c          pthread3.png  pthread_lab_new.c      test3                zombie1.c
+matriux@localhost:~/org-mode/101152025$ wc: standard input: Input/output error
+</pre>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-2-5">At the end of pipe manual page (man 2 pipe), there is an example program. Compile it, run it, understand it, and then, modify the program, let parent do read, and child do write.<br/>
+
+
+
+
+<pre class="src src-c">      <span style="color: #b22222; background-color: #000000; font-style: italic;">/*</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">EXAMPLE  pipe4.c</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       The following program creates a pipe, and then fork(2)s to create a child process; the child inherits a duplicate set  of  file  descriptors</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       that  refer  to the same pipe.  After the fork(2), each process closes the descriptors that it doesn't need for the pipe (see pipe(7)).  The</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       parent then writes the string contained in the program's command-line argument to the pipe, and the child reads this string a byte at a time</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">       from the pipe and echoes it on standard output.</span>
+<span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/wait.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;string.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span>
+<span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">argc</span>, <span style="color: #8888ff; font-weight: bold;">char</span> *<span style="color: #d9d9d9;">argv</span>[])
+{
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">pipefd</span>[2];
+    <span style="color: #8888ff; font-weight: bold;">pid_t</span> <span style="color: #d9d9d9;">cpid</span>;
+    <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">buf</span>;
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (argc != 2) {
+     fprintf(stderr, <span style="color: #A5F26E;">"Usage: %s &lt;string&gt;\n"</span>, argv[0]);
+     exit(EXIT_FAILURE);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (pipe(pipefd) == -1) {
+        perror(<span style="color: #A5F26E;">"pipe"</span>);
+        exit(EXIT_FAILURE);
+    }
+
+    cpid = fork();
+    <span style="color: #CC7832; font-weight: bold;">if</span> (cpid == -1) {
+        perror(<span style="color: #A5F26E;">"fork"</span>);
+        exit(EXIT_FAILURE);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">if</span> (cpid == 0) {    <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Child write from pipe </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pipefd[0]);          <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Close unused read end </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        write(pipefd[1], argv[1], strlen(argv[1]));
+        close(pipefd[1]);          <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Reader will see EOF </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        wait(<span style="color: #6BCFF7;">NULL</span>);                <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Wait for child </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        exit(EXIT_SUCCESS);
+
+    } <span style="color: #CC7832; font-weight: bold;">else</span> {            <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Parent read argv[0] to pipe </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+        close(pipefd[1]);          <span style="color: #b22222; background-color: #000000; font-style: italic;">/* </span><span style="color: #b22222; background-color: #000000; font-style: italic;">Close unused write end </span><span style="color: #b22222; background-color: #000000; font-style: italic;">*/</span>
+
+        <span style="color: #CC7832; font-weight: bold;">while</span> (read(pipefd[0], &amp;buf, 1) &gt; 0)
+            write(STDOUT_FILENO, &amp;buf, 1);
+
+        write(STDOUT_FILENO, <span style="color: #A5F26E;">"\n"</span>, 1);
+        close(pipefd[0]);
+        _exit(EXIT_SUCCESS);
+    }
+}
+</pre>
+
+
+
+<pre class="example">matriux@localhost:~/org-mode/101152025$ ./a.out "world hello"
+world hello
+</pre>
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-3">FIFO<br/>
+<dl>
+<dt>Tasks</dt><dd>
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 5 step by step to learn how to use FIFOs.
+
+<p>
+          Here is speak.c
+</p></li>
+</ol>
+
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;errno.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;string.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;fcntl.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/stat.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+
+<span style="color: #59ACC2; background-color: #202020;">#define</span> <span style="color: #d9d9d9;">FIFO_NAME</span> <span style="color: #A5F26E;">"american_maid"</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">s</span>[300];
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">num</span>, <span style="color: #d9d9d9;">fd</span>;
+
+    mknod(FIFO_NAME, S_IFIFO | 0666, 0);
+
+    printf(<span style="color: #A5F26E;">"waiting for readers...\n"</span>);
+    fd = open(FIFO_NAME, O_WRONLY);
+    printf(<span style="color: #A5F26E;">"got a reader--type some stuff\n"</span>);
+
+    <span style="color: #CC7832; font-weight: bold;">while</span> (gets(s), !feof(stdin)) {
+        <span style="color: #CC7832; font-weight: bold;">if</span> ((num = write(fd, s, strlen(s))) == -1)
+            perror(<span style="color: #A5F26E;">"write"</span>);
+        <span style="color: #CC7832; font-weight: bold;">else</span>
+            printf(<span style="color: #A5F26E;">"speak: wrote %d bytes\n"</span>, num);
+    }
+
+    <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+
+<p>
+          Here is tick.c
+</p>
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdio.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;stdlib.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;errno.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;string.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;fcntl.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/types.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/stat.h&gt;</span>
+<span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;unistd.h&gt;</span>
+
+<span style="color: #59ACC2; background-color: #202020;">#define</span> <span style="color: #d9d9d9;">FIFO_NAME</span> <span style="color: #A5F26E;">"american_maid"</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">main</span>(<span style="color: #8888ff; font-weight: bold;">void</span>)
+{
+    <span style="color: #8888ff; font-weight: bold;">char</span> <span style="color: #d9d9d9;">s</span>[300];
+    <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">num</span>, <span style="color: #d9d9d9;">fd</span>;
+
+    mknod(FIFO_NAME, S_IFIFO | 0666, 0);
+
+    printf(<span style="color: #A5F26E;">"waiting for writers...\n"</span>);
+    fd = open(FIFO_NAME, O_RDONLY);
+    printf(<span style="color: #A5F26E;">"got a writer\n"</span>);
+
+    <span style="color: #CC7832; font-weight: bold;">do</span> {
+        <span style="color: #CC7832; font-weight: bold;">if</span> ((num = read(fd, s, 300)) == -1)
+            perror(<span style="color: #A5F26E;">"read"</span>);
+        <span style="color: #CC7832; font-weight: bold;">else</span> {
+            s[num] = <span style="color: #A5F26E;">'\0'</span>;
+            printf(<span style="color: #A5F26E;">"tick: read %d bytes: \"%s\"\n"</span>, num, s);
+        }
+    } <span style="color: #CC7832; font-weight: bold;">while</span> (num &gt; 0);
+
+    <span style="color: #CC7832; font-weight: bold;">return</span> 0;
+}
+</pre>
+
+
+<p>
+          Here is the test
+</p>
+
+
+
+<pre class="example">          at tty1
+matriux@localhost:~/org-mode/101152025$ ./speak.o 
+waiting for readers...
+got a reader--type some stuff
+Hello Joshua
+speak: wrote 12 bytes
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./tick.o 
+waiting for writers...
+got a writer
+tick: read 12 bytes: "Hello Joshua"
+
+
+</pre>
+
+<ol>
+<li>When you run the example programs (speak and tick), there should be a new file named
+          american_maid ppappear in your working directory ($PWD). What will happen if you delete this FIFO file while the two programs running? Why?
+
+<p>          
+          <b>1. I had deleted the ameirca_maid and they still working</b>
+</p>
+<p>          
+          <b>2. i think i just delete a name of fifo,but the fifo is still there, they can communicate as before.</b>
+</p></li>
+<li>Modify the example programs to use mkfifo instead of mknod.
+
+<p>
+          <b>just modify the mknod(FIFO_NAME, S_IFIFO | 0666, 0) as mkfifo(FIFO_NAME, S_IFIFO | 0666)</b>
+</p>
+<p>          
+          check it at <a href="./speak2.c">./speak2.c</a>
+</p>
+<p>          
+          check it at <a href="./tick2.c">./tick2.c</a>
+</p>
+<p>
+          <b>this is the output:</b>
+</p></li>
+</ol>
+
+
+
+
+
+<pre class="example">          at tty1
+matriux@localhost:~/org-mode/101152025$ ./speak2.o 
+waiting for readers...
+got a reader--type some stuff
+Hello Joshua
+speak: wrote 12 bytes
+Hello Joshua
+speak: wrote 12 bytes
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./tick2.o 
+waiting for writers...
+got a writer
+tick: read 12 bytes: "Hello Joshua"
+tick: read 12 bytes: "Hello Joshua"
+
+#+end_src
+          
+       4. Extend the example programs, and make it have 3 writers.
+          
+          find me here [[file:./3writer.c]]
+
+          *out put*
+ORG-LIST-END-MARKER
+
+#+begin_example
+          at tty1
+matriux@localhost:~/org-mode/101152025$ ./3writer.o 
+waiting for readers...
+got a reader--type some stuff
+There are 3 readers 
+speak: wrote 19 bytes
+speak: wrote 19 bytes
+speak: wrote 19 bytes
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./tick2.o 
+waiting for writers...
+got a writer
+tick: read 57 bytes: "There are 3 readersThere are 3 readersThere are 3 readers"
+
+</pre>
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-4">File Locking<br/>
+<dl>
+<dt>Tasks</dt><dd>
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 6 step by step to learn how to use File locks.
+          <b>write lock</b>
+</li>
+</ol>
+
+</dd>
+</dl>
+
+
+
+
+<pre class="example">          at tty1 get a write lock
+matriux@localhost:~/org-mode/101152025$ ./lockdemo 
+Press &lt;RETURN&gt; to try to get lock: 
+Trying to get lock...got lock
+Press &lt;RETURN&gt; to release lock:
+
+          at tty2 are waiting tty1 to release the lock
+matriux@localhost:~/org-mode/101152025$ ./lockdemo 
+Press &lt;RETURN&gt; to try to get lock: 
+
+conclusion:tty2 can only get write lock when tty1 set the lock free
+
+</pre>
+
+
+<p>
+          <b>read lock</b>
+</p>
+
+
+<pre class="example">          at tty1 get a read lock(with argv &gt; 1)
+matriux@localhost:~/org-mode/101152025$ ./lockdemo a
+Press &lt;RETURN&gt; to try to get lock: 
+Trying to get lock...got lock
+Press &lt;RETURN&gt; to release lock:
+
+          at tty2 get a read lock
+matriux@localhost:~/org-mode/101152025$ ./lockdemo a
+Press &lt;RETURN&gt; to try to get lock: 
+Trying to get lock...got lock
+Press &lt;RETURN&gt; to release lock: 
+
+conclusion:tty2 and tty1 can get the read lock at same time.
+</pre>
+
+<ol>
+<li>Try the example lockdemo.c with both F_RDLCK and F_WRLCK.
+
+<p>
+          <b>the same as above</b>
+</p>
+</li>
+<li>Tell me whether the locked file, e.g. lockdemo.c can be delete while the programs are running? And why?
+
+<p>
+          <b>it can be deleted while programs are running, because of it's a types of locking mechanisms:advisory</b>
+</p></li>
+</ol>
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-5">Message Queues<br/>
+<dl>
+<dt>Tasks</dt><dd>
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 7 step by step to learn how to use message queues.
+</li>
+</ol>
+
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c">          at <span style="color: #8888ff; font-weight: bold;">tty1</span>
+<span style="color: #d9d9d9;">matriux</span>@localhost:~/org-mode/101152025$ ./kirk.o 
+Enter lines of text, ^D to quit:
+Hola Joshua!
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./spock.o 
+spock: ready to receive messages, captain.
+spock: <span style="color: #A5F26E;">"Hola Joshua!"</span>
+
+
+</pre>
+
+<ol>
+<li>What happens when you're running both in separate windows and you kill one or the other?
+
+<p>
+          <b>when i killed kirt, the spock still running, when i run the kirt again, spock can recieve the message</b>
+</p></li>
+<li>Also try running two copies of kirk or two copies of spock to get an idea of what happens when you have two readers or two writers.
+</li>
+</ol>
+
+
+
+
+<pre class="example">/*        sample one have kirk and kirkcopy send message to spock         */
+          at tty1
+matriux@localhost:~/org-mode/101152025$ cp kirk.o kirkcopy.o
+matriux@localhost:~/org-mode/101152025$ cp spock.o spockcopy.o
+matriux@localhost:~/org-mode/101152025$ ./kirk.o 
+Enter lines of text, ^D to quit:
+This is kirk.o
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./kirkcopy.o 
+Enter lines of text, ^D to quit:
+This is kirkcoyp.o
+
+          at tty3
+matriux@localhost:~/org-mode/101152025$ ./spock.o 
+spock: ready to receive messages, captain.
+spock: "This is kirkcoyp.o"
+spock: "This is kirk.o"
+
+/*         sample two have kirk and kirkcopy send message to spock or spockcopy(arbitrary)        */
+          at tty1
+matriux@localhost:~/org-mode/101152025$ ./kirk.o 
+Enter lines of text, ^D to quit:
+This is kirk.o
+kirk.o
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./kirkcopy.o 
+Enter lines of text, ^D to quit:
+This is kirkcopy.o
+kirkcopy.o
+
+          at tty3
+matriux@localhost:~/org-mode/101152025$ ./spock.o 
+spock: ready to receive messages, captain.
+spock: "This is kirk.o"
+spock: "This is kirkcopy.o"
+spock: "kirkcopy.o"
+
+          at tty4
+matriux@localhost:~/org-mode/101152025$ ./spockcopy.o 
+spock: ready to receive messages, captain.
+spock: "kirk.o"
+          
+
+</pre>
+
+
+<ol>
+<li>Another interesting demonstration is to run kirk, enter a bunch of messages, then run spock and see it retrieve all the messages in
+          one swoop. Just messing around with these toy programs will help you gain an understanding of what is really going on.
+
+<p>
+          <b>when kirk had sent a bunch of messages, the spock at tty2 recieved them by 12 times</b>
+</p></li>
+</ol>
+
+
+
+
+<pre class="example">          at tty1
+matriux@localhost:~/org-mode/101152025$ ./kirk.o 
+Enter lines of text, ^D to quit:
+##############################################################################################################################################################################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+##############################################################################################################################################################################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+##############################################################################################################################################################################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./spock.o 
+spock: ready to receive messages, captain.
+spock: "#######################################################################################################################################################################################################"
+spock: "#######################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################################################################"
+spock: "#######################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "#######################################################################################################################################################"
+spock: "###############################################################################################################################################
+</pre>
+
+<ol>
+<li>What happens if you ipcrm the queue while it's in use? Why?
+
+<p>
+          <b>when execute ipcs</b>
+</p></li>
+</ol>
+
+
+
+
+<pre class="example">          ------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x420a0d15 32768      matriux    644        0            0           
+
+</pre>
+
+
+<p>
+          <b>then remove it with ipcrm</b>
+</p>
+
+
+<pre class="example">matriux@localhost:~/org-mode/101152025$ ipcs 
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+0x00000000 0          matriux    600        393216     2          dest         
+0x00000000 32769      matriux    600        393216     2          dest         
+0x00000000 554893315  matriux    600        393216     2          dest         
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+0x420a0d15 32768      matriux    644        0            0           
+
+matriux@localhost:~/org-mode/101152025$ ipcrm -q 32768
+matriux@localhost:~/org-mode/101152025$ ipcrm -q 32768
+ipcrm: invalid id (32768)
+
+</pre>
+
+
+<p>
+          <b>let's see another tty(tty2 had exit when execute ipcrm -q 32768)</b>
+</p>
+
+
+<pre class="example">          at tty1
+matriux@localhost:~/org-mode/101152025$ ./kirk.o 
+Enter lines of text, ^D to quit:
+##############################################################################################################################################################################################################################################################################################################
+#######################################################################################################################################################
+#######################################################################################################################################################
+
+          at tty2
+matriux@localhost:~/org-mode/101152025$ ./spock.o 
+spock: ready to receive messages, captain.
+spock: "#######################################################################################################################################################"
+spock: ""
+spock: ""
+msgrcv: Identifier removed
+
+</pre>
+
+<ol>
+<li>Create a message queue with ipcmk, and use it in your programs.
+<pre class="example">
+haven't done yet
+</pre>
+
+</li>
+</ol>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-1-2-3-6">Semaphores<br/>
+<dl>
+<dt>Tasks</dt><dd>
+<ol>
+<li>Follow Beej's Guide to Unix IPC, section 8 step by step to learn how to use
+          semaphores.
+</li>
+</ol>
+
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #59ACC2; background-color: #202020;">#include</span> <span style="color: #A5F26E;">&lt;sys/sem.h&gt;</span>
+
+<span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #E8BF6A; font-weight: bold;">semget</span>(<span style="color: #8888ff; font-weight: bold;">key_t</span> <span style="color: #d9d9d9;">key</span>, <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">nsems</span>, <span style="color: #8888ff; font-weight: bold;">int</span> <span style="color: #d9d9d9;">semflg</span>);     
+</pre>
+
+
+<p>
+     Here's an example call that generates the key with ftok() and creates a 10 semaphore
+     set, with 666 (rw-rw-rw-) permissions:
+</p>
+
+
+<pre class="src src-s">#include &lt;sys/ipc.h&gt;
+#include &lt;sys/sem.h&gt;
+
+key_t key;
+int semid;
+
+key = ftok(<span style="color: #A5F26E;">"/home/beej/somefile"</span>, 'E');
+semid = semget(key, 10, 0666 | IPC_CREAT);
+</pre>
+
+<ol>
+<li>Semaphores are used to lock some shared resources to enforce
+          mutual-exclusion. In the demo program semdemo.c, what's locked?
+
+
+
+<pre class="example">the resources that two semdemo.c have is locked by one of them.
+</pre>
+
+</li>
+<li>Draw a flow chart to show how the demo program works.
+
+<p>          
+          There are some pictures:
+</p>
+<p>          
+          <img src="./semdemo.png"  alt="./semdemo.png" />
+</p>
+<p>          
+          <img src="./semdemo1.png"  alt="./semdemo1.png" />
+</p>
+<p>          
+          <img src="./semdemo2.png"  alt="./semdemo2.png" />
+</p>
+<p>          
+          <img src="./semdemo3.png"  alt="./semdemo3.png" />
+</p>
+<p>          
+          <img src="./semdemo4.png"  alt="./semdemo4.png" />
+</p>
+<p>          
+          <img src="./semdemo5.png"  alt="./semdemo5.png" />
+</p>
+<p>          
+          <img src="./semdemo6.png"  alt="./semdemo6.png" />
+</p></li>
+</ol>
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> gains</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<p>   I had spent most of my time at this part, Process is just like a man in society,
+   the government(PCB) need to coordinate the people in society, and <b>IPC</b> is a good way
+   to associate each process, i had learned
+</p>
+<ol>
+<li>Signals
+</li>
+<li>Pipe 
+</li>
+<li>FIFO
+</li>
+<li>File Locking
+</li>
+<li>Message Queues 
+</li>
+<li>Semaphores
+</li>
+</ol>
+
+
+<p>      
+   These are some good tools of IPC, i had gained a lot; i didn't give up, because i
+   love this maze, i'm full of curiosity&hellip;
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="author">Author: 温俊瑞(20101152025) (<a href="mailto:mclyte.rabbit@gmail.com">mclyte.rabbit@gmail.com</a>)</p>
+<p class="date">Date: 2012-12-14 22:07:37 CST</p>
+
+</div>
+</body>
+</html>
