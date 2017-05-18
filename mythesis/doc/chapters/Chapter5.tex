@@ -1,0 +1,38 @@
+\chapter{方案实施}
+
+\section{方案要求}
+
+\begin{itemize}
+\item 树莓派实现自动控制系统。
+\item 接入hotspot后打开任意网站显示欢迎界面。
+\item 欢迎界面显示自定义广告。
+\item 客户刷卡后打印机自动出纸，在欢迎界面输入用户名密码登录即可上网。
+\item 客户再次刷卡后注销用户，上网纸条失效。
+\item Raspberry$+$PYTHON程序$+$打印机$+$刷卡器$+$ROS系统整合。
+\item 对于不同身份用户进行不同限制,如限速，上网时间,防火墙策略等等。
+\end{itemize}
+
+\section{材料准备}
+
+\begin{itemize}
+\item Raspberry Pi一个（见图~\ref{fig:real}）
+\item 与Raspberry Pi兼容的SD卡一张（见附录~\ref{sec:sdcard}）
+\item MikroTik ROS路由器一台
+\item IC卡刷卡器一个
+\item IC卡若干（测试用）
+\item POS打印机一台
+\end{itemize}
+
+\section{设计流程}
+
+\begin{enumerate}
+\item 网络拓扑设计
+\item 配置ROS路由
+\item 软件方案设计
+\item PYTHON编码
+\end{enumerate}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

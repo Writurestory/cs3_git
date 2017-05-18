@@ -1,0 +1,141 @@
+\chapter{SD卡兼容列表}
+
+\section{工作的SD卡}
+\label{sec:sdcard}
+
+\footnotetext{参见Working / Non-working SD cards -
+  \href{http://elinux.org/RPi_SD_cards}{SD卡工作表}}
+\footnotetext{本表未完全包括所有SD卡，仅列出SanDisk} 
+
+\begin{longtable}{llllp{.1\textwidth}p{.3\textwidth}}
+  \caption{SD卡工作表}\\\hline
+  OK&Manufacturer&Type&Size&Class&Model\\\hline\endfirsthead
+  \caption[]{SD卡工作表（续）}\\\hline\endhead
+  ok&SanDisk&SD&2&?&Extreme III (BE0715105083B)\\
+  % &&&&& \\
+  ok&SanDisk&SD&2&2&BE0816113150D writes at 3.5 Mb/s\\
+  ok&SanDisk&SD&2&4&Ultra	15 MB/s\\
+  ok&SanDisk&SD&2&4&Ultra II, BE0719111366D\\
+  ok&SanDisk&SD&2&6&Extreme III (BE0804212046D)	20 MB/s\\
+  ok&SanDisk&SD&2&?&	SanDisk for Wii\\
+  ok&SanDisk&SDHC&4&2&BH0820113475D\\
+  ok&SanDisk&SDHC&4&4&SDSDB-004G-B35, BH1210821913G, SDSDB-004G-BT35\\
+  ok&SanDisk&SDHC&4&4&Ultra II\\
+  ok&SanDisk&SDHC&4&6&Extreme III (30 MB/s)\\
+  ok&SanDisk&SDHC&4&6&Ultra SDSDH-004G-U46 - BH1136121837G,\\
+  ok&SanDisk&SDHC&4&10&Extreme (BH10297143382G)\\
+  ok&SanDisk&SDHC&4&10&Extreme (SDSDX-004G-X46)\\
+  ok&SanDisk&SDHC&8&4&writes at ~1.5MB/s\\
+  ok&SanDisk&SDHC&8&4&Ultra BI1024716014G\\
+  ok&SanDisk&SDHC&8&4&SDSDB-008G-B35S / SDSDB-008G-B35\\
+  ok&SanDisk&SDHC&8&4&SDSDB3-008G-A16BJ\\
+  ok&SanDisk&SDHC&8&6&Ultra SDSDH-008G-U46\\
+  ok&SanDisk&SDHC&8&10&Extreme\\
+  ok&SanDisk&SDHC&8&10&Extreme\\
+  ok&SanDisk&SDHC&8&10&Extreme Pro\\
+  ok&SanDisk&SDHC&8&10&Extreme Pro\\
+  ok&SanDisk&SDHC&8&10&Ultra SDSDU-008G-U46 (30 MB/s)\\
+  ok&SanDisk&SDHC&8&10&Ultra SDSDU-008G-A11 (30 MB/s)\\
+  ok&SanDisk&SDHC&8&10&Ultra SDSDU-008G-T11 (30 MB/s)\\
+  ok&SanDisk&SDHC&8&10&Ultra SDSDU-008G-UQ46 (30 MB/s)\\
+  ok&SanDisk&SDHC&16&4&SDSDB-016G-B35\\
+  ok&SanDisk&SDHC&16&4&SDSDB-016G-A11\\
+  ok&SanDisk&SDHC&16&6&Ultra (30MB/s) (BL1133921933G)\\
+  ok&SanDisk&SDHC&16&10&Extreme\\
+  ok&SanDisk&SDHC&16&10&Extreme Pro\\
+  ok&SanDisk&SDHC&16&10&Ultra(30MB/s) (SDSDU-016G-U46) (SDSDU-016G-U46S)\\
+  ok&SanDisk&microSDHC&16&10&Ultra microSDHC I UHS-I\\
+  ok&SanDisk&SDHC&16&10&EXTREME SDHC UHS-I (SDSDX-016G-X46)\\
+  ok&SanDisk&SDHC&32&4\\
+  ok&SanDisk&SDHC&32&6\\
+  ok&SanDisk&SDHC&32&10&Extreme (45MB/s UHS-I) (SDSDX-032G-X46)\\
+  ok&SanDisk&SDHC&32&10&Ultra (30 MB/s)\\
+  ok&SanDisk&SDHC&32&10&Elevate (30 MB/s) SDSDU-032G-T11\\
+  ok&SanDisk&SDXC&64&10&Extreme (SDSDX-064G-X46)\\
+  ok&SanDisk&SDXC&64&10&Ultra SDXC UHS-I FFP (3A114807)\\
+  ok&SanDisk&microSDHC&4&2\\
+  ok&SanDisk&microSDHC&4&4\\
+  ok&SanDisk&microSDHC&8&2\\
+  ok&SanDisk&microSDHC&8&4\\
+  ok&SanDisk&microSDHC&8&4&SDSDQM-008G-B35\\
+  ok&SanDisk&microSDHC&8&10&Ultra (SDSDQU-008G-U46) 30 MB/s\\
+  ok&SanDisk&microSDHC&16&10&Mobile Ultra (SDSDQUA-016G-U46A)\\
+  ok&SanDisk&microSDHC&32&4\\
+  ok&SanDisk&microSDHC&32&10&SDSDQU-032G-U46A\\
+  ok&SanDisk&microSDXC&64&6&SDSDQY-064G-A11A\\\hline{}
+\end{longtable}
+
+\chapter{配置文件}
+\section{主程序配置文件（conf.cfg）}
+\label{cha:conf.cfg-1}
+
+\inputminted{python}{../src/conf.cfg}
+
+% 见代码~\ref{cha:conf.cfg-1}。
+
+\section{ROS配置脚本（backup.rsc）}
+\label{sec:ros-script}
+
+\inputminted{bash}{../src/backup.rsc}
+
+\chapter{程序代码清单}
+
+\section{pyhook函数引用}
+\label{sec:pyhook}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/pyHook/Hook.py}
+
+\section{主程序模块}
+%\label{sec:main}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/rasp.py}
+
+\section{打印模块}
+%\label{sec:rasprint}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/rasprint.py}
+
+\section{ros模块}
+%\label{sec:ros}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/ros.py}
+
+\section{readcard模块}
+%\label{sec:readcard}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/readcard.py}
+
+\section{myconf模块}
+%\label{sec:myconf}
+
+\inputminted[fontsize=\small,
+  linenos=true,numbersep=2pt,
+  frame=leftline,framesep=3pt,rulecolor=\color{lightgray},
+  xleftmargin=10pt
+  ]{python}{../src/myconf.py}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

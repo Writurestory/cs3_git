@@ -1,0 +1,155 @@
+\documentclass{swfcthesis}
+\usepackage{multicol}
+\begin{document}
+
+\Title{网络用户管理模块的设计与集成}	% 论文标题
+\Author{温俊瑞} 	% 作者姓名 
+\Advisor{孙永科}      %指导教师姓名
+\AdvisorTitle{讲师} %指导教师职称
+\AdvisorInfo{孙永科，男，1980年出生，硕士，讲师，计算机科学与
+术专业。主要从事软件开发和计算机网络的教学工作，
+主讲课程为《计算机网络》，《网络程序设计与开发》
+。参加科技部重大科技工程“西南野生生物物种质资源库
+”子课题“西南野生生物种质资源库信息系统”的开发
+工作；参加科研项目《运用现代教育技术的实践与成果
+》获云南省二等奖；参加科研项目《树木学教育教学建设与研究》获云南省二等奖。}	%指导教师简介（约百余字）
+\Month{五}		    %月份（比如 六）
+\Year{二〇一四} 	    %年份（比如 二〇一二）
+\Univ{西南林业大学}    		%校名
+\School{计算机与信息学院}		%院系名称
+\Subject{计算机科学与技术专业}	%专业名称（比如 电子信息工程专业）
+\Docname{本科毕业（设计）论文}	%本科？研究生？
+\Abstract{
+  如今，一走进咖啡厅、休闲娱乐场所、银行展会、美容购物等地方或者入住酒店时，几乎每个人都会先问一句：有
+  没有免费的WiFi啊？WiFi普及的速度着实令人惊叹，已经成为不少人主要的移动上网方式。国外咖啡厅，
+  购物商场，酒店等基本都覆盖了wifi热点，顾客利用闲暇时间可以免费上网，同时商家又可以借助弹出的认证
+  界面投送广告，带来商业利益。wifi热点认证收到国外很多商家的青睐。就连不少航空公司的航班上
+  都开始提供起WiFi服务，让乘客可以利用自带的电脑等电子产品联网，在空中享受发邮件、传递数据
+  等。
+  
+  目前国内WIFI热点认证方案主要还是通过手机短信认证、人工操作认证、采用固定密码或者直接不认
+  证。
+  
+  手机短信认证方式是这样的，用户接入WIFI热点后手机会弹出认证界面，输入手机号码后点击
+  获取密码，输入短信中显示的密码即可上网。这样的认证方式存在一些不足，比如用户自带电脑不用手
+  机获取密码就无法上网，而且不能有效的防止蹭网现象的发生，如果用一些软件批量获取密码上
+  网的话路由器将会不堪重负。
+  人工操作可以防止软件恶意批量新建帐号，但是操作起来耗费人力物力，操作人员也可能因为误操作
+  导致网络出问题。
+  采用固定密码或者直接不认证的方式就相当于完全公开网络，同样不能防止蹭网。
+  
+  经过市场调查分析，国内WIFI热点认证方案或配置麻烦或不够安全稳定，基本都是基于windows操作
+  系统下来进行控制，人工操作环节比较多从而导致费时费力。本文介绍了一套基于Raspberry Pi\cite{pie}的
+  WIFI热点认证方案，通过集成于Raspberry Pi实现刷卡打印的功能，为人们在商业场所、酒店、机场
+  等热点认证提供便利。通过PYTHON程序在后台来控制Router OS\cite{routeros-book}上的用户自动化认证，无需人工操作，
+  用户只需要通过刷卡然后打印机自动打印上网用户名和密码，用户使用该密码便可以上网。认证弹出的界面可以投放广告，
+  为商家带来利益。另外安装配置方便，配置完成后安全稳定，减少了工作人员的工作力度。
+}	%论文摘要（约两百字）
+\Keywords{Raspberry Pi，刷卡，打印，Router OS，WIFI，热点认证}	%关键字（比如 电阻, 电容, 电感, 电灯泡）
+\Acknowledgments{非常感谢在大学期间的各位老师教授了我很多东西，并且在学习和生活中给予了我
+  很大帮助，在这四年期间，我学到了很多在学校外面学不到的东西，在何鑫老师和和辛宏老师的启蒙
+  下我开始喜欢上编程，接触到了面向对象、MVC的思想，打好了编程的基础，非常感谢他们。还要感谢王晓林老师让我很幸运地接
+  触到了世界上最好玩的系统和编辑器。还要感谢孙永科老师，在您的带领下我试着自己
+  尝试创造很多有趣的东西，通过动手实践我学会了很多网络知识，喜欢上了PYTHON
+  ，学会了把书本知识应用到每一个有趣的项目里，从研发产品，再到售前售后懂得了如何制定研发计
+  划，和客户沟通改善用户体验，非常感谢您。另外还有很多我们学院的优秀老师给予了我很大的帮助，谢谢你们。}		%鸣谢 （感谢人民感谢党，约百字）
+\enTitle{Design and Integration of Network User Management Module}			%英文标题
+\enAuthor{rory}			%作者英文姓名
+\enUniv{Southwest Forestry University}	%英文校名
+\enSchool{School of Computer and Information Science}	%英文院系名称
+\enAbstract{Nowadays, when people go to Café, Entertainment, Bank Show, Beauty Shopping, hotel
+  and other Entertainment places, almost everybody will ask if there is free WIFI? Universal
+  speed of the WIFI is indeed amazing, and has become a major way of mobile
+  Internet. Foreign cafes, shopping malls, hotels and other entertainment venues are
+  basically covered with WIFI hotspots, customers can access free in their spare time, 
+  while businesses can make use of pop-up and delivery of advertising authentication
+  interface to get commericial interests. WIFI hotspot authentication is very popular
+  between businesses in foreign countries. Even on many airlines have begun to offer
+  services of WIFI hotspot, so that passengers can surf the internet with their computers
+  or other electronic products, enjoy e-mail in the air, passing data and so on.
+
+  Currently WIFI hotspot authentication scheme mainly via SMS certification, certification
+  with manual operation, using a fixed password or no certification. SMS authentication
+  method is that after the user accessed WIFI, hotspot authentication interface will pop
+  up the phone, enter the phone number after clicking Obtain the password, enter the
+  password to access Internet. There are some deficiencies of this king of authentication,
+  such as a user can not access Internet without a Phone, and can not effectively prevent
+  the occurrence of rubing network, if some malware bulk access to the Internet, then the
+  router will be overwhelmed. Manual operation can prevent malicious software, but the
+  operation cost of manpower and resources, the operator may cause network problems
+  because of misuse. Fixed password or no authentication provides an easy way for everyone to rub
+  network.
+
+  After market research analysis, domestic WIFI hotspot authentication sch-emes either
+  complicated in configuration or insufficient in security and stability, which are mostly
+  based on windows operating System, manual operation links leading to more
+  time-consuming. This paper introduces a set based On Raspberry Pi \cite{pie} of WIFI
+  hotspot authentication scheme, Raspberry Pi are integrated with brushing-card printing
+  function, providing people with convenient hotspot certification in commercial
+  establishments, hotels and airports. Router OS\cite{routeros-book} is controlled by
+  PYTHON program for the automate user authentication in the background. Without manual
+  operation, Users only need to Brush card and then the printer automatically prints the
+  username and password, the user will be able to access by this username and
+  password. Authentication pop-up interface can advertise, which Benefits businesses. It
+  is easy to install and configure, the system is highly security and stability, reducing
+  the efforts of the staff.  }  %论文英文摘要
+\enKeywords{Raspberry Pi, Brush cards, Router OS, WIFI, hotspot} %英文关键字
+
+%%% 下面六行不要动！
+\makepreliminarypages
+\frontmatter
+\tableofcontents
+\listoffigures
+\listoftables
+\mainmatter
+%%% 上面六行不要动！
+
+%%% 正文开始
+
+\include{chapters/Introduction} %%前言
+%\include{chapters/Chapter2}  %%设计背景和意义（不要了）
+%\include{chapters/Chapter3}  %%目标问题 （不要了）
+\include{chapters/Chapter4}  %%研究方案
+\include{chapters/Chapter5}  %%方案实施
+\include{chapters/Chapter7}  %%配置ROS路由器(调整了一下位置，更合理)
+\include{chapters/Chapter6}  %%网络拓扑设计
+\include{chapters/Chapter8}  %%软件方案设计
+\include{chapters/shigongtu} %%施工图
+
+%%% 正文部分到此结束。下面是『参考文献』、『指导教师简介』、『鸣谢』、『附录』
+\Appendix{} % 不要动这一行！
+% 下面是参考文献部分
+\begin{thebibliography}{99}
+\bibitem{wifi-hotspot} Geier, Eric. Wi-Fi Hotspots. Cisco Press, 2006.
+\bibitem{pi-start} Richardson, Matt, and Shawn Wallace. Getting Started with Raspberry
+  Pi. O'Reilly Media, Inc., 2012.
+\bibitem{pi-guide} Halfacree, Gareth, and Eben Upton. Raspberry Pi User Guide. John Wiley
+  \& Sons, 2012.
+\bibitem{pi-python} Monk, Simon. Programming the Raspberry Pi: Getting Started with
+  Python. McGraw-Hill, 2013.
+\bibitem{routeros-book} 崔北亮.《Router OS 全攻略》，电子工业出版社. 2010.
+\bibitem{py-ref} Beazley, David M. Python essential reference. Addison-Wesley
+  Professional, 2009.
+\bibitem{wxpy-act} Rappin, Noel, and Robin Dunn. wxPython in Action. Manning, 2006.
+\bibitem{pie} Raspberry Pi Quick Start Guide,
+  \url{http://www.raspberrypi.org/help/quick-start-guide/}
+\bibitem{wikipedia-pie}Wikipedia: Raspberry Pi,
+  \url{http://en.wikipedia.org/wiki/Raspberry_Pi}
+\bibitem{ros} Wikipedia: MikroTik, \url{http://en.wikipedia.org/wiki/MikroTik}
+\bibitem{wxpython} Wikipedia: WxPython, \url{http://en.wikipedia.org/wiki/WxPython}
+\bibitem{termio} Termio Manual, \url{http://man7.org/linux/man-pages/man7/termio.7.html}
+\end{thebibliography}
+
+\advisorinfopage{} % 不要动这一行！
+\acknowledgmentspage{} % 不要动这一行！
+
+%%% 下面是附录部分。
+
+\include{chapters/appendix}   % 附录
+
+\end{document} % 此行后面不要有任何文字。
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
