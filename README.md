@@ -1,2 +1,1 @@
-# cs3_git
-# Some file in my cs3 Server
+# some file in swfu school cs3 server
